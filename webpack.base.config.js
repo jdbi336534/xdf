@@ -16,10 +16,6 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                         scss: ExtractTextPlugin.extract({
-                            use: ['css-loader?minimize', 'autoprefixer-loader', 'sass-loader'],
-                            fallback: 'vue-style-loader'
-                        }),
                         sass: ExtractTextPlugin.extract({
                             use: ['css-loader?minimize', 'autoprefixer-loader', 'sass-loader'],
                             fallback: 'vue-style-loader'
