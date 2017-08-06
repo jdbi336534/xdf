@@ -5,7 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-
+// const router = require('koa-router')();
 const index = require('./routes/index')
 const users = require('./routes/users')
 
@@ -34,6 +34,9 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-
+app.use( users.routes(), users.allowedMethods())
+// //装载子路由
+// router.use('/api', users.routes(), users.allowedMethods());
+// //加载路由中间件
+// app.use(router.routes()).use(router.allowedMethods());
 module.exports = app
