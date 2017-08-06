@@ -40,6 +40,7 @@ const Login = async ( ctx ) => {
         });
 
         ctx.status = 200;
+        ctx.cookies.set("token", token);
         ctx.body = { 
             success: true,
             username,
