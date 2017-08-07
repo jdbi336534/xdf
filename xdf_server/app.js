@@ -29,8 +29,8 @@ app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start;
-   const ckies = ctx.cookies.get('token');
-  console.log(`${ctx.method}-*-${ctx.url} - ${ms}ms---${ckies}`);
+  //  const ckies = ctx.cookies.get('token');
+  console.log(`${ctx.method}-*-${ctx.url} - ${ms}ms`);
 })
 
 // routes

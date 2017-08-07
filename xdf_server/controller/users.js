@@ -28,7 +28,7 @@ const Login = async ( ctx ) => {
 
          //生成一个新的token,并存到数据库
         let token = createToken(username);
-        console.log(token);
+        // console.log(token);
         doc.token = token;
         await new Promise((resolve, reject) => {
             doc.save((err) => {
@@ -40,7 +40,9 @@ const Login = async ( ctx ) => {
         });
 
         ctx.status = 200;
+        // maxAge单位是毫秒 3600*n，过期时间为n小时
         ctx.cookies.set("token", token);
+        ctx.cookies.set("dotcom_user", username);
         ctx.body = { 
             success: true,
             username,
