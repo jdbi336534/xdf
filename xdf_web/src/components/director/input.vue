@@ -82,6 +82,10 @@
         <Button type="primary" @click="" style="margin-left:60px;">修改</Button>
         <Button type="ghost" @click="handleReset('formValidate')" style="margin-left:60px;">重置</Button> </Form-item>
     </Form>
+     <form action="/node/api/upload" method="post" enctype="multipart/form-data">  
+        <input type="file" name="file"/>  
+        <input type="submit" value="ok"/>  
+    </form>  
   </div>
 </template>
 <script>

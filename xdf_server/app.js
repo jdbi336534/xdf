@@ -5,10 +5,11 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-// const router = require('koa-router')();
+// const serve = require('koa-static');
+// const koaBody = require('koa-body');
 const index = require('./routes/index')
 const users = require('./routes/users')
-
+const path = require('path');
 // error handler
 onerror(app)
 
@@ -18,6 +19,7 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
+// app.use(koaBody({ multipart: true }));
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
@@ -32,7 +34,9 @@ app.use(async (ctx, next) => {
   //  const ckies = ctx.cookies.get('token');
   console.log(`${ctx.method}-*-${ctx.url} - ${ms}ms`);
 })
+// serve files from ./public
 
+// app.use(serve(path.join(__dirname, '/public')));
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use( users.routes(), users.allowedMethods())
