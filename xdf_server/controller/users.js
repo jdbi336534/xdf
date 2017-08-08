@@ -1,7 +1,7 @@
 const xlsx = require('node-xlsx');
 const fs = require('fs');
 const path = require('path');
-const User = require('../models/user').User;
+// const User = require('../models/user').User;
 const Models = require('../lib/query/core');
 const $User = Models.$User;
 //下面这两个包用来生成时间
