@@ -4,16 +4,16 @@ var ObjectId  = Schema.ObjectId;
 //声明用户schema
 const DirectorSchema = new Schema({
     prescheduling: {
-        type: String
+        type: Number
     }, // 本月预排
     carryover: {
-        type: String
+        type: Number
     }, // 本月结转
     Q1prescheduling: {
-        type: String
+        type: Number
     }, // Q1预排
     Q1carryover: {
-        type: String
+        type: Number
     }, // Q1结转
     takesteps: {
         type: String

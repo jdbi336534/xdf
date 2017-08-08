@@ -6,23 +6,19 @@ Vue.use(Router)
 export default new Router({
     routes: [{
         path: '/',
-        meta: {
-            title: ''
-        },
         redirect: 'login'
     }, {
         path: '/login',
         name: 'login',
-        meta: {
-            title: '登录'
-        },
         component: (resolve) => require(['@/components/login/login.vue'], resolve)
     }, {
-        path: '/director',
-        name: 'director',
-        meta: {
-            title: '录入'
-        },
-        component: (resolve) => require(['@/components/director/director.vue'], resolve)
+        path: '/main',
+        name: 'main',
+        component: (resolve) => require(['@/components/main.vue'], resolve),
+        children: [{
+            path: '/director',
+            name: 'director',
+            component: (resolve) => require(['@/components/director/director.vue'], resolve)
+        }]
     }]
 });

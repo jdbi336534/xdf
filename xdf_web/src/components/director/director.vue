@@ -1,5 +1,5 @@
 <style scoped>
-.director-layout {
+/* .director-layout {
     width: 100%;
     position: absolute;
     top: 0;
@@ -59,7 +59,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .center-content {
     width: calc(100% - 20px);
@@ -84,50 +84,6 @@
 }
 </style>
 <template>
-    <div class="director-layout">
-        <Menu mode="horizontal" theme="dark" active-name="1">
-            <div class="layout-logo">
-                <img class="logoimg" src="http://images.xdf.cn/cms20150819/img/images/logo.png"></img>
-            </div>
-            <div class="layout-nav">
-                <span class="nav-right-welcome">你好！蒋东兵</span>
-                <Button type="ghost" shape="circle" icon="power" class="nav-right-logout"></Button>
-            </div>
-        </Menu>
-    
-        <div class="layout-content">
-            <Row class="layout-content-row">
-                <i-col span="5" class="layout-content-col">
-                    <Menu active-name="1-2" width="auto" :open-names="['1']" class="menu">
-                        <Submenu name="1">
-                            <template slot="title">
-                                <Icon type="ios-navigate"></Icon>
-                                报表统计
-                            </template>
-                            <Menu-item name="1-1">主管汇报统计</Menu-item>
-                            <Menu-item name="1-2">四折标课统计</Menu-item>
-                            <Menu-item name="1-3">面招培情况统计</Menu-item>
-                            <Menu-item name="1-4">教研情况统计</Menu-item>
-                        </Submenu>
-                        <Submenu name="2">
-                            <template slot="title">
-                                <Icon type="ios-keypad"></Icon>
-                                导航二
-                            </template>
-                            <Menu-item name="2-1">选项 1</Menu-item>
-                            <Menu-item name="2-2">选项 2</Menu-item>
-                        </Submenu>
-                        <Submenu name="3">
-                            <template slot="title">
-                                <Icon type="ios-analytics"></Icon>
-                                导航三
-                            </template>
-                            <Menu-item name="3-1">选项 1</Menu-item>
-                            <Menu-item name="3-2">选项 2</Menu-item>
-                        </Submenu>
-                    </Menu>
-                </i-col>
-                <i-col span="19" class="layout-content-col right-content">
                     <div class="center-content">
                         <div class="right-content-left">
                             <Inputform />
@@ -136,10 +92,6 @@
                             预留
                         </div>
                     </div>
-                </i-col>
-            </Row>
-        </div>
-    </div>
 </template>
 <script>
 import Inputform from './input';
@@ -149,21 +101,7 @@ export default {
     },
     data() {
         return {
-            submitmodalvisible: false,
-            deletemodalvisible: false,
-            tableloading: false,
-            datalistz: [],
-            currentPage3: 1,
-            total: 0,
-            usermsg: {},
-            datamagOne: null,
-            delId: null,
-            delIndex: null,
-            loadingbtndel: false,
-            submitId: null,
-            submitUserId: null,
-            submitInde: null,
-            loadingbtnsub: false
+           
         }
     }
 }

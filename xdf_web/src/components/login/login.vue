@@ -14,76 +14,90 @@
           </Input>
         </Form-item>
         <Form-item>
-          <Button type="primary" @click="handleSubmit('formInline')">登录</Button> </Form-item>
+          <Button type="primary" :loading="loading" @click="handleSubmit('formInline')">登录</Button>
+        </Form-item>
       </Form>
       </Col>
     </Row>
   </div>
 </template>
 <script>
-  import {
-    login
-  } from '../../services/login';
-  export default {
-    data() {
-      return {
-        formInline: {
-          username: '',
-          password: ''
-        },
-        ruleInline: {
-          username: [{
-            required: true,
-            message: '请填写用户名',
-            trigger: 'blur'
-          }],
-          password: [{
-            required: true,
-            message: '请填写密码',
-            trigger: 'blur'
-          }, {
-            type: 'string',
-            min: 6,
-            message: '密码长度不能小于6位',
-            trigger: 'blur'
-          }]
-        }
-      }
-    },
-    methods: {
-      handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            login(this.formInline).then(res => {
-              console.log(res);
-            })
-            this.$Message.success('提交成功!');
-          } else {
-            this.$Message.error('表单验证失败!');
-          }
-        })
+import {
+  login
+} from '../../services/query';
+export default {
+  data() {
+    return {
+      formInline: {
+        username: '',
+        password: ''
+      },
+      loading: false,
+      ruleInline: {
+        username: [{
+          required: true,
+          message: '请填写用户名',
+          trigger: 'blur'
+        }],
+        password: [{
+          required: true,
+          message: '请填写密码',
+          trigger: 'blur'
+        }, {
+          type: 'string',
+          min: 6,
+          message: '密码长度不能小于6位',
+          trigger: 'blur'
+        }]
       }
     }
+  },
+  methods: {
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.loading = true;
+          login(this.formInline).then(res => {
+            this.loading = false;
+            let { data } = res;
+            if (data.code === 200) {
+              this.$Message.success(data.msg);
+              this.$router.push({
+                path: '/director'
+              });
+            } else if (data.code === 400) {
+              this.$Message.error(data.msg);
+            }
+          }).catch(err => {
+            this.loading = false;
+            this.$Message.error('网络或服务器发生错误!');
+            throw new Error(err);
+          });
+        } else {
+
+        }
+      })
+    }
   }
+}
 
 </script>
 <style scoped>
-  .index {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-  }
+.index {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
 
-  .index .ivu-row-flex {
-    height: 100%;
-  }
+.index .ivu-row-flex {
+  height: 100%;
+}
 
-  .login-form {
-    width: 250px;
-    margin: 0 auto;
-  }
-
+.login-form {
+  width: 250px;
+  margin: 0 auto;
+}
 </style>
