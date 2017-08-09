@@ -3,25 +3,32 @@ var Schema = mongoose.Schema;
 //声明用户schema
 const RenewalsSchema = new Schema({
     district: {
-        type: String
+        type: String,
+        default:''
     }, // 校区
     subject: {
-        type: String
+        type: String,
+        default:''
     }, // 科目
     leftdirector: {
-        type: String
+        type: String,
+        default:''
     }, // 助理主管
     teacher: {
-        type: String
+        type: String,
+        default:''
     }, // 老师姓名
     student: {
-        type: String
+        type: String,
+        default:''
     }, // 学生姓名
     renew: {
-        type: String
+        type: String,
+        default:''
     }, // 是否续费
     measures: {
-        type: String
+        type: String,
+        default:''
     }, //未续费不就措施
     update_at: {
         type: Date,

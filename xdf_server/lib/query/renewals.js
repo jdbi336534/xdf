@@ -17,4 +17,8 @@ exports.newAndSave = (district, subject, leftdirector, teacher, student, renew, 
             resolve(doc);
         });
     });
+};
+
+exports.insertCollection = (arrdata, callback) => {
+    Renewals.collection.insert(arrdata, callback);
 }
