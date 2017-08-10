@@ -76,13 +76,13 @@
         <div class="layout-content">
             <Row class="layout-content-row">
                 <i-col span="5" class="layout-content-col">
-                    <Menu active-name="1-2" width="auto" :open-names="['1']" class="menu">
+                    <Menu active-name="1-2" width="auto" :active-name="defaultActive" class="menu" @on-select="handleSelectMenu">
                         <Submenu name="1">
                             <template slot="title">
                                 <Icon type="ios-navigate"></Icon>
                                 报表统计
                             </template>
-                            <Menu-item name="1-1">主管汇报统计</Menu-item>
+                            <Menu-item name="/director">主管汇报统计</Menu-item>
                             <Menu-item name="1-2">四折标课统计</Menu-item>
                             <Menu-item name="1-3">面招培情况统计</Menu-item>
                             <Menu-item name="1-4">教研情况统计</Menu-item>
@@ -116,21 +116,17 @@
 export default {
     data() {
         return {
-            submitmodalvisible: false,
-            deletemodalvisible: false,
-            tableloading: false,
-            datalistz: [],
-            currentPage3: 1,
-            total: 0,
-            usermsg: {},
-            datamagOne: null,
-            delId: null,
-            delIndex: null,
-            loadingbtndel: false,
-            submitId: null,
-            submitUserId: null,
-            submitInde: null,
-            loadingbtnsub: false
+            defaultActive: '/director'
+        }
+    },
+    mounted() {
+        this.defaultActive = getSessionStore('defaultActive') || this.$route.path;
+    }
+    methods: {
+        handleSelectMenu(path) {
+            this.$router.push({
+                path: path
+            })
         }
     }
 }
