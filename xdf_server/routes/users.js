@@ -12,8 +12,8 @@ router.post('/login', UserController.Login);
 router.post('/register', UserController.Reg);
 // 测试
 router.get('/users',UploadController.Upload);
-// 文件上传
-router.post('/upload',Upload.single('file'), UserController.Upload);
+// 四折标课excel文件上传
+router.post('/course',Upload.single('file'), UserController.Upload);
 // 主管提交信保存
 router.post('/directorsave', DirectorController.Save);
 

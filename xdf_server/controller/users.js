@@ -116,10 +116,25 @@ const DelUser = async (ctx) => {
 const Upload = (ctx) => {
     var filepath = path.resolve(__dirname, '..');
     var obj = xlsx.parse(filepath + '/' + ctx.req.file.destination + '/' + ctx.req.file.filename);
-    console.log('excelobj:', obj);
+    let data = obj[0].data;
+    let collectionarr = [];
+    for (let i = 4; i < data.length; i++) {
+        if (data[i].length !== 0) {
+            collectionarr.push({
+                'campus': data[i][0] || '',
+                'assistant': data[i][1] || '',
+                'teacher': data[i][2] || '',
+                'student': data[i][3] || '',
+                'isrenew': data[i][4] || '',
+                'measures': data[i][5] || ''
+            });
+        }
+    }
+    // 这里不能直接存数据库，得手动在页面确认后才行。
     ctx.status = 200;
     ctx.body = {
         code: 200,
+        data: collectionarr,
         origionname: ctx.req.file.originalname,
         filename: ctx.req.file.filename,
         filepath: ctx.req.file.destination + '/' + ctx.req.file.filename

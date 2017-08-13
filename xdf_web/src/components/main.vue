@@ -1,6 +1,7 @@
 <style scoped>
 .director-layout {
     width: 100%;
+    min-width: 1280px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -82,27 +83,27 @@
                                 <Icon type="ios-navigate"></Icon>
                                 报表统计
                             </template>
-                            <Menu-item name="/director">主管汇报统计</Menu-item>
-                            <Menu-item name="1-2">四折标课统计</Menu-item>
-                            <Menu-item name="1-3">面招培情况统计</Menu-item>
-                            <Menu-item name="1-4">教研情况统计</Menu-item>
+                            <Menu-item name="/director">汇报统计</Menu-item>
+                            <!-- <Menu-item name="1-2">四折标课统计</Menu-item>
+                                <Menu-item name="1-3">面招培情况统计</Menu-item>
+                                <Menu-item name="1-4">教研情况统计</Menu-item> -->
                         </Submenu>
-                        <Submenu name="2">
-                            <template slot="title">
-                                <Icon type="ios-keypad"></Icon>
-                                导航二
-                            </template>
-                            <Menu-item name="2-1">选项 1</Menu-item>
-                            <Menu-item name="2-2">选项 2</Menu-item>
-                        </Submenu>
-                        <Submenu name="3">
-                            <template slot="title">
-                                <Icon type="ios-analytics"></Icon>
-                                导航三
-                            </template>
-                            <Menu-item name="3-1">选项 1</Menu-item>
-                            <Menu-item name="3-2">选项 2</Menu-item>
-                        </Submenu>
+                        <!-- <Submenu name="2">
+                                <template slot="title">
+                                    <Icon type="ios-keypad"></Icon>
+                                    导航二
+                                </template>
+                                <Menu-item name="2-1">选项 1</Menu-item>
+                                <Menu-item name="2-2">选项 2</Menu-item>
+                            </Submenu>
+                            <Submenu name="3">
+                                <template slot="title">
+                                    <Icon type="ios-analytics"></Icon>
+                                    导航三
+                                </template>
+                                <Menu-item name="3-1">选项 1</Menu-item>
+                                <Menu-item name="3-2">选项 2</Menu-item>
+                            </Submenu> -->
                     </Menu>
                 </i-col>
                 <i-col span="19" class="layout-content-col right-content">
@@ -113,6 +114,7 @@
     </div>
 </template>
 <script>
+import { getSessionStore } from '@/assets/js/mUtils';
 export default {
     data() {
         return {
@@ -121,7 +123,7 @@ export default {
     },
     mounted() {
         this.defaultActive = getSessionStore('defaultActive') || this.$route.path;
-    }
+    },
     methods: {
         handleSelectMenu(path) {
             this.$router.push({

@@ -4,6 +4,10 @@
       <Col span="24">
       <Form ref="formInline" :model="formInline" :rules="ruleInline" class="login-form">
         <Form-item prop="username">
+          <div class="logo">
+            <img alt="logo" src="../../assets/img/icon1.svg">
+            <span>数据统计平台</span>
+          </div>
           <Input type="text" v-model="formInline.username" placeholder="用户名">
           <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
@@ -90,6 +94,8 @@ export default {
   bottom: 0;
   left: 0;
   text-align: center;
+  background:url('../../assets/img/login.jpg') no-repeat;
+  /* background-size:100%; */
 }
 
 .index .ivu-row-flex {
@@ -97,7 +103,32 @@ export default {
 }
 
 .login-form {
-  width: 250px;
+  width: 320px;
+  height: 278px;
+  padding: 36px;
+  background:#fdfdfd;
+  -webkit-box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
   margin: 0 auto;
+}
+
+.logo {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 8px;
+}
+
+.logo span {
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
 }
 </style>

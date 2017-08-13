@@ -1,31 +1,6 @@
-<style scoped>
-.input-center {
-  width: 100%;
-  padding: 0 20px;
-  margin: 10px auto;
-}
-
-.director-title {
-  text-align: center;
-  border-bottom: 1px solid #666;
-  padding: 10px 0;
-  margin-bottom: 40px;
-}
-
-.form {
-  padding: 0 40px 0 20px;
-}
-
-.btngroup {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-</style>
 <template>
   <div class="input-center">
-    <h2 class="director-title">主管汇报统计</h2>
+    <h2 class="director-title">基础汇报</h2>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120" class="form">
       <Row>
         <Col span="12">
@@ -59,7 +34,14 @@
       <Form-item label="采取措施和情况" prop="takesteps">
         <Input v-model="formValidate.takesteps" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
       </Form-item>
-      <Form-item label="结转速度" prop="speed">
+      <Form-item label="预排完成速度" prop="prespeed">
+        <Radio-group v-model="formValidate.prespeed">
+          <Radio label="较快">较快</Radio>
+          <Radio label="正常">正常</Radio>
+          <Radio label="较慢">较慢</Radio>
+        </Radio-group>
+      </Form-item>
+      <Form-item label="结转完成速度" prop="speed">
         <Radio-group v-model="formValidate.speed">
           <Radio label="较快">较快</Radio>
           <Radio label="正常">正常</Radio>
@@ -69,31 +51,38 @@
       <Form-item label="结转原因分析" prop="reason">
         <Input v-model="formValidate.reason" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
       </Form-item>
-      <Form-item label="结转采取措施" prop="takemeasures">
+      <Form-item label="后续采取措施" prop="takemeasures">
         <Input v-model="formValidate.takemeasures" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
       </Form-item>
-      <Form-item label="教研情况" prop="research">
-        <Input v-model="formValidate.research" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+  
+      <Form-item label="结转前五名" prop="firstfive">
+        <Input v-model="formValidate.firstfive" placeholder="请填写姓名并用逗号隔开"></Input>
       </Form-item>
-      <Form-item label="产品研发情况" prop="development">
-        <Input v-model="formValidate.development" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+      <Form-item label="结转后五名" prop="lastfive">
+        <Input v-model="formValidate.lastfive" placeholder="请填写姓名并用逗号隔开"></Input>
       </Form-item>
-      <Form-item label="其他职能工作情况" prop="others">
+      <!-- <Form-item label="教研情况" prop="research">
+            <Input v-model="formValidate.research" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+          </Form-item> -->
+      <!-- <Form-item label="产品研发情况" prop="development">
+            <Input v-model="formValidate.development" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+          </Form-item> -->
+      <Form-item label="其他工作情况" prop="others">
         <Input v-model="formValidate.others" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
       </Form-item>
-      <Form-item label="备注" prop="remarks">
-        <Input v-model="formValidate.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
-      </Form-item>
+      <!-- <Form-item label="备注" prop="remarks">
+            <Input v-model="formValidate.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+          </Form-item> -->
       <Form-item class="btngroup">
-        <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+        <Button type="primary" @click="handleSubmit('formValidate')">下一步</Button>
         <!-- <Button type="primary" @click="" style="margin-left:60px;">修改</Button> -->
         <Button type="ghost" @click="handleReset('formValidate')" style="margin-left:60px;">清空</Button>
       </Form-item>
     </Form>
-    <form action="/node/api/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" />
-      <input type="submit" value="ok" />
-    </form>
+    <!-- <form action="/node/api/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="ok" />
+      </form> -->
   </div>
 </template>
 <script>
@@ -109,9 +98,12 @@ export default {
         Q1prescheduling: null, // Q1预排
         Q1carryover: null, // Q1结转
         takesteps: '', // 采取措施和情况
+        prespeed: '', // 预排速度
         speed: '', // 结转速度
         reason: '', // 结转原因
-        takemeasures: '', // 结转采取措施
+        takemeasures: '', // 后续采取措施
+        firstfive: '',
+        lastfive: '',
         research: '', // 教研情况
         development: '', // 研发情况
         others: '', // 其他职能工作情况
@@ -145,11 +137,16 @@ export default {
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
+          trigger: 'blur'
         }], // 采取措施和情况
+        prespeed: [{
+          required: true,
+          message: '预排完成速度必选',
+          trigger: 'blur'
+        }], // 预排速度
         speed: [{
           required: true,
-          message: '结转速度必选',
+          message: '结转完成速度必选',
           trigger: 'blur'
         }], // 结转速度
         reason: [{
@@ -159,17 +156,35 @@ export default {
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
+          trigger: 'blur'
         }], // 结转原因
         takemeasures: [{
           required: true,
-          message: '结转采取措施不能为空',
+          message: '后续采取措施不能为空',
           trigger: 'blur'
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
-        }], // 结转采取措施
+          trigger: 'blur'
+        }], // 后续采取措施
+        firstfive: [{
+          required: true,
+          message: '结转前五名不能为空',
+          trigger: 'blur'
+        }, {
+          max: 50,
+          message: '字数不能超过50个字',
+          trigger: 'blur'
+        }], // 结转前五名
+        lastfive: [{
+          required: true,
+          message: '结转后五名不能为空',
+          trigger: 'blur'
+        }, {
+          max: 50,
+          message: '字数不能超过50个字',
+          trigger: 'blur'
+        }], // 结转后五名
         research: [{
           required: true,
           message: '教研情况不能为空',
@@ -177,7 +192,7 @@ export default {
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
+          trigger: 'blur'
         }], // 教研情况
         development: [{
           required: true,
@@ -186,7 +201,7 @@ export default {
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
+          trigger: 'blur'
         }], // 研发情况
         others: [{
           required: true,
@@ -195,7 +210,7 @@ export default {
         }, {
           max: 500,
           message: '字数不能超过500个字',
-          trigger: 'change'
+          trigger: 'blur'
         }], // 其他职能工作情况
         remarks: [{
           type: 'string',
@@ -232,3 +247,28 @@ export default {
 };
 
 </script>
+<style scoped>
+.input-center {
+  width: 100%;
+  padding: 0 20px;
+  margin: 10px auto;
+}
+
+.director-title {
+  text-align: center;
+  border-bottom: 1px solid #666;
+  padding: 10px 0;
+  margin-bottom: 40px;
+}
+
+.form {
+  padding: 0 40px 0 20px;
+}
+
+.btngroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+</style>

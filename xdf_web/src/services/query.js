@@ -25,17 +25,13 @@ export async function directorsave(params) {
     body: qs.stringify(params)
   });
 }
-// 登陆
-// export async function login(params) {
-//   return request(`${prefix}/api/login`, {
-//     credentials: 'include',
-//     method: 'post',
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     },
-//     body: qs.stringify(params)
-//   });
-// }
+// 基础汇报
+export async function basicinfo(params) {
+  return request(`${prefix}/api/basicinfo`, {
+    ...postparams,
+    body: qs.stringify(params)
+  });
+}
 
 // get获取地域表数据
 export async function getuser(params) {
