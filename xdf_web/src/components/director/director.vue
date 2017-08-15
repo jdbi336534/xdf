@@ -3,7 +3,7 @@
         <div class="right-content-left">
             <Inputform v-show="step===1" ref="basicinfo" @commit="commitinfo" />
             <Course v-show="step===2" ref="excelinfo" @commitexcel="commitexcel" />
-            <Research v-show="step===3" />
+            <!-- <Research v-show="step===3" /> -->
         </div>
         <div class="right-content-right">
             <My-Progress />
@@ -52,7 +52,7 @@ export default {
                 if (res.data.code === 200) {
                     this.$refs.excelinfo.loading = false;
                     // 进入到最后一步
-                    this.step = 3;
+                    // this.step = 3;
                 }
             }).catch(err => {
                 this.$refs.excelinfo.loading = false;
