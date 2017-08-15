@@ -112,7 +112,7 @@ const DelUser = async (ctx) => {
     };
 };
 
-//文件上传
+//四折标课文件上传
 const Upload = (ctx) => {
     var filepath = path.resolve(__dirname, '..');
     var obj = xlsx.parse(filepath + '/' + ctx.req.file.destination + '/' + ctx.req.file.filename);
@@ -141,10 +141,24 @@ const Upload = (ctx) => {
     }
 }
 
+//文件上传
+const Fileupload = (ctx) => {
+    var filepath = path.resolve(__dirname, '..');
+    // 这里返回文件路径，页面在提交的时候提交路径信息
+    ctx.status = 200;
+    ctx.body = {
+        code: 200,
+        origionname: ctx.req.file.originalname,
+        filename: ctx.req.file.filename,
+        filepath: ctx.req.file.destination + '/' + ctx.req.file.filename
+    }
+}
+
 module.exports = {
     Login,
     Reg,
     GetAllUsers,
     DelUser,
-    Upload
+    Upload,
+    Fileupload
 };

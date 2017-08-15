@@ -1,9 +1,9 @@
 <template>
     <div class="center-content">
         <div class="right-content-left">
-              <!-- <Inputform />   -->
-               <Course />   
-               <!-- <Research />   -->
+            <Inputform v-show="step===1" ref="basicinfo" @commit="commitinfo" />
+            <Course v-show="step===2" ref="excelinfo" @commitexcel="commitexcel" />
+            <Research v-show="step===3" />
         </div>
         <div class="right-content-right">
             <My-Progress />
@@ -11,6 +11,10 @@
     </div>
 </template>
 <script>
+import {
+    directorsave,
+    coursesave
+} from '../../services/query';
 import Inputform from './input';
 import MyProgress from './progress';
 import Course from './course';
@@ -24,7 +28,36 @@ export default {
     },
     data() {
         return {
-
+            step: 1
+        }
+    },
+    methods: {
+        commitinfo(form) {
+            this.$refs.basicinfo.loading = true;
+            directorsave(form).then(res => {
+                console.log(res.data);
+                if (res.data.code === 200) {
+                    this.$refs.basicinfo.loading = false;
+                    // 进入到第二步
+                    this.step = 2;
+                }
+            }).catch(err => {
+                this.$refs.basicinfo.loading = false;
+                this.$Message.error(err.message);
+            })
+        },
+        commitexcel(filepath) {
+            this.$refs.excelinfo.loading = true;
+            coursesave({ filepath }).then(res => {
+                if (res.data.code === 200) {
+                    this.$refs.excelinfo.loading = false;
+                    // 进入到最后一步
+                    this.step = 3;
+                }
+            }).catch(err => {
+                this.$refs.excelinfo.loading = false;
+                this.$Message.error(err.message);
+            })
         }
     }
 }

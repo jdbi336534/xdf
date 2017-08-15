@@ -5,8 +5,9 @@ const Models = require('../lib/query/core');
 const $Renewals = Models.$Renewals;
 //优能一对一教学团队·主管四折标课续费情况统计
 const Upload = (ctx) => {
+    let excelfilepath=ctx.request.body.filepath;
     var filepath = path.resolve(__dirname, '..');
-    var obj = xlsx.parse(filepath + '/public/uploads/excel/director.xlsx');
+    var obj = xlsx.parse(filepath + excelfilepath);
     let data = obj[0].data;
     let collectionarr = [];
     for (let i = 2; i < data.length; i++) {

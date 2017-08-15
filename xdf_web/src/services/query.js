@@ -25,6 +25,13 @@ export async function directorsave(params) {
     body: qs.stringify(params)
   });
 }
+// 保存四折标课
+export async function coursesave(params) {
+  return request(`${prefix}/api/coursesave`, {
+    ...postparams,
+    body: qs.stringify(params)
+  });
+}
 // 基础汇报
 export async function basicinfo(params) {
   return request(`${prefix}/api/basicinfo`, {

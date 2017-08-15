@@ -2,20 +2,20 @@
     <div class="course">
         <h2 class="course-title">四折标课情况</h2>
         <div class="upload">
-            <Upload type="drag" action="/node/api/course" :on-success="handleSuccess" :before-upload="handleBeforeUpload">
+            <Upload type="drag" action="/node/api/course" :on-success="handleSuccess" :before-upload="handleBeforeUpload" :on-remove="handleRemove">
                 <div style="padding: 20px 0">
                     <Icon type="ios-cloud-upload" size="52" style="color: #3399ff" :show-upload-list="false"></Icon>
                     <p>点击或将文件拖拽到这里上传(四折标课Excel)</p>
                 </div>
             </Upload>
         </div>
-        <p class="result-title">上传结果如下：</p>
-        <div class="upload-result">
-            <Table :columns="columns1" :data="data2" size="small" stripe></Table>
+        <div class="upload-result" v-if="showtable">
+            <p class="result-title">上传结果如下：</p>
+            <Table height="400" :columns="columns1" :data="data2" size="small" stripe></Table>
         </div>
         <Form>
             <Form-item class="btngroup">
-                <Button type="primary">下一步</Button>
+                <Button type="primary" :loading="loading" @click="handleSubmit">下一步</Button>
             </Form-item>
         </Form>
     </div>
@@ -56,24 +56,44 @@ export default {
                     ellipsis: true
                 }
             ],
-            data2: [
-            ]
+            data2: [],
+            fileList: [],
+            showtable: false,
+            loading: false,
+            filepath: ''
         }
     },
     methods: {
-        handleSuccess(res, file) {
+        handleSuccess(res, file, fileList) {
             try {
                 if (res.code === 200) {
                     this.data2 = res.data;
+                    this.fileList = fileList;
+                    this.filepath = res.filepath;
+                    this.showtable = true;
                 }
             } catch (err) {
                 this.data2 = [];
-                throw new Error(err);
+                this.$Message.error(err.message);
             }
-            console.log(res);
         },
-        handleBeforeUpload() {
-
+        handleBeforeUpload(file) {
+            if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+                this.$Message.warning('上传文件的格式错误，只能上传excel文件');
+                return false;
+            }
+        },
+        handleRemove(file, fileList) {
+            this.showtable = false;
+            this.data2 = [];
+        },
+        handleSubmit() {
+            if (this.fileList.length < 1) {
+                this.$Message.warning('请上传文件后再进行下一步');
+                return;
+            } else {
+                this.$emit('commitexcel', this.filepath)
+            }
         }
     }
 };

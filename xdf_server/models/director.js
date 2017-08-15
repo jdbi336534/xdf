@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId  = Schema.ObjectId;
+var ObjectId = Schema.ObjectId;
 //声明用户schema
 const DirectorSchema = new Schema({
     prescheduling: {
@@ -18,6 +18,9 @@ const DirectorSchema = new Schema({
     takesteps: {
         type: String
     }, // 采取措施和情况
+    prespeed: {
+        type: String
+    }, // 结转速度
     speed: {
         type: String
     }, // 结转速度
@@ -27,24 +30,36 @@ const DirectorSchema = new Schema({
     takemeasures: {
         type: String
     }, // 结转采取措施
-    research: {
+    firstfive: {
         type: String
-    }, // 教研情况
-    development: {
+    }, // 结转前五名
+    lastfive: {
         type: String
-    }, // 研发情况
+    }, // 结转后五名
     others: {
         type: String
     }, // 其他职能工作情况
-    remarks: {
+    isresearch: {
         type: String
-    }, // 备注
+    }, // 是否进行教研
+    notresearchreason: {
+        type: String
+    }, // 未教研原因
+    filepath: {
+        type: Array
+    }, // 文件路径
+    imgpath: {
+        type: Array
+    }, // 图片路径
+    // remarks: {
+    //     type: String
+    // }, // 备注
+    username: {
+        type: String
+    },
     update_at: {
         type: Date,
         default: Date.now
-    },
-    username:{
-        type:String 
     }
 });
 //  {
