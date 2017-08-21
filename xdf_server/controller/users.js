@@ -4,6 +4,7 @@ const path = require('path');
 // const User = require('../models/user').User;
 const Models = require('../lib/query/core');
 const $User = Models.$User;
+var User = require('../models/user').User;
 //下面这两个包用来生成时间
 const moment = require('moment');
 const objectIdToTimestamp = require('objectid-to-timestamp');
@@ -72,7 +73,8 @@ const Reg = async (ctx) => {
         console.log('用户名已经存在');
         ctx.status = 200;
         ctx.body = {
-            success: false
+            code:500,
+            msg:'用户名已存在'
         };
     } else {
         await new Promise((resolve, reject) => {
@@ -96,8 +98,8 @@ const GetAllUsers = async (ctx) => {
     let doc = await $User.findAllUsers();
     ctx.status = 200;
     ctx.body = {
-        succsess: '成功',
-        result: doc
+        code:200,
+        msg:'用户注册成功'
     };
 };
 
