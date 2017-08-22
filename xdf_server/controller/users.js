@@ -67,10 +67,8 @@ const Reg = async (ctx) => {
     });
     //将objectid转换为用户创建时间(可以不用)
     user.create_time = moment(objectIdToTimestamp(user._id)).format('YYYY-MM-DD HH:mm:ss');
-
     let doc = await $User.findUser(user.username);
     if (doc) {
-        console.log('用户名已经存在');
         ctx.status = 200;
         ctx.body = {
             code:500,
@@ -85,10 +83,10 @@ const Reg = async (ctx) => {
                 resolve();
             });
         });
-        console.log('注册成功');
         ctx.status = 200;
         ctx.body = {
-            success: true
+            code:200,
+            msg:'用户注册成功'
         }
     }
 };
@@ -99,7 +97,7 @@ const GetAllUsers = async (ctx) => {
     ctx.status = 200;
     ctx.body = {
         code:200,
-        msg:'用户注册成功'
+        data:doc
     };
 };
 

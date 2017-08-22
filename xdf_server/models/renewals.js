@@ -30,7 +30,7 @@ const RenewalsSchema = new Schema({
         type: String,
         default:''
     }, //未续费不就措施
-    update_at: {
+    create_time: {
         type: Date,
         default: Date.now
     }

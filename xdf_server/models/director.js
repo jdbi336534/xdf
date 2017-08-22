@@ -57,7 +57,7 @@ const DirectorSchema = new Schema({
     username: {
         type: String
     },
-    update_at: {
+    create_time: {
         type: Date,
         default: Date.now
     }

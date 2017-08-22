@@ -23,7 +23,7 @@ exports.findAllUsers = () => {
     });
 };
 //删除某个用户
-exports.delUser = function(id){
+exports.delUser = (id)=>{
     return new Promise(( resolve, reject) => {
         User.findOneAndRemove({ _id: id }, err => {
             if(err){
