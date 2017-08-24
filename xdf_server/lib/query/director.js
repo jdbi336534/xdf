@@ -28,3 +28,14 @@ exports.newAndSave = (prescheduling, carryover, Q1prescheduling, Q1carryover, ta
         });
     });
 }
+//按条件查找，某一天的数据
+exports.findBydate = (start,end) => {
+    return new Promise((resolve, reject) => {
+        Director.find({'create_time':{'$gt':start,'$lt':end}}, (err, doc) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(doc);
+        });
+    });
+};

@@ -1,7 +1,7 @@
 const Models = require('../lib/query/core');
 const $Director = Models.$Director;
 //保存主管提交的信息
-const Save = async (ctx) => {
+const Save = async(ctx) => {
     // 获得cookie
     if (ctx.cookies.get("xdf_user")) {
         //  ctx.body = {
@@ -47,7 +47,25 @@ const Save = async (ctx) => {
         };
     }
 };
-
+const FindByDate = async(ctx) => {
+    let start = new Date(2017, 7, 23);
+    let end = new Date(2017, 7, 25);
+    console.log(start,end);
+    let doc = await $Director.findBydate(start, end);
+    console.log(doc);
+    if (doc) {
+        ctx.body = {
+            code: 200,
+            date: doc
+        }
+    }else{
+        ctx.body={
+            code:500,
+            msg:doc
+        }
+    }
+}
 module.exports = {
-    Save
+    Save,
+    FindByDate
 };

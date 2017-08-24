@@ -95,7 +95,7 @@ export default {
   left: 0;
   text-align: center;
   background:url('../../assets/img/login.jpg') no-repeat;
-  /* background-size:100%; */
+   background-size:100% 100%; 
 }
 
 .index .ivu-row-flex {

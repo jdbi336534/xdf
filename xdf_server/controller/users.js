@@ -15,7 +15,7 @@ const createToken = require('../lib/token/createToken.js');
 
 
 //登录
-const Login = async (ctx) => {
+const Login = async(ctx) => {
     //拿到账号和密码
     let username = ctx.request.body.username;
     let password = sha1(ctx.request.body.password);
@@ -58,51 +58,42 @@ const Login = async (ctx) => {
     }
 };
 //注册
-const Reg = async (ctx) => {
-    let user = new User({
-        username: ctx.request.body.username,
-        password: sha1(ctx.request.body.password), //加密
-        name: '测试用户',
-        token: createToken(this.username) //创建token并存入数据库
-    });
-    //将objectid转换为用户创建时间(可以不用)
-    user.create_time = moment(objectIdToTimestamp(user._id)).format('YYYY-MM-DD HH:mm:ss');
-    let doc = await $User.findUser(user.username);
+const Reg = async(ctx) => {
+    let username = ctx.request.body.username;
+    let password = sha1(ctx.request.body.password); //加密
+    let name = '测试用户';
+    let token = createToken(username); //创建token并存入数据库
+    let doc = await $User.findUser(username);
     if (doc) {
         ctx.status = 200;
         ctx.body = {
-            code:500,
-            msg:'用户名已存在'
+            code: 500,
+            msg: '用户名已存在'
         };
     } else {
-        await new Promise((resolve, reject) => {
-            user.save((err) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve();
-            });
-        });
-        ctx.status = 200;
-        ctx.body = {
-            code:200,
-            msg:'用户注册成功'
+        let result = await $User.registerUser(username, password, name, token);
+        if (result) {
+            ctx.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '用户注册成功'
+            }
         }
     }
 };
 //获得所有用户信息
-const GetAllUsers = async (ctx) => {
+const GetAllUsers = async(ctx) => {
     //查询所有用户信息
     let doc = await $User.findAllUsers();
     ctx.status = 200;
     ctx.body = {
-        code:200,
-        data:doc
+        code: 200,
+        data: doc
     };
 };
 
 //删除某个用户
-const DelUser = async (ctx) => {
+const DelUser = async(ctx) => {
     //拿到要删除的用户id
     let id = ctx.request.body.id;
     await $User.delUser(id);
