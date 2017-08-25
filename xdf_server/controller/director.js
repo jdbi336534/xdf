@@ -1,4 +1,5 @@
 const Models = require('../lib/query/core');
+const moment = require('moment');
 const $Director = Models.$Director;
 //保存主管提交的信息
 const Save = async(ctx) => {
@@ -52,10 +53,13 @@ const FindByDate = async(ctx) => {
     let ctxend =ctx.request.body.end;    
     let start = new Date(ctxstart);
     let end = new Date(ctxend);
-    console.log(start+'');
-    console.log(end+'');
+    // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
+    // console.log(end,moment(end).format('YYYY-MM-DD HH:mm:ss'));
     let doc = await $Director.findBydate(start, end);
-    // console.log(doc);
+    for(let item in doc){
+        console.log(moment(item.create_time).format('YYYY-MM-DD HH:mm:ss'));
+        item.create_time=moment(item.create_time).format('YYYY-MM-DD HH:mm:ss');
+    }
     if (doc) {
         ctx.body = {
             code: 200,

@@ -155,12 +155,12 @@ const Upload = (ctx) => {
         }
     }
     //用数据源(对象)data渲染Excel模板
-    ejsExcel.renderExcel(exlBuf, collectionarr).then(function (exlBuf2) {
-        fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
-        console.log("生成助理主管四折标课统计.xlsx成功！");
-    }).catch(function (err) {
-        console.error(err);
-    });
+    // ejsExcel.renderExcel(exlBuf, collectionarr).then(function (exlBuf2) {
+    //     fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
+    //     console.log("生成助理主管四折标课统计.xlsx成功！");
+    // }).catch(function (err) {
+    //     console.error(err);
+    // });
     // 这里不能直接存数据库，得手动在页面确认后才行。
     ctx.status = 200;
     ctx.body = {
@@ -168,7 +168,8 @@ const Upload = (ctx) => {
         data: collectionarr,
         origionname: ctx.req.file.originalname,
         filename: ctx.req.file.filename,
-        filepath: ctx.req.file.destination + '/' + ctx.req.file.filename
+         // 去掉路径中的public字段
+        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public","")
     }
 }
 
@@ -181,7 +182,8 @@ const Fileupload = (ctx) => {
         code: 200,
         origionname: ctx.req.file.originalname,
         filename: ctx.req.file.filename,
-        filepath: ctx.req.file.destination + '/' + ctx.req.file.filename
+        // 去掉路径中的public字段
+        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public","")
     }
 }
 
