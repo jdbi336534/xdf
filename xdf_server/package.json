@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "debug": "^2.6.3",
+    "ejsexcel": "^3.4.9",
     "jsonwebtoken": "^7.4.2",
     "koa": "^2.2.0",
     "koa-body": "^2.3.0",

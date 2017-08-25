@@ -1,4 +1,5 @@
 const xlsx = require('node-xlsx');
+const ejsExcel = require("ejsexcel");
 const fs = require('fs');
 const path = require('path');
 // const User = require('../models/user').User;
@@ -12,8 +13,9 @@ const objectIdToTimestamp = require('objectid-to-timestamp');
 const sha1 = require('sha1');
 //createToken
 const createToken = require('../lib/token/createToken.js');
-
-
+var filepath2 = path.resolve(__dirname, '..');
+//获得Excel模板的buffer对象
+var exlBuf = fs.readFileSync(filepath2 + "/public/exports/assistantDirector.xlsx");
 //登录
 const Login = async(ctx) => {
     //拿到账号和密码
@@ -40,7 +42,38 @@ const Login = async(ctx) => {
                 resolve();
             });
         });
-
+        var data = [{
+                "campus": "刘家窑中心",
+                "assistant": "王昕烨",
+                "teacher": "孟男",
+                "student": "连振伟",
+                "isrenew": "否",
+                "measures": "还未上课"
+            },
+            {
+                "campus": "通州梨园中心",
+                "assistant": "王昕烨",
+                "teacher": "李江琴",
+                "student": "张雨姿",
+                "isrenew": "否",
+                "measures": "还未上课"
+            },
+            {
+                "campus": "刘家窑中心",
+                "assistant": "王昕烨",
+                "teacher": "李仕香",
+                "student": "闫皓博",
+                "isrenew": "否",
+                "measures": "还未上课"
+            }
+        ];
+        //用数据源(对象)data渲染Excel模板
+        ejsExcel.renderExcel(exlBuf, data).then(function (exlBuf2) {
+            fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
+            console.log("生成助理主管四折标课统计.xlsx成功！");
+        }).catch(function (err) {
+            console.error(err);
+        });
         ctx.status = 200;
         // maxAge单位是毫秒 3600*n，过期时间为n小时
         ctx.cookies.set("token", token);
@@ -121,6 +154,13 @@ const Upload = (ctx) => {
             });
         }
     }
+    //用数据源(对象)data渲染Excel模板
+    ejsExcel.renderExcel(exlBuf, collectionarr).then(function (exlBuf2) {
+        fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
+        console.log("生成助理主管四折标课统计.xlsx成功！");
+    }).catch(function (err) {
+        console.error(err);
+    });
     // 这里不能直接存数据库，得手动在页面确认后才行。
     ctx.status = 200;
     ctx.body = {

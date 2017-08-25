@@ -48,14 +48,19 @@ const Save = async(ctx) => {
     }
 };
 const FindByDate = async(ctx) => {
-    let start = new Date(2017, 7, 23);
-    let end = new Date(2017, 7, 25);
-    console.log(start,end);
+    let ctxstart =ctx.request.body.start;
+    let ctxend =ctx.request.body.end;    
+    let start = new Date(ctxstart);
+    let end = new Date(ctxend);
+    console.log(start+'');
+    console.log(end+'');
     let doc = await $Director.findBydate(start, end);
-    console.log(doc);
+    // console.log(doc);
     if (doc) {
         ctx.body = {
             code: 200,
+            start,
+            end,
             date: doc
         }
     }else{

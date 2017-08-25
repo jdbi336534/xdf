@@ -21,7 +21,7 @@ router.post('/coursesave',UploadController.Upload);
 // 主管提交信保存
 router.post('/directorsave', DirectorController.Save);
 // 按日期条件查询主管提交的数据
-router.get('/getbydate',DirectorController.FindByDate);
+router.post('/getbydate',DirectorController.FindByDate);
 
 //需要先检查权限的路由
 router.get('/user', checkToken, UserController.GetAllUsers);

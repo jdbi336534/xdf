@@ -67,7 +67,7 @@ const DirectorSchema = new Schema({
 // }
 DirectorSchema.pre('save', function (next) {
     var now = new Date();
-    this.update_at = now;
+    this.create_time = now;
     next();
 });
 
