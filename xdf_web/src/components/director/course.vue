@@ -15,7 +15,7 @@
         </div>
         <Form>
             <Form-item class="btngroup">
-                <Button type="primary" :loading="loading" @click="handleSubmit">下一步</Button>
+                <Button type="primary" :loading="loading" @click="handleSubmit">保存</Button>
             </Form-item>
         </Form>
     </div>

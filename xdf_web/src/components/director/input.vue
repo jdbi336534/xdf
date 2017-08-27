@@ -70,7 +70,7 @@
           </Select>
           {{status}}</label> </Form-item>
       <div class="operation" v-show="show">
-        <Alert type="warning" show-icon>注意：三种上传方式可任选一种(二选一)或者多种</Alert>
+        <Alert type="warning" show-icon>注意：二种上传方式可任选一种(二选一)或者多种</Alert>
         <p class="result-title">pdf或word上传处：</p>
         <div class="upload">
           <Upload type="drag" action="/node/api/researchfile" :on-success="onfilesuccess" :before-upload="fileBeforeUpload"
@@ -419,6 +419,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    margin-bottom:100px;
   }
 
   .result-title {

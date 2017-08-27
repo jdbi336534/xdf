@@ -76,7 +76,7 @@
     
         <div class="layout-content">
             <Row class="layout-content-row">
-                <i-col span="5" class="layout-content-col">
+                <i-col span="4" class="layout-content-col">
                     <Menu active-name="1-2" width="auto" :active-name="defaultActive" class="menu" @on-select="handleSelectMenu">
                         <Submenu name="1">
                             <template slot="title">
@@ -106,7 +106,7 @@
                             </Submenu> -->
                     </Menu>
                 </i-col>
-                <i-col span="19" class="layout-content-col right-content">
+                <i-col span="20" class="layout-content-col right-content">
                     <router-view></router-view>
                 </i-col>
             </Row>
