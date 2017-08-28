@@ -28,16 +28,16 @@
       </Form-item>
       <Form-item label="预排完成速度" prop="prespeed">
         <Radio-group v-model="formValidate.prespeed">
-          <Radio label="较快">较快</Radio>
-          <Radio label="正常">正常</Radio>
-          <Radio label="较慢">较慢</Radio>
+          <Radio label="fast">较快</Radio>
+          <Radio label="normal">正常</Radio>
+          <Radio label="slow">较慢</Radio>
         </Radio-group>
       </Form-item>
       <Form-item label="结转完成速度" prop="speed">
         <Radio-group v-model="formValidate.speed">
-          <Radio label="较快">较快</Radio>
-          <Radio label="正常">正常</Radio>
-          <Radio label="较慢">较慢</Radio>
+          <Radio label="fast">较快</Radio>
+          <Radio label="normal">正常</Radio>
+          <Radio label="slow">较慢</Radio>
         </Radio-group>
       </Form-item>
       <Form-item label="结转原因分析" prop="reason">
@@ -71,6 +71,8 @@
           {{status}}</label> </Form-item>
       <div class="operation" v-show="show">
         <Alert type="warning" show-icon>注意：三种上传方式可任选一种(二选一)或者多种</Alert>
+        <p class="result-title">已教研说明：</p>
+         <Input v-model="formValidate.researchexp" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="若无图片或文件上传，请填写"></Input>
         <p class="result-title">pdf或word上传处：</p>
         <div class="upload">
           <Upload type="drag" action="/node/api/researchfile" :on-success="onfilesuccess" :before-upload="fileBeforeUpload"
@@ -110,7 +112,7 @@
       <Form-item class="btngroup">
         <Button type="primary" @click="handleSubmit('formValidate')" :loading="loading">下一步</Button>
         <!-- <Button type="primary" @click="" style="margin-left:60px;">修改</Button> -->
-        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left:60px;">清空</Button> </Form-item>
+        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left:60px;">清空表单</Button> </Form-item>
     </Form>
     <!-- <form action="/node/api/upload" method="post" enctype="multipart/form-data">
                               <input type="file" name="file" />
@@ -140,7 +142,7 @@
           others: '', // 其他职能工作情况
           filepath: [],
           imgpath: [],
-          // remarks: '' // 备注
+          researchexp: '' // 已教研说明
         },
         show: false,
         status: '未教研',
@@ -419,6 +421,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    margin-bottom:122px;
   }
 
   .result-title {

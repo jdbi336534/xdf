@@ -51,9 +51,9 @@ const DirectorSchema = new Schema({
     imgpath: {
         type: Array
     }, // 图片路径
-    // remarks: {
-    //     type: String
-    // }, // 备注
+    researchexp: {
+        type: String
+    }, // 已教研说明
     username: {
         type: String
     },
@@ -65,11 +65,11 @@ const DirectorSchema = new Schema({
 //  {
 //     versionKey: false // 不想数据库存储_v字段
 // }
-DirectorSchema.pre('save', function (next) {
-    var now = new Date();
-    this.create_time = now;
-    next();
-});
+// DirectorSchema.pre('save', function (next) {
+//     var now = new Date();
+//     this.create_time = now;
+//     next();
+// });
 
 module.exports = {
     Director: mongoose.model('Director', DirectorSchema)

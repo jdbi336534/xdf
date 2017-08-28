@@ -29,10 +29,10 @@ const Save = async(ctx) => {
     let notresearchreason = ctx.request.body.notresearchreason;
     let filepath = ctx.request.body.filepath;
     let imgpath = ctx.request.body.imgpath;
-    // let remarks = ctx.request.body.remarks;
+    let researchexp = ctx.request.body.researchexp;
     let username = ctx.cookies.get("xdf_user");
     // 可以进行相关的验证
-    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, username);
+    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username);
     console.log('doc', doc);
     if (doc) {
         ctx.body = {
@@ -73,8 +73,28 @@ const FindByDate = async(ctx) => {
             msg:doc
         }
     }
-}
+};
+const getAssistantList = async(ctx) => {
+    let page =parseInt(ctx.request.body.page);
+    let size =parseInt(ctx.request.body.size);    
+    // let start = new Date(ctxstart);
+    // let end = new Date(ctxend);
+    // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
+    // console.log(end,moment(end).format('YYYY-MM-DD HH:mm:ss'));
+    let doc = await $Director.findAssistantList(page, size);
+    if (doc) {
+        doc.code=200;
+        ctx.body = doc;
+    }else{
+        ctx.body={
+            code:500,
+            msg:doc
+        }
+    }
+};
+
 module.exports = {
     Save,
-    FindByDate
+    FindByDate,
+    getAssistantList
 };

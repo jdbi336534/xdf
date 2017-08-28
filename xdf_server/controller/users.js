@@ -42,38 +42,38 @@ const Login = async(ctx) => {
                 resolve();
             });
         });
-        var data = [{
-                "campus": "刘家窑中心",
-                "assistant": "王昕烨",
-                "teacher": "孟男",
-                "student": "连振伟",
-                "isrenew": "否",
-                "measures": "还未上课"
-            },
-            {
-                "campus": "通州梨园中心",
-                "assistant": "王昕烨",
-                "teacher": "李江琴",
-                "student": "张雨姿",
-                "isrenew": "否",
-                "measures": "还未上课"
-            },
-            {
-                "campus": "刘家窑中心",
-                "assistant": "王昕烨",
-                "teacher": "李仕香",
-                "student": "闫皓博",
-                "isrenew": "否",
-                "measures": "还未上课"
-            }
-        ];
-        //用数据源(对象)data渲染Excel模板
-        ejsExcel.renderExcel(exlBuf, data).then(function (exlBuf2) {
-            fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
-            console.log("生成助理主管四折标课统计.xlsx成功！");
-        }).catch(function (err) {
-            console.error(err);
-        });
+        // var data = [{
+        //         "campus": "刘家窑中心",
+        //         "assistant": "王昕烨",
+        //         "teacher": "孟男",
+        //         "student": "连振伟",
+        //         "isrenew": "否",
+        //         "measures": "还未上课"
+        //     },
+        //     {
+        //         "campus": "通州梨园中心",
+        //         "assistant": "王昕烨",
+        //         "teacher": "李江琴",
+        //         "student": "张雨姿",
+        //         "isrenew": "否",
+        //         "measures": "还未上课"
+        //     },
+        //     {
+        //         "campus": "刘家窑中心",
+        //         "assistant": "王昕烨",
+        //         "teacher": "李仕香",
+        //         "student": "闫皓博",
+        //         "isrenew": "否",
+        //         "measures": "还未上课"
+        //     }
+        // ];
+        // //用数据源(对象)data渲染Excel模板
+        // ejsExcel.renderExcel(exlBuf, data).then(function (exlBuf2) {
+        //     fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
+        //     console.log("生成助理主管四折标课统计.xlsx成功！");
+        // }).catch(function (err) {
+        //     console.error(err);
+        // });
         ctx.status = 200;
         // maxAge单位是毫秒 3600*n，过期时间为n小时
         ctx.cookies.set("token", token);
@@ -85,7 +85,7 @@ const Login = async(ctx) => {
             msg: '登录成功！',
             username,
             name: doc.name,
-            token, //登录成功要创建一个新的token,应该存入数据库
+            //token, //登录成功要创建一个新的token,应该存入数据库
             create_time: doc.create_time
         };
     }

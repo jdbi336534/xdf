@@ -39,8 +39,14 @@ export async function basicinfo(params) {
     body: qs.stringify(params)
   });
 }
-
 // get获取地域表数据
 export async function getuser(params) {
   return request(`${prefix}/api/user`, getparams);
+}
+// 助理主管提交报告列表查询
+export async function getAssistantList(params) {
+  return request(`${prefix}/api/getAssistantList`, {
+    ...postparams,
+    body: qs.stringify(params)
+  });
 }
