@@ -31,8 +31,9 @@ const Save = async(ctx) => {
     let imgpath = ctx.request.body.imgpath;
     let researchexp = ctx.request.body.researchexp;
     let username = ctx.cookies.get("xdf_user");
+    let name = ctx.cookies.get("xdf_name");
     // 可以进行相关的验证
-    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username);
+    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username, name);
     console.log('doc', doc);
     if (doc) {
         ctx.body = {

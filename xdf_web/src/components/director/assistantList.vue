@@ -80,7 +80,8 @@
           name: '周小伟',
           age: 26,
           address: '深圳市南山区深南大道'
-        }]
+        }],
+        tableData: []
       }
     },
     components: {
@@ -91,11 +92,20 @@
     },
     methods: {
       async getList(page, size) {
-        let {data} = await getAssistantList({
-          page,
-          size
-        });
-        console.log(data);
+        try {
+          let {
+            data
+          } = await getAssistantList({
+            page,
+            size
+          });
+          if (data.code !== 200) {
+            throw new Error(data.msg);
+          }
+          this.tableData = data.data;
+        } catch (err) {
+          this.$Message.error(err.message);
+        }
       }
     }
   };

@@ -1,6 +1,6 @@
 var Director = require('../../models/director').Director;
 // 保存主管提交的信息
-exports.newAndSave = (prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, researchexp, username) => {
+exports.newAndSave = (prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, researchexp, username, name) => {
     var director = new Director();
     director.prescheduling = prescheduling; // 本月预排
     director.carryover = carryover; // 本月结转
@@ -20,6 +20,9 @@ exports.newAndSave = (prescheduling, carryover, Q1prescheduling, Q1carryover, ta
     director.imgpath = imgpath; // 其他职能工作情况
     director.researchexp = researchexp; // 已教研说明
     director.username = username;
+    if(name){
+        director.name=decodeURI(name);
+    }
     return new Promise((resolve, reject) => {
         director.save((err, doc) => {
             if (err) {
