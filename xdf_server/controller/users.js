@@ -21,7 +21,6 @@ const Login = async(ctx) => {
     //拿到账号和密码
     let username = ctx.request.body.username;
     let password = sha1(ctx.request.body.password);
-
     let doc = await $User.findUser(username);
     if (!doc) {
         // console.log('检查到用户名不存在');
@@ -42,49 +41,19 @@ const Login = async(ctx) => {
                 resolve();
             });
         });
-        // var data = [{
-        //         "campus": "刘家窑中心",
-        //         "assistant": "王昕烨",
-        //         "teacher": "孟男",
-        //         "student": "连振伟",
-        //         "isrenew": "否",
-        //         "measures": "还未上课"
-        //     },
-        //     {
-        //         "campus": "通州梨园中心",
-        //         "assistant": "王昕烨",
-        //         "teacher": "李江琴",
-        //         "student": "张雨姿",
-        //         "isrenew": "否",
-        //         "measures": "还未上课"
-        //     },
-        //     {
-        //         "campus": "刘家窑中心",
-        //         "assistant": "王昕烨",
-        //         "teacher": "李仕香",
-        //         "student": "闫皓博",
-        //         "isrenew": "否",
-        //         "measures": "还未上课"
-        //     }
-        // ];
-        // //用数据源(对象)data渲染Excel模板
-        // ejsExcel.renderExcel(exlBuf, data).then(function (exlBuf2) {
-        //     fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
-        //     console.log("生成助理主管四折标课统计.xlsx成功！");
-        // }).catch(function (err) {
-        //     console.error(err);
-        // });
         ctx.status = 200;
         // maxAge单位是毫秒 3600*n，过期时间为n小时
         ctx.cookies.set("token", token);
         ctx.cookies.set("xdf_user", username);
         ctx.cookies.set("xdf_name", encodeURI(doc.name));
+        ctx.cookies.set("xdf_subject", encodeURI(doc.subject));
 
         ctx.body = {
             code: 200,
             msg: '登录成功！',
             username,
             name: doc.name,
+            subject: doc.subject,
             //token, //登录成功要创建一个新的token,应该存入数据库
             create_time: doc.create_time
         };
@@ -94,7 +63,9 @@ const Login = async(ctx) => {
 const Reg = async(ctx) => {
     let username = ctx.request.body.username;
     let password = sha1(ctx.request.body.password); //加密
-    let name = '测试用户';
+    let name = ctx.request.body.name;
+    let subject = ctx.request.body.subject;
+    let role = ctx.request.body.role;
     let token = createToken(username); //创建token并存入数据库
     let doc = await $User.findUser(username);
     if (doc) {
@@ -104,7 +75,7 @@ const Reg = async(ctx) => {
             msg: '用户名已存在'
         };
     } else {
-        let result = await $User.registerUser(username, password, name, token);
+        let result = await $User.registerUser(username, password, subject, role, name, token);
         if (result) {
             ctx.status = 200;
             ctx.body = {
@@ -168,8 +139,8 @@ const Upload = (ctx) => {
         data: collectionarr,
         origionname: ctx.req.file.originalname,
         filename: ctx.req.file.filename,
-         // 去掉路径中的public字段
-        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public","")
+        // 去掉路径中的public字段
+        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public", "")
     }
 }
 
@@ -183,7 +154,7 @@ const Fileupload = (ctx) => {
         origionname: ctx.req.file.originalname,
         filename: ctx.req.file.filename,
         // 去掉路径中的public字段
-        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public","")
+        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public", "")
     }
 }
 

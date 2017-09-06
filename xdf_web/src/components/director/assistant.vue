@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Inputform v-show="step===1" ref="basicinfo" @commit="commitinfo" />
-    <Course v-show="step===2" ref="excelinfo" @commitexcel="commitexcel" /> </div>
+    <Inputform v-if="step===1" ref="basicinfo" @commit="commitinfo" />
+    <Course v-if="step===2" ref="excelinfo" @commitexcel="commitexcel" /> </div>
 </template>
 <script>
   import {
@@ -24,7 +24,7 @@
     },
     data() {
       return {
-        step: 1
+        step: 2
       }
     },
     created() {
@@ -52,8 +52,7 @@
         }).then(res => {
           if (res.data.code === 200) {
             this.$refs.excelinfo.loading = false;
-            // 进入到最后一步
-            // this.step = 3;
+            this.$Message.success('保存成功！');
           }
         }).catch(err => {
           this.$refs.excelinfo.loading = false;

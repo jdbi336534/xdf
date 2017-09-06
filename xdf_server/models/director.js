@@ -4,61 +4,84 @@ var ObjectId = Schema.ObjectId;
 //声明用户schema
 const DirectorSchema = new Schema({
     prescheduling: {
-        type: Number
+        type: Number,
+        default: 0
     }, // 本月预排
     carryover: {
-        type: Number
+        type: Number,
+        default: 0
     }, // 本月结转
     Q1prescheduling: {
-        type: Number
+        type: Number,
+        default: 0
     }, // Q1预排
     Q1carryover: {
-        type: Number
+        type: Number,
+        default: 0
     }, // Q1结转
     takesteps: {
-        type: String
+        type: String,
+        default: ''
     }, // 采取措施和情况
     prespeed: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转速度
     speed: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转速度
     reason: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转原因
     takemeasures: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转采取措施
     firstfive: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转前五名
     lastfive: {
-        type: String
+        type: String,
+        default: ''
     }, // 结转后五名
     others: {
-        type: String
+        type: String,
+        default: ''
     }, // 其他职能工作情况
     isresearch: {
-        type: String
+        type: String,
+        default: ''
     }, // 是否进行教研
     notresearchreason: {
-        type: String
+        type: String,
+        default: ''
     }, // 未教研原因
     filepath: {
-        type: Array
+        type: Array,
+        default: []
     }, // 文件路径
     imgpath: {
-        type: Array
+        type: Array,
+        default: []
     }, // 图片路径
     researchexp: {
-        type: String
+        type: String,
+        default: ''
     }, // 已教研说明
     username: {
-        type: String
+        type: String,
+        default: ''
     },
     name: {
-        type: String
+        type: String,
+        default: ''
+    },
+    subject: {
+        type: String,
+        default: ''
     },
     create_time: {
         type: Date,

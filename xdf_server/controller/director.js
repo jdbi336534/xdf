@@ -32,8 +32,9 @@ const Save = async(ctx) => {
     let researchexp = ctx.request.body.researchexp;
     let username = ctx.cookies.get("xdf_user");
     let name = ctx.cookies.get("xdf_name");
+    let subject = ctx.cookies.get("xdf_subject");
     // 可以进行相关的验证
-    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username, name);
+    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username, name, subject);
     console.log('doc', doc);
     if (doc) {
         ctx.body = {
@@ -57,10 +58,10 @@ const FindByDate = async(ctx) => {
     // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
     // console.log(end,moment(end).format('YYYY-MM-DD HH:mm:ss'));
     let doc = await $Director.findBydate(start, end);
-    for(let item in doc){
-        console.log(moment(item.create_time).format('YYYY-MM-DD HH:mm:ss'));
-        item.create_time=moment(item.create_time).format('YYYY-MM-DD HH:mm:ss');
-    }
+    // for(let item in doc){
+    //     console.log(moment(item.create_time).format('YYYY-MM-DD HH:mm:ss'));
+    //     item.create_time=moment(item.create_time).format('YYYY-MM-DD HH:mm:ss');
+    // }
     if (doc) {
         ctx.body = {
             code: 200,

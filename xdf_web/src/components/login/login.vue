@@ -70,7 +70,7 @@
                 setSessionStore('DisplayName', data.name);
                 this.$Message.success(data.msg);
                 this.$router.push({
-                  path: '/report/assdirector'
+                  path: '/report/assistant'
                 });
               } else if (data.code === 400) {
                 this.$Message.error(data.msg);

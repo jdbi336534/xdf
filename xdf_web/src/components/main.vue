@@ -71,7 +71,8 @@
     justify-content: center;
     align-items: center;
   }
-   .center-content {
+
+  .center-content {
     width: calc(100% - 20px);
     height: calc(100% - 20px);
     color: #000;
@@ -90,6 +91,7 @@
 </style>
 <template>
   <div class="director-layout">
+    <h1 class="hello"></h1>
     <Menu mode="horizontal" theme="dark" active-name="1">
       <div class="layout-logo"> <img class="logoimg" src="http://images.xdf.cn/cms20150819/img/images/logo.png"></img>
       </div>

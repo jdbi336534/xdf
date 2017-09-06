@@ -4,27 +4,26 @@
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120" class="form">
       <Row>
         <Col span="12">
-        <Form-item label="本月预排完成率" prop="prescheduling">
-          <!-- <Input v-model="formValidate.name" placeholder="请输入姓名"></Input> --><label>
-            <Input style="width:120px" v-model="formValidate.prescheduling"></Input> %</label> </Form-item>
+        <Form-item label="本月预排完成率" prop="prescheduling"> <label>
+            <Input style="width:120px" v-model="formValidate.prescheduling" number></Input> %</label> </Form-item>
         </Col>
         <Col span="12">
         <Form-item label="本月结转完成率" prop="carryover"> <label>
-            <Input style="width:120px" v-model="formValidate.carryover"></Input> %</label> </Form-item>
+            <Input style="width:120px" v-model="formValidate.carryover" number></Input> %</label> </Form-item>
         </Col>
       </Row>
       <Row>
         <Col span="12">
         <Form-item label="Q1预排完成率" prop="Q1prescheduling"> <label>
-            <Input style="width:120px" v-model="formValidate.Q1prescheduling"></Input> %</label> </Form-item>
+            <Input style="width:120px" v-model="formValidate.Q1prescheduling" number></Input> %</label> </Form-item>
         </Col>
         <Col span="12">
         <Form-item label="Q1结转完成率" prop="Q1carryover"> <label>
-            <Input style="width:120px" v-model="formValidate.Q1carryover"></Input> %</label> </Form-item>
+            <Input style="width:120px" v-model="formValidate.Q1carryover" number></Input> %</label> </Form-item>
         </Col>
       </Row>
       <Form-item label="采取措施和情况" prop="takesteps">
-        <Input v-model="formValidate.takesteps" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+        <Input v-model="formValidate.takesteps" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入采取的措施和情况"></Input>
       </Form-item>
       <Form-item label="预排完成速度" prop="prespeed">
         <Radio-group v-model="formValidate.prespeed">
@@ -41,29 +40,20 @@
         </Radio-group>
       </Form-item>
       <Form-item label="结转原因分析" prop="reason">
-        <Input v-model="formValidate.reason" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+        <Input v-model="formValidate.reason" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入结转原因"></Input>
       </Form-item>
       <Form-item label="后续采取措施" prop="takemeasures">
-        <Input v-model="formValidate.takemeasures" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+        <Input v-model="formValidate.takemeasures" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入后续采取措施"></Input>
       </Form-item>
       <Form-item label="结转前五名" prop="firstfive">
-        <Input v-model="formValidate.firstfive" placeholder="请填写姓名并用逗号隔开"></Input>
+        <Input v-model="formValidate.firstfive" placeholder="请填写姓名并用逗号隔开，例如：小明，大明，李明"></Input>
       </Form-item>
       <Form-item label="结转后五名" prop="lastfive">
-        <Input v-model="formValidate.lastfive" placeholder="请填写姓名并用逗号隔开"></Input>
+        <Input v-model="formValidate.lastfive" placeholder="请填写姓名并用逗号隔开，例如：小明，大明，李明"></Input>
       </Form-item>
-      <!-- <Form-item label="教研情况" prop="research">
-                                  <Input v-model="formValidate.research" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
-                                </Form-item> -->
-      <!-- <Form-item label="产品研发情况" prop="development">
-                                  <Input v-model="formValidate.development" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
-                                </Form-item> -->
       <Form-item label="其他工作情况" prop="others">
-        <Input v-model="formValidate.others" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
+        <Input v-model="formValidate.others" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入其他工作情况，没有则输入无"></Input>
       </Form-item>
-      <!-- <Form-item label="备注" prop="remarks">
-                                  <Input v-model="formValidate.remarks" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder=""></Input>
-                                </Form-item> -->
       <Form-item label="是否进行教研" prop="isresearch"> <label>
           <Select v-model="formValidate.isresearch" @on-change="selectchange" style="width:200px">
             <Option v-for="item in isresearchList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -72,7 +62,7 @@
       <div class="operation" v-show="show">
         <Alert type="warning" show-icon>注意：三种上传方式可任选一种(二选一)或者多种</Alert>
         <p class="result-title">已教研说明：</p>
-         <Input v-model="formValidate.researchexp" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="若无图片或文件上传，请填写"></Input>
+        <Input v-model="formValidate.researchexp" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="若无图片或文件上传，请填写教研说明"></Input>
         <p class="result-title">pdf或word上传处：</p>
         <div class="upload">
           <Upload type="drag" action="/node/api/researchfile" :on-success="onfilesuccess" :before-upload="fileBeforeUpload"
@@ -111,18 +101,91 @@
       </Form-item>
       <Form-item class="btngroup">
         <Button type="primary" @click="handleSubmit('formValidate')" :loading="loading">下一步</Button>
-        <!-- <Button type="primary" @click="" style="margin-left:60px;">修改</Button> -->
         <Button type="ghost" @click="handleReset('formValidate')" style="margin-left:60px;">清空表单</Button> </Form-item>
     </Form>
-    <!-- <form action="/node/api/upload" method="post" enctype="multipart/form-data">
-                              <input type="file" name="file" />
-                              <input type="submit" value="ok" />
-                            </form> -->
   </div>
 </template>
 <script>
   export default {
     data() {
+      const valiPrescheduling = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('预排不能为空'));
+        }
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error('预排必须在0-100之间'));
+          } else {
+            callback();
+          }
+        }
+      };
+      const valiCarryover = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('结转不能为空'));
+        }
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error('结转必须在0-100之间'));
+          } else {
+            callback();
+          }
+        }
+      };
+      const valiQ1prescheduling = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('Q1预排不能为空'));
+        }
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error('Q1预排必须在0-100之间'));
+          } else {
+            callback();
+          }
+        }
+      };
+      const valiQ1carryover = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('Q1结转不能为空'));
+        }
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value < 0 || value > 100) {
+            callback(new Error('Q1结转必须在0-100之间'));
+          } else {
+            callback();
+          }
+        }
+      };
+      const valiFirstfive = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入结转前五名'));
+        } else {
+          if (!/^[\u4e00-\u9fa5]+(\uff0c[\u4e00-\u9fa5]+)*$/.test(value)) {
+            callback(new Error('姓名之间请用中文逗号隔开,首尾不能有逗号'));
+          } else {
+            callback();
+          }
+        }
+      };
+      const valiLastfive = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入结转后五名'));
+        } else {
+          if (!/^[\u4e00-\u9fa5]+(\uff0c[\u4e00-\u9fa5]+)*$/.test(value)) {
+            callback(new Error('姓名之间请用中文逗号隔开,首尾不能有逗号'));
+          } else {
+            callback();
+          }
+        }
+      };
       return {
         loading: false,
         formValidate: {
@@ -161,21 +224,23 @@
         ruleValidate: {
           prescheduling: [{
             required: true,
-            message: '本月预排不能为空',
+            validator: valiPrescheduling,
             trigger: 'blur'
           }], // 本月预排
           carryover: [{
             required: true,
-            message: '本月结转不能为空',
+            validator: valiCarryover,
             trigger: 'blur'
           }], // 本月结转
           Q1prescheduling: [{
             required: true,
+            validator: valiQ1prescheduling,
             message: 'Q1预排不能为空',
             trigger: 'blur'
           }], // Q1预排
           Q1carryover: [{
             required: true,
+            validator: valiQ1carryover,
             message: ' Q1结转不能为空',
             trigger: 'blur'
           }], // Q1结转
@@ -218,7 +283,7 @@
           }], // 后续采取措施
           firstfive: [{
             required: true,
-            message: '结转前五名不能为空',
+            validator: valiFirstfive,
             trigger: 'blur'
           }, {
             max: 50,
@@ -227,31 +292,13 @@
           }], // 结转前五名
           lastfive: [{
             required: true,
-            message: '结转后五名不能为空',
+            validator: valiLastfive,
             trigger: 'blur'
           }, {
             max: 50,
             message: '字数不能超过50个字',
             trigger: 'blur'
           }], // 结转后五名
-          research: [{
-            required: true,
-            message: '教研情况不能为空',
-            trigger: 'blur'
-          }, {
-            max: 500,
-            message: '字数不能超过500个字',
-            trigger: 'blur'
-          }], // 教研情况
-          development: [{
-            required: true,
-            message: '研发情况不能为空',
-            trigger: 'blur'
-          }, {
-            max: 500,
-            message: '字数不能超过500个字',
-            trigger: 'blur'
-          }], // 研发情况
           others: [{
             required: true,
             message: '其他职能工作情况不能为空',
@@ -261,13 +308,6 @@
             message: '字数不能超过500个字',
             trigger: 'blur'
           }], // 其他职能工作情况
-          remarks: [{
-            type: 'string',
-            min: 0,
-            max: 200,
-            message: '备注字数限制在0到200字',
-            trigger: 'blur'
-          }], // 备注
           notresearchreason: [{
             required: true,
             message: '未教研说明不能为空',
@@ -276,7 +316,7 @@
             max: 500,
             message: '字数不能超过500个字',
             trigger: 'blur'
-          }], // 本月预排
+          }], // 未教研说明
           isresearch: [{
             required: true,
             message: '是否教研必填',
@@ -303,6 +343,9 @@
       },
       handleReset(name) {
         this.$refs[name].resetFields();
+        this.formValidate.filepath = [];
+        this.formValidate.imgpath = [];
+        this.formValidate.researchexp = '';
       },
       selectchange(val) {
         if (val === 'true') {
@@ -421,7 +464,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-bottom:122px;
+    margin-bottom: 122px;
   }
 
   .result-title {

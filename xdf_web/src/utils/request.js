@@ -1,4 +1,10 @@
 import './fetch-min.js';
+var baseUrl;
+if (process.env.NODE_ENV === 'development') {
+  baseUrl = ''; // 这个为空就好了
+} else {
+  baseUrl = ''; // 这个设置成后台的域名
+}
 
 function parseJSON(response) {
   return response.json();
@@ -22,7 +28,7 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  return fetch(baseUrl + url, options)
     .then(checkStatus)
     .then(parseJSON)
     .then((data) => ({

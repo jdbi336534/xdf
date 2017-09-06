@@ -18,6 +18,13 @@ export async function login(params) {
     body: qs.stringify(params)
   });
 }
+// 注册
+export async function register(params) {
+  return request(`${prefix}/api/register`, {
+    ...postparams,
+    body: qs.stringify(params)
+  });
+}
 // 提交汇报统计表
 export async function directorsave(params) {
   return request(`${prefix}/api/directorsave`, {

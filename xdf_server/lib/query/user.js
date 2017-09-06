@@ -39,10 +39,12 @@ exports.delUser = (id) => {
     });
 };
 //注册用户
-exports.registerUser = (username, password, name, token) => {
+exports.registerUser = (username, password, subject, role, name, token) => {
     let user = new User({
         username,
         password,
+        subject,
+        role,
         name,
         token
     });
