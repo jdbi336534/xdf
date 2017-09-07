@@ -5,12 +5,14 @@ import Vuex from 'vuex'
 import App from './App'
 import store from './store/'
 import router from './router'
+import VueCookie from 'vue-cookie'
 // import ECharts from 'vue-echarts/components/ECharts.vue'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';    // 使用 CSS
 Vue.config.productionTip = false
 Vue.use(iView);
 Vue.use(Vuex);
+Vue.use(VueCookie);
 // Vue.component('chart', ECharts)
 
 /* eslint-disable no-new */

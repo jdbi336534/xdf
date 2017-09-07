@@ -11,6 +11,13 @@ const Upload = async(ctx) => {
     let excelfilepath = ctx.request.body.filepath;
     let username = ctx.cookies.get("xdf_user");
     let name = ctx.cookies.get("xdf_name");
+    // if(!username&&!name){
+    //     ctx.body = {
+    //         code: 400,
+    //         msg: '登录超时，请重新登录！'
+    //     }
+    //     return;
+    // }
     var filepath = path.resolve(__dirname, '..');
     var obj = xlsx.parse(filepath + '/public' + excelfilepath);
     let data = obj[0].data;
@@ -39,21 +46,18 @@ const Upload = async(ctx) => {
     let doc = await $Renewals.isSave(username, start, end);
     if (doc) {
         if (doc.length > 0) {
-            ctx.status = 400;
             ctx.body = {
                 code: 400,
-                msg: '请不要重复提交！'
+                msg: '本月你已提交，请不要重复提交！'
             }
         } else {
             let result = await $Renewals.newAndSave(username, name, collectionarr);
             if (!result) {
-                ctx.status = 500;
                 ctx.body = {
                     code: 500,
                     msg: '服务器发生错误，保存失败！'
                 }
             } else {
-                ctx.status = 200;
                 ctx.body = {
                     code: 200,
                     msg: '保存成功！'

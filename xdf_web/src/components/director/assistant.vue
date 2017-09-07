@@ -24,7 +24,7 @@
     },
     data() {
       return {
-        step: 2
+        step: 1
       }
     },
     created() {
@@ -39,6 +39,8 @@
             this.$refs.basicinfo.loading = false;
             // 进入到第二步
             this.step = 2;
+          } else {
+            throw new Error(res.data.msg);
           }
         }).catch(err => {
           this.$refs.basicinfo.loading = false;
@@ -53,6 +55,9 @@
           if (res.data.code === 200) {
             this.$refs.excelinfo.loading = false;
             this.$Message.success('保存成功！');
+            // 然后跳转到别的页面
+          } else {
+            throw new Error(res.data.msg);
           }
         }).catch(err => {
           this.$refs.excelinfo.loading = false;

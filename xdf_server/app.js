@@ -29,13 +29,31 @@ app.use(views(__dirname + '/views', {
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
-  await next()
-  const ms = new Date() - start;
+  // try {
+    await next();
+    const ms = new Date() - start;
+    console.log(`${ctx.method}-*-${ctx.url} - ${ms}ms`);
+  // } catch (err) {
+  // }
   //  const ckies = ctx.cookies.get('token');
-  console.log(`${ctx.method}-*-${ctx.url} - ${ms}ms`);
-})
-// serve files from ./public
+});
 
+// app.use(async (ctx, next) => {
+//   try {
+//     await next();
+//   } catch (err) {
+//     ctx.body = {
+//       code: err.status,
+//       msg: err.message
+//     }
+//     throw err;
+//   }
+// })
+// // serve files from ./public
+// ctx.throw(422, '用户找到');
+// const err = new Error('yshu');
+// err.status = 422;
+// throw err;
 // app.use(serve(path.join(__dirname, '/public')));
 // routes
 app.use(index.routes(), index.allowedMethods())

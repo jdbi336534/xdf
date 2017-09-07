@@ -10,48 +10,52 @@
     </div>
     <div style="padding: 20px;padding-top:0;">
       <card>
-        <p slot="title">查询信息</p>
+        <p slot="title">汇报查询</p>
         <div slot="body">
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <FormItem label="助理主管" prop="name">
-              <Input v-model="formValidate.name" placeholder="请输入助理主管姓名"></Input>
-            </FormItem>
-            <FormItem label="学科组" prop="city">
-              <Select v-model="formValidate.city" placeholder="请选择学科组">
+            <Row>
+              <Col span="6">
+              <FormItem label="助理主管" prop="name" :show-message="false">
+                <Input size="small" v-model="formValidate.name" placeholder="请输入助理主管姓名"></Input>
+              </FormItem>
+              </Col>
+              <Col span="6">
+              <FormItem label="学科组">
+                <Select size="small" v-model="formValidate.subject" placeholder="请选择学科组">
                 <Option value="beijing">北京市</Option>
                 <Option value="shanghai">上海市</Option>
                 <Option value="shenzhen">深圳市</Option>
             </Select> </FormItem>
-            <FormItem label="预排速度" prop="city">
-              <Select v-model="formValidate.city" placeholder="请选择预排速度">
-                <Option value="beijing">北京市</Option>
-                <Option value="shanghai">上海市</Option>
-                <Option value="shenzhen">深圳市</Option>
+              </Col>
+              <Col span="6">
+              <FormItem label="预排速度">
+                <Select size="small" v-model="formValidate.prespeed" placeholder="请选择预排速度">
+                <Option value="fast">较快</Option>
+                <Option value="normal">正常</Option>
+                <Option value="slow">较慢</Option>
             </Select> </FormItem>
-            <FormItem label="结转速度" prop="city">
-              <Select v-model="formValidate.city" placeholder="请选择结转速度">
-                <Option value="beijing">北京市</Option>
-                <Option value="shanghai">上海市</Option>
-                <Option value="shenzhen">深圳市</Option>
+              </Col>
+              <Col span="6">
+              <FormItem label="结转速度">
+                <Select size="small" v-model="formValidate.speed" placeholder="请选择结转速度">
+                <Option value="fast">较快</Option>
+                <Option value="normal">正常</Option>
+                <Option value="slow">较慢</Option>
             </Select> </FormItem>
-            <FormItem label="选择日期">
-              <Row>
-                <Col span="11">
-                <FormItem prop="date">
-                  <DatePicker type="date" placeholder="选择日期" v-model="formValidate.date"></DatePicker>
-                </FormItem>
-                </Col>
-                <Col span="2" style="text-align: center">-</Col>
-                <Col span="11">
-                <FormItem prop="time">
-                  <TimePicker type="time" placeholder="选择时间" v-model="formValidate.time"></TimePicker>
-                </FormItem>
-                </Col>
-              </Row>
-            </FormItem>
-            <FormItem>
-              <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-              <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> </FormItem>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="20">
+              <FormItem label="选择日期">
+                <DatePicker size="small" type="daterange" format="yyyy-MM-dd" v-model="formValidate.date" placeholder="选择日期"
+                  style="width: 250px"></DatePicker>
+              </FormItem>
+              </Col>
+              <Col span="4">
+              <FormItem>
+                <Button type="primary" size="small" @click="handleSubmit('formValidate')">提交</Button> </FormItem>
+              </Col>
+            </Row>
           </Form>
         </div>
       </card>
@@ -64,6 +68,7 @@
         <Table height="560" :columns="columns1" :data="tableData"></Table>
       </div>
     </div>
+    <Page :total="40" size="small" show-total show-sizer></Page>
   </div>
 </template>
 <script>
@@ -74,6 +79,17 @@
   import moment from 'moment';
   export default {
     data() {
+      const valiName = (rule, value, callback) => {
+        if (value === '') {
+          callback();
+        } else {
+          if (!/^[\u4e00-\u9fa5_a-zA-Z0-9_]{0,10}$/.test(value)) {
+            callback(new Error('请输入正确的姓名'));
+          } else {
+            callback();
+          }
+        }
+      };
       return {
         i: 0,
         columns1: [{
@@ -111,7 +127,15 @@
           key: 'prespeed',
           render: (h, params) => {
             if (params.row.prespeed === 'fast') {
-              return '较快';
+              return h('span', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                style: {
+                  color: 'green'
+                }
+              }, '较快');
             } else if (params.row.prespeed === 'normal') {
               return '正常';
             } else if (params.row.prespeed === 'slow') {
@@ -131,7 +155,15 @@
           key: 'speed',
           render: (h, params) => {
             if (params.row.speed === 'fast') {
-              return '较快';
+              return h('span', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                style: {
+                  color: 'green'
+                }
+              }, '较快');
             } else if (params.row.speed === 'normal') {
               return '正常';
             } else if (params.row.speed === 'slow') {
@@ -180,71 +212,14 @@
         tableData: [],
         formValidate: {
           name: '',
-          mail: '',
-          city: '',
-          gender: '',
-          interest: [],
-          date: '',
-          time: '',
-          desc: ''
+          subject: '',
+          prespeed: '',
+          speed: '',
+          date: [],
         },
         ruleValidate: {
           name: [{
-            required: true,
-            message: '姓名不能为空',
-            trigger: 'blur'
-          }],
-          mail: [{
-            required: true,
-            message: '邮箱不能为空',
-            trigger: 'blur'
-          }, {
-            type: 'email',
-            message: '邮箱格式不正确',
-            trigger: 'blur'
-          }],
-          city: [{
-            required: true,
-            message: '请选择城市',
-            trigger: 'change'
-          }],
-          gender: [{
-            required: true,
-            message: '请选择性别',
-            trigger: 'change'
-          }],
-          interest: [{
-            required: true,
-            type: 'array',
-            min: 1,
-            message: '至少选择一个爱好',
-            trigger: 'change'
-          }, {
-            type: 'array',
-            max: 2,
-            message: '最多选择两个爱好',
-            trigger: 'change'
-          }],
-          date: [{
-            required: true,
-            type: 'date',
-            message: '请选择日期',
-            trigger: 'change'
-          }],
-          time: [{
-            required: true,
-            type: 'date',
-            message: '请选择时间',
-            trigger: 'change'
-          }],
-          desc: [{
-            required: true,
-            message: '请输入个人介绍',
-            trigger: 'blur'
-          }, {
-            type: 'string',
-            min: 20,
-            message: '介绍不能少于20字',
+            validator: valiName,
             trigger: 'blur'
           }]
         }
@@ -276,20 +251,19 @@
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('提交成功!');
-          } else {
-            this.$Message.error('表单验证失败!');
+            console.log(this.formValidate);
           }
         })
-      },
-      handleReset(name) {
-        this.$refs[name].resetFields();
       }
     }
   };
 
 </script>
 <style lang="scss" scoped>
-  .assistantList {}
+  .assistantList {
+    .ivu-form-item {
+      margin-bottom: 10px;
+    }
+  }
 
 </style>

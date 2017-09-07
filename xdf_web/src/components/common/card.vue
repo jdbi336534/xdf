@@ -4,7 +4,7 @@
       <div style="border-bottom:1px solid rgb(221, 222, 225);padding:10px;font-weight:600;">
         <slot name="title"></slot>
       </div>
-      <div style="padding:10px">
+      <div style="padding:20px">
         <slot name="body"></slot>
       </div>
     </div>
