@@ -3,14 +3,14 @@
     <div style="padding:20px;">
       <Breadcrumb>
         <BreadcrumbItem>
-          <Icon type="ios-home-outline"></Icon> 工作情况 </BreadcrumbItem>
+          <Icon type="ios-home-outline"></Icon> 平台管理 </BreadcrumbItem>
         <BreadcrumbItem>
-          <Icon type="social-buffer-outline"></Icon> 助理主管汇报结果 </BreadcrumbItem>
+          <Icon type="social-buffer-outline"></Icon> 用户管理 </BreadcrumbItem>
       </Breadcrumb>
     </div>
     <div style="padding: 20px;padding-top:0;">
       <card>
-        <p slot="title">汇报查询</p>
+        <p slot="title">用户查询</p>
         <div slot="body">
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <Row>
@@ -63,7 +63,7 @@
     <div class="tableList">
       <div class="tablecontent">
         <div style="padding:10px;font-weight:600;border-left:1px solid rgb(221, 222, 225);border-right:1px solid rgb(221, 222, 225);">
-          <p>汇报列表</p>
+          <p>用户列表</p>
         </div>
         <Table :columns="columns1" size="small" :data="tableData" class="vu-table"></Table>
         <!-- <el-table size="small" :data="tableData" height="100%" border style="width: 100%">

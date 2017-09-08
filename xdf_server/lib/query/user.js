@@ -24,6 +24,34 @@ exports.findAllUsers = () => {
         });
     });
 };
+//分页获取助理主管提交的数据
+exports.findAssistantList = (page, size) => {
+    return new Promise((resolve, reject) => {
+        Director.count({}, (err, count) => {
+            if (err) {
+                reject(err);
+            }
+            Director.find({}, null, {
+                skip: (page - 1) * size,
+                sort: {
+                    create_time: -1
+                },
+                limit: size
+            }, (err, doc) => {
+                if (err) {
+                    reject(err);
+                }
+                let obj = {
+                    total: count,
+                    data: doc,
+                    page,
+                    size
+                }
+                resolve(obj);
+            })
+        });
+    });
+};
 //删除某个用户
 exports.delUser = (id) => {
     return new Promise((resolve, reject) => {

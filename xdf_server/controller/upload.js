@@ -5,6 +5,7 @@ const fs = require('fs');
 var storage = multer.diskStorage({
   //文件保存路径  
   destination: function (req, file, cb) {
+    // console.log(req.body);
     // 每天会生成不同的文件夹，文件夹的命名以日期命名，如20160709
     let date = new Date();
     let Y = date.getFullYear() + '';

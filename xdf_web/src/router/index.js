@@ -23,6 +23,10 @@ export default new Router({
       path: '/status/assistantList',
       name: 'assistantList',
       component: (resolve) => require(['@/components/director/assistantList.vue'], resolve)
+    }, {
+      path: '/user/manage',
+      name: 'manange',
+      component: (resolve) => require(['@/components/users/manange.vue'], resolve)
     }]
   }]
 });

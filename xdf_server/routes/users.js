@@ -14,6 +14,7 @@ router.post('/register', UserController.Reg);
 router.get('/users',UploadController.Upload);
 // 四折标课excel文件上传
 router.post('/course',Upload.single('file'), UserController.Upload);
+
 // 教研文件图片上传
 router.post('/researchfile',Upload.single('file'), UserController.Fileupload);
 // 四折标课数据保存

@@ -81,7 +81,7 @@
 
   .right-content-left {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     margin-right: 10px;
     margin-bottom: 10px;
     float: left;
@@ -127,12 +127,11 @@
               <Menu-item name="/status/director">主管汇报结果</Menu-item>
               <Menu-item name="/status/assistantList">助理主管汇报结果</Menu-item>
             </Submenu>
-            <!-- <Submenu name="3">
+             <Submenu name="user">
               <template slot="title">
-                <Icon type="ios-analytics"></Icon> 导航三 </template>
-              <Menu-item name="3-1">选项 1</Menu-item>
-              <Menu-item name="3-2">选项 2</Menu-item>
-            </Submenu> -->
+                <Icon type="ios-analytics"></Icon> 平台管理 </template>
+              <Menu-item name="/user/manage">用户管理</Menu-item>
+            </Submenu> 
           </Menu>
         </i-col>
         <i-col span="20" class="layout-content-col right-content">
