@@ -42,11 +42,35 @@ const Login = async(ctx) => {
             });
         });
         ctx.status = 200;
-        // maxAge单位是毫秒 3600*n，过期时间为n小时
-        ctx.cookies.set("token", token);
-        ctx.cookies.set("xdf_user", username);
-        ctx.cookies.set("xdf_name", encodeURI(doc.name));
-        ctx.cookies.set("xdf_subject", encodeURI(doc.subject));
+        // maxAge单位是毫秒 60 * 60 * 1000 *n，过期时间为n小时
+        ctx.cookies.set("token", token, {
+            domain: 'localhost', // 写cookie所在的域名
+            path: '/', // 写cookie所在的路径
+            maxAge: 60 * 60 * 1000 * 24, // 24小时后失效
+            httpOnly: true, // 是否只用于http请求中获取
+            overwrite: false // 是否允许重写
+        });
+        ctx.cookies.set("xdf_user", username, {
+            domain: 'localhost', // 写cookie所在的域名
+            path: '/', // 写cookie所在的路径
+            maxAge: 60 * 60 * 1000 * 24, // 24小时后失效
+            httpOnly: true, // 是否只用于http请求中获取
+            overwrite: false // 是否允许重写
+        });
+        ctx.cookies.set("xdf_name", encodeURI(doc.name), {
+            domain: 'localhost', // 写cookie所在的域名
+            path: '/', // 写cookie所在的路径
+            maxAge: 60 * 60 * 1000 * 24, // 24小时后失效
+            httpOnly: true, // 是否只用于http请求中获取
+            overwrite: false // 是否允许重写
+        });
+        ctx.cookies.set("xdf_subject", encodeURI(doc.subject), {
+            domain: 'localhost', // 写cookie所在的域名
+            path: '/', // 写cookie所在的路径
+            maxAge: 60 * 60 * 1000 * 24, // 24小时后失效
+            httpOnly: true, // 是否只用于http请求中获取
+            overwrite: false // 是否允许重写
+        });
 
         ctx.body = {
             code: 200,

@@ -230,14 +230,35 @@
         }, {
           title: '操作',
           key: 'action',
-          width: 100,
+          width: 120,
           render: (h, params) => {
-            return h('Button', {
-              props: {
-                type: 'text',
-                size: 'small'
-              }
-            }, '查看详情');
+            return h('div', [
+              h('el-button', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    console.log(params.index, params.row);
+                  }
+                }
+              }, '查看'),
+              h('el-button', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    console.log(params.index, params.row);
+                  }
+                }
+              }, '删除')
+            ]);
           }
         }],
         tableData: [],

@@ -66,35 +66,6 @@
           <p>用户列表</p>
         </div>
         <Table :columns="columns1" size="small" :data="tableData" class="vu-table"></Table>
-        <!-- <el-table size="small" :data="tableData" height="100%" border style="width: 100%">
-            <el-table-column prop="name" label="助理主管"> </el-table-column>
-            <el-table-column prop="subject" label="学科组"> </el-table-column>
-            <el-table-column prop="prescheduling" label="本月预排">
-              <template scope="scope"> {{scope.row.prescheduling+'%'}} </template>
-            </el-table-column>
-            <el-table-column prop="carryover" label="本月结转">
-              <template scope="scope"> {{scope.row.carryover+'%'}} </template>
-            </el-table-column>
-            <el-table-column prop="Q1prescheduling" label="Q1预排">
-              <template scope="scope"> {{scope.row.Q1prescheduling+'%'}} </template>
-            </el-table-column>
-            <el-table-column prop="Q1carryover" label="Q1结转">
-              <template scope="scope"> {{scope.row.Q1carryover+'%'}} </template>
-            </el-table-column>
-            <el-table-column prop="prespeed" label="预排速度">
-              <template scope="scope"> <span style="color:red" v-if="scope.row.prespeed==='slow'">较慢</span> <span style="color:green" v-else-if="scope.row.prespeed==='fast'">较快</span>                <span v-else>正常</span> </template>
-            </el-table-column>
-            <el-table-column prop="speed" label="结转速度">
-              <template scope="scope"> <span style="color:red" v-if="scope.row.speed==='slow'">较慢</span> <span style="color:green" v-else-if="scope.row.speed==='fast'">较快</span>                <span v-else>正常</span> </template>
-            </el-table-column>
-            <el-table-column prop="isresearch" label="教研情况" :formatter="formatterIsresearch"> </el-table-column>
-            <el-table-column prop="create_time" width="120" :formatter="formatterTime" label="时间"> </el-table-column>
-            <el-table-column label="操作" width="120">
-              <template scope="scope">
-                <el-button @click.native.prevent="details(scope.row)" type="text" size="small"> 查看详情 </el-button>
-              </template>
-            </el-table-column>
-          </el-table> -->
       </div>
     </div>
     <div style="text-align:center;">
@@ -104,7 +75,8 @@
 </template>
 <script>
   import {
-    getAssistantList
+    getAssistantList,
+    register
   } from '../../services/query';
   import card from '../common/card';
   import moment from 'moment';
@@ -122,122 +94,47 @@
         }
       };
       return {
-        i: 0,
         columns1: [{
-          title: '助理主管',
+          title: '姓名',
           key: 'name'
         }, {
-          title: '学科组',
+          title: '用户名',
+          key: 'username'
+        }, {
+          title: '科目',
           key: 'subject'
-        }, {
-          title: '本月预排',
-          key: 'prescheduling',
-          render: (h, params) => {
-            return params.row.prescheduling + '%';
-          }
-        }, {
-          title: '本月结转',
-          key: 'carryover',
-          render: (h, params) => {
-            return params.row.carryover + '%';
-          }
-        }, {
-          title: 'Q1预排',
-          key: 'Q1prescheduling',
-          render: (h, params) => {
-            return params.row.Q1prescheduling + '%';
-          }
-        }, {
-          title: 'Q1结转',
-          key: 'Q1carryover',
-          render: (h, params) => {
-            return params.row.Q1carryover + '%';
-          }
-        }, {
-          title: '预排速度',
-          key: 'prespeed',
-          render: (h, params) => {
-            if (params.row.prespeed === 'fast') {
-              return h('span', {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                style: {
-                  color: 'green'
-                }
-              }, '较快');
-            } else if (params.row.prespeed === 'normal') {
-              return '正常';
-            } else if (params.row.prespeed === 'slow') {
-              return h('span', {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                style: {
-                  color: 'red'
-                }
-              }, '较慢');
-            }
-          }
-        }, {
-          title: '结转速度',
-          key: 'speed',
-          render: (h, params) => {
-            if (params.row.speed === 'fast') {
-              return h('span', {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                style: {
-                  color: 'green'
-                }
-              }, '较快');
-            } else if (params.row.speed === 'normal') {
-              return '正常';
-            } else if (params.row.speed === 'slow') {
-              return h('span', {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                style: {
-                  color: 'red'
-                }
-              }, '较慢');
-            }
-          }
-        }, {
-          title: '教研情况',
-          key: 'isresearch',
-          render: (h, params) => {
-            if (params.row.isresearch === 'false') {
-              return '未教研';
-            } else if (params.row.isresearch === 'true') {
-              return '已教研';
-            }
-          }
-        }, {
-          title: '时间',
-          key: 'create_time',
-          render: (h, params) => {
-            if (params.row.create_time) {
-              return moment(params.row.create_time).format('YYYY-MM-DD');
-            }
-          }
         }, {
           title: '操作',
           key: 'action',
-          width: 100,
+          width: 180,
           render: (h, params) => {
-            return h('Button', {
-              props: {
-                type: 'text',
-                size: 'small'
-              }
-            }, '查看详情');
+            return h('div', [
+              h('el-button', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    console.log(params.index, params.row);
+                  }
+                }
+              }, '重置密码'),
+              h('el-button', {
+                props: {
+                  type: 'text',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    console.log(params.index, params.row);
+                  }
+                }
+              }, '删除用户')
+            ]);
           }
         }],
         tableData: [],
@@ -261,6 +158,284 @@
     },
     mounted() {
       this.getList(1, 15);
+      var obj = [{
+        'name': '施艳飞',
+        'subject': '初小语文 ',
+        'username': 'shiyf',
+        'role': 0
+      }, {
+        'name': '吴尘',
+        'subject': '初小语文 ',
+        'username': 'wuc',
+        'role': 0
+      }, {
+        'name': '王漫琳',
+        'subject': '初小语文 ',
+        'username': 'wangml',
+        'role': 0
+      }, {
+        'name': '翁飞',
+        'subject': '初小语文 ',
+        'username': 'wengf',
+        'role': 0
+      }, {
+        'name': '杨雪',
+        'subject': '小学数学 ',
+        'username': 'yangx',
+        'role': 0
+      }, {
+        'name': '陈柏臻',
+        'subject': '小学数学 ',
+        'username': 'chenbz',
+        'role': 0
+      }, {
+        'name': '孙海迪',
+        'subject': '初中数学 ',
+        'username': 'sunhd',
+        'role': 0
+      }, {
+        'name': '娄红梅',
+        'subject': '初中数学 ',
+        'username': 'louhm',
+        'role': 0
+      }, {
+        'name': '张晨雪',
+        'subject': '初中数学 ',
+        'username': 'zhangcx',
+        'role': 0
+      }, {
+        'name': '王昕烨',
+        'subject': '初中数学',
+        'username': 'wangxy',
+        'role': 0
+      }, {
+        'name': '张月',
+        'subject': '初中数学 ',
+        'username': 'zhangy',
+        'role': 0
+      }, {
+        'name': '颜小千',
+        'subject': '小学英语 ',
+        'username': 'yanxq',
+        'role': 0
+      }, {
+        'name': '郑之钰',
+        'subject': '小学英语 ',
+        'username': 'zhengzy',
+        'role': 0
+      }, {
+        'name': '陈琦',
+        'subject': '初中英语 ',
+        'username': 'chenq',
+        'role': 0
+      }, {
+        'name': '徐景新',
+        'subject': '初中英语 ',
+        'username': 'xujx',
+        'role': 0
+      }, {
+        'name': '杨全坤',
+        'subject': '初中英语 ',
+        'username': 'yangqk',
+        'role': 0
+      }, {
+        'name': '于静雪',
+        'subject': '初中英语 ',
+        'username': 'yujx',
+        'role': 0
+      }, {
+        'name': '王杰',
+        'subject': '初中英语 ',
+        'username': 'wangj',
+        'role': 0
+      }, {
+        'name': '胡建玮',
+        'subject': '初中物理 ',
+        'username': 'hujw',
+        'role': 0
+      }, {
+        'name': '董宇松',
+        'subject': '初中物理 ',
+        'username': 'dongys',
+        'role': 0
+      }, {
+        'name': '黄禹衫',
+        'subject': '初中物理 ',
+        'username': 'huangys',
+        'role': 0
+      }, {
+        'name': '闫文浩',
+        'subject': '初中物理 ',
+        'username': 'yanwh',
+        'role': 0
+      }, {
+        'name': '李南',
+        'subject': '初中化学 ',
+        'username': 'lin',
+        'role': 0
+      }, {
+        'name': '樊一',
+        'subject': '初中化学 ',
+        'username': 'fany',
+        'role': 0
+      }, {
+        'name': '王延',
+        'subject': '高中化学 ',
+        'username': 'wangy',
+        'role': 0
+      }, {
+        'name': '张冰冰',
+        'subject': '高中化学 ',
+        'username': 'zhangbb',
+        'role': 0
+      }, {
+        'name': '吴婧',
+        'subject': '高中化学 ',
+        'username': 'wuj',
+        'role': 0
+      }, {
+        'name': '葛超力',
+        'subject': '高中化学 ',
+        'username': 'gecl',
+        'role': 0
+      }, {
+        'name': '韩潞鹏',
+        'subject': '高中语文 ',
+        'username': 'hanlp',
+        'role': 0
+      }, {
+        'name': '李宜桐',
+        'subject': ' 高中化学',
+        'username': 'liyt',
+        'role': 0
+      }, {
+        'name': '史双',
+        'subject': '高中化学 ',
+        'username': 'shis',
+        'role': 0
+      }, {
+        'name': '刘亮',
+        'subject': '高中数学 ',
+        'username': 'liul',
+        'role': 0
+      }, {
+        'name': '刘兵',
+        'subject': ' 高中数学 ',
+        'username': 'liub',
+        'role': 0
+      }, {
+        'name': '常经伟',
+        'subject': ' 高中数学 ',
+        'username': 'changjw',
+        'role': 0
+      }, {
+        'name': '孙泽众',
+        'subject': ' 高中数学 ',
+        'username': 'sunzz',
+        'role': 0
+      }, {
+        'name': '周子清',
+        'subject': '高中数学  ',
+        'username': 'zhouzq',
+        'role': 0
+      }, {
+        'name': '李思成',
+        'subject': '高中数学  ',
+        'username': 'lisc',
+        'role': 0
+      }, {
+        'name': '王睽',
+        'subject': '高中数学  ',
+        'username': 'wangk',
+        'role': 0
+      }, {
+        'name': '张明洁',
+        'subject': '高中英语 ',
+        'username': 'zhangmj',
+        'role': 0
+      }, {
+        'name': '孙盟佳',
+        'subject': '高中英语 ',
+        'username': 'sunmj',
+        'role': 0
+      }, {
+        'name': '韩彦欣',
+        'subject': ' 高中英语',
+        'username': 'hanyx',
+        'role': 0
+      }, {
+        'name': '张雪瑶',
+        'subject': ' 高中英语',
+        'username': 'zhangxy',
+        'role': 0
+      }, {
+        'name': '马瑞',
+        'subject': '高中英语 ',
+        'username': 'mar',
+        'role': 0
+      }, {
+        'name': '杜昊程',
+        'subject': '高中英语 ',
+        'username': 'duhc',
+        'role': 0
+      }, {
+        'name': '毕岩岩',
+        'subject': ' 高中物理',
+        'username': 'biyy',
+        'role': 0
+      }, {
+        'name': '杨莉',
+        'subject': ' 高中物理',
+        'username': 'yangl',
+        'role': 0
+      }, {
+        'name': '李春月',
+        'subject': '高中物理 ',
+        'username': 'licy',
+        'role': 0
+      }, {
+        'name': '马赛',
+        'subject': ' 高中物理',
+        'username': 'mas',
+        'role': 0
+      }, {
+        'name': '朱珍媛',
+        'subject': ' 初高中生物',
+        'username': 'zhuzy',
+        'role': 0
+      }, {
+        'name': '胡燕飞',
+        'subject': ' 初高中生物',
+        'username': 'huyf',
+        'role': 0
+      }, {
+        'name': '贡亚鹏',
+        'subject': ' 初高中文综',
+        'username': 'gongyp',
+        'role': 0
+      }, {
+        'name': '李春秋',
+        'subject': ' 初高中文综',
+        'username': 'licq',
+        'role': 0
+      }, {
+        'name': '孙辉',
+        'subject': '初高中文综 ',
+        'username': 'sunh',
+        'role': 0
+      }];
+      for (let item of obj) {
+        item.password = '111111';
+      }
+      let i = 0;
+      setInterval(() => {
+        register(obj[i]).then(res => {
+          //   if (res.data.code === 200) {
+          console.log(res);
+          i++;
+          //   }
+        })
+      }, 100);
     },
     methods: {
       async getList(page, size) {
