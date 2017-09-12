@@ -21,7 +21,7 @@
               </Col>
               <Col span="6">
               <FormItem label="学科组">
-                <Select size="small" v-model="formValidate.subject" placeholder="请选择学科组">
+                <Select size="small" v-model="formValidate.subject" clearable placeholder="请选择学科组">
                 <Option value="beijing">北京市</Option>
                 <Option value="shanghai">上海市</Option>
                 <Option value="shenzhen">深圳市</Option>
@@ -29,7 +29,7 @@
               </Col>
               <Col span="6">
               <FormItem label="预排速度">
-                <Select size="small" v-model="formValidate.prespeed" placeholder="请选择预排速度">
+                <Select size="small" v-model="formValidate.prespeed" clearable placeholder="请选择预排速度">
                 <Option value="fast">较快</Option>
                 <Option value="normal">正常</Option>
                 <Option value="slow">较慢</Option>
@@ -37,7 +37,7 @@
               </Col>
               <Col span="6">
               <FormItem label="结转速度">
-                <Select size="small" v-model="formValidate.speed" placeholder="请选择结转速度">
+                <Select size="small" v-model="formValidate.speed" clearable placeholder="请选择结转速度">
                 <Option value="fast">较快</Option>
                 <Option value="normal">正常</Option>
                 <Option value="slow">较慢</Option>
@@ -53,7 +53,7 @@
               </Col>
               <Col span="4">
               <FormItem>
-                <Button type="primary" size="small" @click="handleSubmit('formValidate')">提交</Button> </FormItem>
+                <Button type="primary" size="small" @click="handleSubmit('formValidate')">查询</Button> </FormItem>
               </Col>
             </Row>
           </Form>
@@ -98,7 +98,7 @@
       </div>
     </div>
     <div style="text-align:center;">
-      <Page :total="40" size="small" show-total show-sizer @on-change="pageChange" @on-page-size-change="pagesizeChange"></Page>
+      <Page :total="40" size="small" show-total  @on-change="pageChange" ></Page>
     </div>
   </div>
 </template>
@@ -254,7 +254,7 @@
                 },
                 on: {
                   click: () => {
-                    console.log(params.index, params.row);
+                    this.deleteitem(params.index, params.row);
                   }
                 }
               }, '删除')
@@ -301,6 +301,19 @@
         }
       },
       details(data) {},
+      deleteitem(index, row) {
+        this.$Modal.confirm({
+          title: '确认删除',
+          content: '<p>您确认要删除此条内容吗？删除后将不可恢复</p>',
+          loading: true,
+          onOk: () => {
+            setTimeout(() => {
+              this.$Modal.remove();
+              this.$Message.info('异步关闭了对话框');
+            }, 2000);
+          }
+        });
+      },
       formatterTime(row, column) {
         return moment(row.create_time).format('YYYY-MM-DD');
       },
@@ -318,8 +331,7 @@
           }
         })
       },
-      pageChange(page) {},
-      pagesizeChange(pagesize) {}
+      pageChange(page) {}
     }
   };
 
@@ -334,12 +346,12 @@
     .tableList {
       padding: 20px;
       padding-top: 0;
-      height: calc(100% - 286px);
+      height: calc(100% - 292px);
       .tablecontent {
         height: 100%;
         border-top: 1px solid rgb(221, 222, 225);
         .vu-table {
-          height: calc(100% - 28px);
+          height: calc(100% - 38px);
         }
       }
     }

@@ -93,7 +93,6 @@ const Reg = async(ctx) => {
     let token = createToken(username); //创建token并存入数据库
     let doc = await $User.findUser(username);
     if (doc) {
-        ctx.status = 200;
         ctx.body = {
             code: 500,
             msg: '用户名已存在'
@@ -101,7 +100,6 @@ const Reg = async(ctx) => {
     } else {
         let result = await $User.registerUser(username, password, subject, role, name, token);
         if (result) {
-            ctx.status = 200;
             ctx.body = {
                 code: 200,
                 msg: '用户注册成功'

@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema({
     name: String,
     token: String,
     subject:String,
+    role:Number,
     create_time: Date
 });
 //根据schema生成model

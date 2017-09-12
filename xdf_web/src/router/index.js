@@ -25,8 +25,8 @@ export default new Router({
       component: (resolve) => require(['@/components/director/assistantList.vue'], resolve)
     }, {
       path: '/user/manage',
-      name: 'manange',
-      component: (resolve) => require(['@/components/users/manange.vue'], resolve)
+      name: 'manage',
+      component: (resolve) => require(['@/components/users/manage.vue'], resolve)
     }]
   }]
 });
