@@ -18,7 +18,7 @@ let database = [
   {
     id: '7',
     bpid: '1',
-    name: 'Posts',
+    name: '购物车',
     icon: 'shopping-cart',
     route: '/post',
   },
