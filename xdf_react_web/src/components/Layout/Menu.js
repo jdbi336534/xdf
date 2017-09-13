@@ -69,6 +69,7 @@ const Menus = ({ siderFold, darkTheme, handleClickNavMenu, navOpenKeys, changeOp
     if (latestCloseKey) {
       nextOpenKeys = getAncestorKeys(latestCloseKey)
     }
+    console.log('changeOpenKeys(nextOpenKeys)');
     changeOpenKeys(nextOpenKeys)
   }
 

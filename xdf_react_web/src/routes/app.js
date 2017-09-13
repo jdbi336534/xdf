@@ -60,12 +60,9 @@ const App = ({ children, dispatch, app, loading, location }) => {
     menu,
     location,
     siderFold,
-    darkTheme,
     navOpenKeys,
-    changeTheme () {
-      dispatch({ type: 'app/switchTheme' })
-    },
     changeOpenKeys (openKeys) {
+      console.log('changeOpenKeys')
       window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
       dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } })
     },
@@ -103,7 +100,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
               {hasPermission ? children : <Error />}
             </div>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>

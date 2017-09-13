@@ -1,10 +1,10 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
+const APIV3 = '/node'
 
 module.exports = {
-  name: 'AntD Admin',
+  name: '数据统计系统',
   prefix: 'antdAdmin',
-  footerText: 'Ant Design Admin  © 2017 zuiidea',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
@@ -25,5 +25,7 @@ module.exports = {
     weather: `${APIV1}/weather`,
     v1test: `${APIV1}/test`,
     v2test: `${APIV2}/test`,
+    // jdb's
+    getAssistantList: `${APIV3}/api/getAssistantList`,
   },
 }

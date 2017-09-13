@@ -28,7 +28,6 @@ export default {
     ],
     menuPopoverVisible: false,
     siderFold: window.localStorage.getItem(`${prefix}siderFold`) === 'true',
-    darkTheme: window.localStorage.getItem(`${prefix}darkTheme`) === 'true',
     isNavbar: document.body.clientWidth < 769,
     navOpenKeys: JSON.parse(window.localStorage.getItem(`${prefix}navOpenKeys`)) || [],
     locationPathname: '',
@@ -38,6 +37,7 @@ export default {
 
     setupHistory ({ dispatch, history }) {
       history.listen((location) => {
+        console.log(location.pathname,queryString.parse(location.search));
         dispatch({
           type: 'updateState',
           payload: {
@@ -61,13 +61,14 @@ export default {
 
   },
   effects: {
-
     * query ({
       payload,
     }, { call, put, select }) {
       const { success, user } = yield call(query, payload)
+      // 检测是否登录，登录成功会返回权限列表
       const { locationPathname } = yield select(_ => _.app)
       if (success && user) {
+        // 登录成功获取菜单列表
         const { list } = yield call(menusService.query)
         const { permissions } = user
         let menu = list
@@ -92,6 +93,7 @@ export default {
           },
         })
         if (location.pathname === '/login') {
+          console.log('go to dashboard');
           yield put(routerRedux.push({
             pathname: '/dashboard',
           }))

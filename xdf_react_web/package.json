@@ -19,6 +19,7 @@
     "less-vars-to-js": "^1.1.2",
     "lodash": "^4.17.4",
     "mockjs": "^1.0.1-beta3",
+    "moment": "^2.18.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^1.7.0",
     "prop-types": "^15.5.10",
@@ -53,7 +54,9 @@
     "redbox-react": "^1.2.10",
     "roadhog": "^1.2.2"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint"
+  ],
   "scripts": {
     "dev": "cross-env BROWSER=none HOST=0.0.0.0 roadhog server",
     "lint": "eslint --fix --ext .js src",

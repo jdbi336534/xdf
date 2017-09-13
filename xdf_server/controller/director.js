@@ -77,8 +77,8 @@ const FindByDate = async(ctx) => {
     }
 };
 const getAssistantList = async(ctx) => {
-    let page =parseInt(ctx.request.body.page);
-    let size =parseInt(ctx.request.body.size);    
+    let page =parseInt(ctx.request.body.current);
+    let size =parseInt(ctx.request.body.pageSize);    
     // let start = new Date(ctxstart);
     // let end = new Date(ctxend);
     // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
