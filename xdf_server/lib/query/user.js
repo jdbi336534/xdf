@@ -24,14 +24,14 @@ exports.findAllUsers = () => {
         });
     });
 };
-//分页获取助理主管提交的数据
-exports.findAssistantList = (page, size) => {
+//分页获取所有用户数据
+exports.findUserList = (page, size) => {
     return new Promise((resolve, reject) => {
-        Director.count({}, (err, count) => {
+        User.count({}, (err, count) => {
             if (err) {
                 reject(err);
             }
-            Director.find({}, null, {
+            User.find({}, null, {
                 skip: (page - 1) * size,
                 sort: {
                     create_time: -1

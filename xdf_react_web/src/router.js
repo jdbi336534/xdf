@@ -67,7 +67,7 @@ const Routers = function ({ history, app }) {
         path: '/login',
         models: () => [import('./models/login')],
         component: () => import('./routes/login/'),
-      },
+    },
     {
         path: '/datareport',
         models: () => [import('./models/datareport')],
@@ -77,7 +77,12 @@ const Routers = function ({ history, app }) {
       path: '/datareport/:id',
       models: () => [import('./models/report/detail')],
       component: () => import('./routes/datareport/reportdetail/'),
-  }
+    },
+    {
+      path: '/user',
+      models: () => [import('./models/user')],
+      component: () => import('./routes/user/'),
+    }
   ]
 
   return (

@@ -117,7 +117,22 @@ const GetAllUsers = async(ctx) => {
         data: doc
     };
 };
-
+// 分页获取用户的数据
+const getUserList = async(ctx) => {
+    let page = parseInt(ctx.request.body.page);
+    let size = parseInt(ctx.request.body.pageSize);
+    let doc = await $User.findUserList(page, size);
+    if (doc) {
+        doc.code = 200;
+        ctx.body = doc;
+    } else {
+        ctx.status = 500;
+        ctx.body = {
+            code: 500,
+            msg: doc
+        }
+    }
+};
 //删除某个用户
 const DelUser = async(ctx) => {
     //拿到要删除的用户id
@@ -184,6 +199,7 @@ module.exports = {
     Login,
     Reg,
     GetAllUsers,
+    getUserList,
     DelUser,
     Upload,
     Fileupload

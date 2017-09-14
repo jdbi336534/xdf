@@ -211,7 +211,7 @@ let database = [{
     mpid: '3',
     name: '用户管理',
     icon: 'line-chart',
-    route: '/chart/lineChart',
+    route: '/user',
   },
   {
     id: '32',

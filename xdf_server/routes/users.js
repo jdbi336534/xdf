@@ -27,6 +27,9 @@ router.post('/getbydate',DirectorController.FindByDate);
 router.post('/getAssistantList',DirectorController.getAssistantList);
 // 通过ID查找FindById
 router.get('/FindReportListById',DirectorController.FindById);
+// 分页查询用户
+router.post('/getUserList',UserController.getUserList);
+
 
 //需要先检查权限的路由
 router.get('/user', checkToken, UserController.GetAllUsers);

@@ -37,8 +37,20 @@ const Searchform=({
             }
           }    
     }
+    // 正则验证用户名
+    function valiUsername(rule, value, callback){
+        if (value === '') {
+            callback();
+          } else {
+            if (!/^[a-z_]{0,10}$/.test(value)) {
+              callback(new Error('     '));
+            } else {
+              callback();
+            }
+          }    
+    }
 return (
-    <Plate title="汇报查询">
+    <Plate title="用户查询">
         <Form layout="inline" className={styles.searchform}>
             <Row >
                 <Col  span={5} >
@@ -49,7 +61,19 @@ return (
                         rules:[{validator: valiName}],
                         validateTrigger:'onBlur'
                     })(
-                        <Input size="small" placeholder="请输入" />
+                        <Input size="small" placeholder="请输入姓名" />
+                    )}
+                    </FormItem>
+                </Col>
+                <Col  span={5} >
+                    <FormItem
+                    label="用户名"
+                    >
+                    {getFieldDecorator('username', {
+                        rules:[{validator: valiUsername}],
+                        validateTrigger:'onBlur'
+                    })(
+                        <Input size="small" placeholder="请输入用户名" />
                     )}
                     </FormItem>
                 </Col>
@@ -65,33 +89,22 @@ return (
                     )}
                     </FormItem>
                 </Col>
-                <Col  span={6} >
+                <Col  span={5} >
                     <FormItem
-                    label="预排速度"
+                    label="职位"
                     >
-                    {getFieldDecorator('prespeed', {
+                    {getFieldDecorator('role', {
                     })(
-                    <Select size="small" placeholder="请选择预排速度" style={{ width: 147,textAlign:'left' }} allowClear>
-                    <Option value="fast">较快</Option>
-                    <Option value="normal">正常</Option>
-                    <Option value="slow">较慢</Option>
+                    <Select size="small" placeholder="请选择职位" style={{ width: 147,textAlign:'left' }} allowClear>
+                        <Option  value="0">助理主管</Option>
+                        <Option  value="1">主管</Option>
+                        <Option  value="2">管理员</Option>
                     </Select>
                     )}
                     </FormItem>
                 </Col>
-                <Col  span={6} >
-                    <FormItem
-                    label="结转速度"
-                    >
-                    {getFieldDecorator('speed', {
-                    })(
-                    <Select size="small" placeholder="请选择结转速度" style={{ width: 147,textAlign:'left' }} allowClear>
-                    <Option value="fast">较快</Option>
-                    <Option value="normal">正常</Option>
-                    <Option value="slow">较慢</Option>
-                    </Select>
-                    )}
-                    </FormItem>
+                <Col  span={2} >
+               
                 </Col>
                 <Col  span={2} >
                 <FormItem>

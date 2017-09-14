@@ -14,7 +14,7 @@ const List = ({location, ...tableProps}) => {
 
     const columns = [
         {
-          title: '助理主管',
+          title: '姓名',
           dataIndex: 'name',
           key: 'name',
           width:'8%'

@@ -1,10 +1,10 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
-import { AssistantList } from 'services/datareport'
+import { UserList } from 'services/user'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'datareport',
+  namespace: 'user',
   state: {
     modalType: 'create',
   },
@@ -12,10 +12,10 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/datareport') {
+        if (location.pathname === '/user') {
           const payload = location.query || { page: 1, pageSize: 30 }
           dispatch({
-            type: 'reportlist',
+            type: 'query',
             payload,
           })
           
@@ -25,8 +25,8 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    * reportlist ( {payload={} }, { put, call, select }) {
-        const data = yield call(AssistantList, payload);
+    * query ( {payload={} }, { put, call, select }) {
+        const data = yield call(UserList, payload);
         if (data.success) {
           yield put({
             type:'querySuccess',

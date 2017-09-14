@@ -23,10 +23,11 @@ const Detail = ({ reportDetail,loading}) => {
 //      <Option key={key} value={item.value}>{item.label}</Option>
 //    );
 // });
+try{
     if(data.filepath){
         for(let item of data.filepath){
             filesrc.push(
-                <Col span={24} key={item}><a target="_blank" href={'http://localhost:3001'+item}>{item}</a></Col>
+                <Col span={24} key={item}><a target="_blank" href={'http://localhost:3001'+item}>{item.split('/')[4]}</a></Col>
             )
         }
     }
@@ -37,7 +38,9 @@ const Detail = ({ reportDetail,loading}) => {
             )
         }
     }
-
+}catch(err){
+    console.error(err.message);
+}
   return (
     <Spin size="small" spinning={loading}>
     <div className="content-inner">

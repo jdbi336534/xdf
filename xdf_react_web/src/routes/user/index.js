@@ -5,15 +5,14 @@ import { Page } from 'components'
 import { routerRedux } from 'dva/router'
 import queryString from 'query-string'
 import Searchform from './search'
-import List from './List'
-
-const Datareport = ({location, dispatch, datareport, loading }) => {
+import List from './list'
+const User = ({location, dispatch, user, loading }) => {
     location.query = queryString.parse(location.search);
-    const { list, pagination} = datareport;
+    const { list, pagination} = user;
     const { pageSize } = pagination;
     const listProps = {
         dataSource: list,
-        loading: loading.effects['datareport/reportlist'],
+        loading: loading.effects['user/query'],
         pagination,
         location,
         onChange (page) {
@@ -27,7 +26,6 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
             },
           }));
         },
-        
       }
     
       const searchProps={
@@ -43,11 +41,11 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
     );
 }
 
-Datareport.propTypes = {
-  datareport: PropTypes.object,
+User.propTypes = {
+    user: PropTypes.object,
     location: PropTypes.object,
     dispatch: PropTypes.func,
      loading: PropTypes.object,
   }
 
-export default connect(({ datareport, loading }) => ({ datareport, loading }))(Datareport)
+  export default connect(({ user, loading }) => ({ user, loading }))(User)
