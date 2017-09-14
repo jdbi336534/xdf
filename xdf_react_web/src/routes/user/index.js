@@ -6,9 +6,10 @@ import { routerRedux } from 'dva/router'
 import queryString from 'query-string'
 import Searchform from './search'
 import List from './list'
+import Modal from './modal'
 const User = ({location, dispatch, user, loading }) => {
     location.query = queryString.parse(location.search);
-    const { list, pagination} = user;
+    const { list, pagination,modalVisible,modalType} = user;
     const { pageSize } = pagination;
     const listProps = {
         dataSource: list,
@@ -33,10 +34,32 @@ const User = ({location, dispatch, user, loading }) => {
 
         }
       }
+
+      const modalProps = {
+        item: modalType === 'create' ? {} : currentItem,
+        visible: modalVisible,
+        maskClosable: false,
+        confirmLoading: loading.effects['user/update'],
+        title: `${modalType === 'create' ? '新增用户' : '修改用户'}`,
+        wrapClassName: 'vertical-center-modal',
+        onOk (data) {
+          dispatch({
+            type: `user/${modalType}`,
+            payload: data,
+          })
+        },
+        onCancel () {
+          dispatch({
+            type: 'user/hideModal',
+          })
+        },
+      }
+
     return (
       <Page inner>
         <Searchform {...searchProps}/>
         <List {...listProps} />
+        {modalVisible && <Modal {...modalProps} />}
       </Page>
     );
 }
