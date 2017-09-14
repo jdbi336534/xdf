@@ -62,17 +62,22 @@ const Routers = function ({ history, app }) {
     //   path: '/post',
     //   models: () => [import('./models/post')],
     //   component: () => import('./routes/post/'),
-    // }, 
+    // },
     {
         path: '/login',
         models: () => [import('./models/login')],
         component: () => import('./routes/login/'),
       },
     {
-      path: '/datareport',
-      models: () => [import('./models/datareport')],
-      component: () => import('./routes/datareport/'),
-    }
+        path: '/datareport',
+        models: () => [import('./models/datareport')],
+        component: () => import('./routes/datareport/'),
+    },
+    {
+      path: '/datareport/:id',
+      models: () => [import('./models/report/detail')],
+      component: () => import('./routes/datareport/reportdetail/'),
+  }
   ]
 
   return (

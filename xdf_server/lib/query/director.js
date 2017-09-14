@@ -1,4 +1,5 @@
 var Director = require('../../models/director').Director;
+var mongoose = require('mongoose');
 // 保存主管提交的信息
 exports.newAndSave = (prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, researchexp, username, name, subject) => {
     var director = new Director();
@@ -79,3 +80,15 @@ exports.findAssistantList = (page, size) => {
         });
     });
 };
+// 通过_id查询某一调数据
+exports.findOne = (id) => {
+    console.log(id);
+    return new Promise((resolve, reject) => {
+        Director.findById(id, (err, doc) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(doc);
+        });
+    });
+}

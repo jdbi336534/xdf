@@ -4,6 +4,7 @@ import { connect } from 'dva'
 import { Page } from 'components'
 import { routerRedux } from 'dva/router'
 import queryString from 'query-string'
+import Searchform from './search'
 import List from './List'
 
 const Datareport = ({location, dispatch, datareport, loading }) => {
@@ -16,8 +17,8 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
         pagination,
         location,
         onChange (page) {
-            console.log(page);
           const { query, pathname } = location
+          console.log('1',pagination,JSON.stringify(location,null,4));
           dispatch(routerRedux.push({
             pathname,
             query: {
@@ -25,25 +26,22 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
               page: page.current,
               pageSize: page.pageSize,
             },
-          }))
+          }));
+          console.log('2',pagination,JSON.stringify(location,null,4));
         },
-        // rowSelection: {
-        //   selectedRowKeys,
-        //   onChange: (keys) => {
-        //     dispatch({
-        //       type: 'user/updateState',
-        //       payload: {
-        //         selectedRowKeys: keys,
-        //       },
-        //     })
-        //   },
-        // },
+        
       }
     
+      const searchProps={
+        searchData(data){
+
+        }
+      }
     return (
-        <Page inner>
+      <Page inner>
+        <Searchform {...searchProps}/>
         <List {...listProps} />
-        </Page>
+      </Page>
     );
 }
 

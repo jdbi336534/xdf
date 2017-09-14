@@ -27,5 +27,6 @@ module.exports = {
     v2test: `${APIV2}/test`,
     // jdb's
     getAssistantList: `${APIV3}/api/getAssistantList`,
+    FindReportListById:`${APIV3}/api/FindReportListById`
   },
 }

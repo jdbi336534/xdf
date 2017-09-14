@@ -25,6 +25,8 @@ router.post('/directorsave', DirectorController.Save);
 router.post('/getbydate',DirectorController.FindByDate);
 // 分页查询助理主管汇报列表(已经按照时间排序)
 router.post('/getAssistantList',DirectorController.getAssistantList);
+// 通过ID查找FindById
+router.get('/FindReportListById',DirectorController.FindById);
 
 //需要先检查权限的路由
 router.get('/user', checkToken, UserController.GetAllUsers);

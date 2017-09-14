@@ -1,6 +1,5 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
-import { config } from 'utils'
 import { AssistantList } from 'services/datareport'
 import { pageModel } from './common'
 
@@ -14,7 +13,7 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/datareport') {
-          const payload = location.query || { current: 1, pageSize: 10 }
+          const payload = location.query || { page: 1, pageSize: 30 }
           dispatch({
             type: 'reportlist',
             payload,
@@ -34,7 +33,7 @@ export default modelExtend(pageModel, {
               list:data.data,
               pagination:{
                 current:Number(payload.page) || 1,
-                pageSize:Number(payload.pageSize) || 10,
+                pageSize:Number(payload.pageSize) || 30,
                 total:data.total
               }
             }

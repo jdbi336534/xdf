@@ -187,6 +187,13 @@ let database = [{
   },
   {
     id: '22',
+    mpid: '-1',
+    bpid: '21',
+    name: '查看汇报详情',
+    route: '/datareport/:id'
+  },
+  {
+    id: '23',
     bpid: '2',
     mpid: '2',
     name: '统计数据',

@@ -34,7 +34,7 @@ const Save = async(ctx) => {
     let name = ctx.cookies.get("xdf_name");
     let subject = ctx.cookies.get("xdf_subject");
     // 可以进行相关的验证
-    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath,researchexp, username, name, subject);
+    let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, researchexp, username, name, subject);
     console.log('doc', doc);
     if (doc) {
         ctx.body = {
@@ -51,8 +51,8 @@ const Save = async(ctx) => {
     }
 };
 const FindByDate = async(ctx) => {
-    let ctxstart =ctx.request.body.start;
-    let ctxend =ctx.request.body.end;    
+    let ctxstart = ctx.request.body.start;
+    let ctxend = ctx.request.body.end;
     let start = new Date(ctxstart);
     let end = new Date(ctxend);
     // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
@@ -69,28 +69,43 @@ const FindByDate = async(ctx) => {
             end,
             date: doc
         }
-    }else{
-        ctx.body={
-            code:500,
-            msg:doc
+    } else {
+        ctx.body = {
+            code: 500,
+            msg: doc
+        }
+    }
+};
+const FindById = async(ctx) => {
+    let id = ctx.query.id;
+    let doc = await $Director.findOne(id);
+    if (doc) {
+        ctx.body = {
+            code: 200,
+            data: doc
+        }
+    } else {
+        ctx.body = {
+            code: 500,
+            msg: doc
         }
     }
 };
 const getAssistantList = async(ctx) => {
-    let page =parseInt(ctx.request.body.current);
-    let size =parseInt(ctx.request.body.pageSize);    
+    let page = parseInt(ctx.request.body.page);
+    let size = parseInt(ctx.request.body.pageSize);
     // let start = new Date(ctxstart);
     // let end = new Date(ctxend);
     // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
     // console.log(end,moment(end).format('YYYY-MM-DD HH:mm:ss'));
     let doc = await $Director.findAssistantList(page, size);
     if (doc) {
-        doc.code=200;
+        doc.code = 200;
         ctx.body = doc;
-    }else{
-        ctx.body={
-            code:500,
-            msg:doc
+    } else {
+        ctx.body = {
+            code: 500,
+            msg: doc
         }
     }
 };
@@ -98,5 +113,6 @@ const getAssistantList = async(ctx) => {
 module.exports = {
     Save,
     FindByDate,
+    FindById,
     getAssistantList
 };
