@@ -7,6 +7,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 const Searchform=({
+    subject,
     searchData,
     form: {
         getFieldDecorator,
@@ -14,6 +15,13 @@ const Searchform=({
         getFieldsValue
         }
 })=>{
+
+    const subjectOptions=subject.map((item,key)=>{
+        return(
+         <Option key={key} value={item._id}>{item.subject}</Option>
+       );
+    });
+
     function handleSearch(e){
         e.preventDefault();
           validateFields((errors,fieldsValue) => {
@@ -49,6 +57,7 @@ const Searchform=({
             }
           }    
     }
+
 return (
     <Plate title="用户查询">
         <Form layout="inline" className={styles.searchform}>
@@ -84,7 +93,7 @@ return (
                     {getFieldDecorator('subject', {
                     })(
                     <Select size="small" placeholder="请选择学科组" style={{ width: 147,textAlign:'left' }} allowClear>
-                        <Option  value="">全部</Option>
+                        {subjectOptions}
                     </Select>
                     )}
                     </FormItem>
@@ -119,7 +128,8 @@ return (
 
 Searchform.propTypes = {
     form: PropTypes.object,
-    searchData:PropTypes.func
+    searchData:PropTypes.func,
+    subject: PropTypes.array
   };
 
 export default Form.create()(Searchform);

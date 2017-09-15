@@ -1,6 +1,7 @@
 var User = require('./user');
 var Director = require('./director');
 var Renewals = require('./renewals');
+var Subject = require('./subject');
 
 module.exports = {
   get $User () {
@@ -11,5 +12,8 @@ module.exports = {
   },
    get $Renewals () {
     return Renewals;
+  },
+  get $Subject () {
+    return Subject;
   }
 };

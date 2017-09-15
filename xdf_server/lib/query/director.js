@@ -80,9 +80,8 @@ exports.findAssistantList = (page, size) => {
         });
     });
 };
-// 通过_id查询某一调数据
+// 通过_id查询某一条数据
 exports.findOne = (id) => {
-    console.log(id);
     return new Promise((resolve, reject) => {
         Director.findById(id, (err, doc) => {
             if (err) {

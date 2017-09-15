@@ -9,7 +9,7 @@ import List from './list'
 import Modal from './modal'
 const User = ({location, dispatch, user, loading }) => {
     location.query = queryString.parse(location.search);
-    const { list, pagination,modalVisible,modalType} = user;
+    const { list, pagination,modalVisible,modalType,subject} = user;
     const { pageSize } = pagination;
     const listProps = {
         dataSource: list,
@@ -27,19 +27,29 @@ const User = ({location, dispatch, user, loading }) => {
             },
           }));
         },
-      }
+        onAdd(){
+            dispatch({
+                type: 'user/showModal',
+                payload: {
+                  modalType: 'create',
+                },
+              })
+        }
+    }
     
-      const searchProps={
+    const searchProps={
+        subject,
         searchData(data){
 
         }
-      }
+    }
 
-      const modalProps = {
+    const modalProps = {
+        subject,
         item: modalType === 'create' ? {} : currentItem,
         visible: modalVisible,
         maskClosable: false,
-        confirmLoading: loading.effects['user/update'],
+        confirmLoading: loading.effects[`user/${modalType}`],
         title: `${modalType === 'create' ? '新增用户' : '修改用户'}`,
         wrapClassName: 'vertical-center-modal',
         onOk (data) {
@@ -53,7 +63,7 @@ const User = ({location, dispatch, user, loading }) => {
             type: 'user/hideModal',
           })
         },
-      }
+    }
 
     return (
       <Page inner>

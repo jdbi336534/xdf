@@ -9,7 +9,7 @@ import List from './List'
 
 const Datareport = ({location, dispatch, datareport, loading }) => {
     location.query = queryString.parse(location.search);
-    const { list, pagination} = datareport;
+    const { list, pagination, subject} = datareport;
     const { pageSize } = pagination;
     const listProps = {
         dataSource: list,
@@ -31,6 +31,7 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
       }
     
       const searchProps={
+        subject,
         searchData(data){
 
         }

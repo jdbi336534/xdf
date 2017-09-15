@@ -26,8 +26,13 @@ module.exports = {
     v1test: `${APIV1}/test`,
     v2test: `${APIV2}/test`,
     // jdb's
-    getAssistantList: `${APIV3}/api/getAssistantList`,
-    FindReportListById:`${APIV3}/api/FindReportListById`,
-    getUserList:`${APIV3}/api/getUserList`
+    getAssistantList: `${APIV3}/api/getAssistantList`,// 获取汇报列表
+    FindReportListById:`${APIV3}/api/FindReportListById`,// 获取汇报列表详情
+    getUserList:`${APIV3}/api/getUserList`,// 获取用户列表
+    login:`${APIV3}/api/login`,// 登录
+    register:`${APIV3}/api/register`,// 注册，新增用户
+    updateUserinfo:`${APIV3}/api/updateUserinfo`,// 更新用户信息
+    delUser:`${APIV3}/api/delUser`,// 删除用户
+    subject:`${APIV3}/api/subject`,// 获取学科组
   },
 }

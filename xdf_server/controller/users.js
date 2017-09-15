@@ -86,10 +86,11 @@ const Login = async(ctx) => {
 //注册
 const Reg = async(ctx) => {
     let username = ctx.request.body.username;
-    let password = sha1(ctx.request.body.password); //加密
+    let password = sha1('111111'); //加密
     let name = ctx.request.body.name;
     let subject = ctx.request.body.subject;
     let role = ctx.request.body.role;
+    let email = ctx.request.body.email;
     let token = createToken(username); //创建token并存入数据库
     let doc = await $User.findUser(username);
     if (doc) {
@@ -98,15 +99,36 @@ const Reg = async(ctx) => {
             msg: '用户名已存在'
         };
     } else {
-        let result = await $User.registerUser(username, password, subject, role, name, token);
+        let result = await $User.registerUser(username, password, subject, role, name, token, email);
         if (result) {
             ctx.body = {
                 code: 200,
                 msg: '用户注册成功'
             }
+        }else{
+            ctx.body = {
+                code: 500,
+                msg: result
+            }
         }
     }
 };
+// 修改
+const Upd = async(ctx) => {
+    let id = ctx.request.body.id;
+    let username = ctx.request.body.username;
+    let name = ctx.request.body.name;
+    let subject = ctx.request.body.subject;
+    let role = ctx.request.body.role;
+    let email = ctx.request.body.email;
+    let result = await $User.updateUser(id, username, subject, role, name, email);
+    if (result) {
+        ctx.body = {
+            code: 200,
+            msg: '用户信息修改成功'
+        }
+    }
+}
 //获得所有用户信息
 const GetAllUsers = async(ctx) => {
     //查询所有用户信息
@@ -198,6 +220,7 @@ const Fileupload = (ctx) => {
 module.exports = {
     Login,
     Reg,
+    Upd,
     GetAllUsers,
     getUserList,
     DelUser,

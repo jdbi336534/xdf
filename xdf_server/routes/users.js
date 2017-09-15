@@ -25,12 +25,17 @@ router.post('/directorsave', DirectorController.Save);
 router.post('/getbydate',DirectorController.FindByDate);
 // 分页查询助理主管汇报列表(已经按照时间排序)
 router.post('/getAssistantList',DirectorController.getAssistantList);
-// 通过ID查找FindById
+// 通过ID查找已汇报列表
 router.get('/FindReportListById',DirectorController.FindById);
+
+
+
+
+
 // 分页查询用户
 router.post('/getUserList',UserController.getUserList);
-
-
+// 修改用户信息
+router.post('/updateUserinfo',UserController.Upd);
 //需要先检查权限的路由
 router.get('/user', checkToken, UserController.GetAllUsers);
 router.post('/delUser', checkToken, UserController.DelUser);

@@ -1,12 +1,14 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
 import { AssistantList } from 'services/datareport'
+import { GetSubject } from 'services/user'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
   namespace: 'datareport',
   state: {
     modalType: 'create',
+    subject:[]
   },
 
   subscriptions: {
@@ -17,8 +19,8 @@ export default modelExtend(pageModel, {
           dispatch({
             type: 'reportlist',
             payload,
-          })
-          
+          });
+          dispatch({type:'querySubject'});
         }
       })
     },
@@ -43,6 +45,19 @@ export default modelExtend(pageModel, {
           throw data
         }
     },
+    * querySubject ( {}, { put, call, select }) {
+      const subject = yield call(GetSubject);
+      if(subject.success){
+        yield put({
+          type:'Change',
+          payload:{
+            subject:subject.data
+          }
+        });
+      }else{
+        throw subject
+      }
+    }
   },
 
   reducers: {

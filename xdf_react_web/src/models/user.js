@@ -1,6 +1,6 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
-import { UserList } from 'services/user'
+import { UserList,UserRegister,UserUpdate,UserDelete,GetSubject } from 'services/user'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,6 +9,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalType: 'create',
     modalVisible: false,
+    subject:[]
   },
 
   subscriptions: {
@@ -19,8 +20,8 @@ export default modelExtend(pageModel, {
           dispatch({
             type: 'query',
             payload,
-          })
-          
+          });
+          dispatch({type:'querySubject'});
         }
       })
     },
@@ -45,10 +46,23 @@ export default modelExtend(pageModel, {
           throw data
         }
     },
+    * querySubject ( {}, { put, call, select }) {
+      const subject = yield call(GetSubject);
+      if(subject.success){
+        yield put({
+          type:'Change',
+          payload:{
+            subject:subject.data
+          }
+        });
+      }else{
+        throw subject
+      }
+    },
     * update ({ payload }, { select, call, put}) {
       const id = yield select(({ user }) => user.currentItem.id)
       const newUser = { ...payload, id }
-      const data = yield call(update, newUser)
+      const data = yield call(UserUpdate, newUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -57,8 +71,11 @@ export default modelExtend(pageModel, {
       }
     },
     * create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
+      const data = yield call(UserRegister, payload)
       if (data.success) {
+        if(data.code!==200){
+          throw new Error(data.msg);
+        }
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -66,7 +83,7 @@ export default modelExtend(pageModel, {
       }
     },
     * delete ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
+      const data = yield call(UserDelete, { id: payload })
       const { selectedRowKeys } = yield select(_ => _.user)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })

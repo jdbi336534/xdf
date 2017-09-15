@@ -77,6 +77,7 @@ const FindByDate = async(ctx) => {
     }
 };
 const FindById = async(ctx) => {
+    // get 请求，获取get的参数的值
     let id = ctx.query.id;
     let doc = await $Director.findOne(id);
     if (doc) {

@@ -67,14 +67,15 @@ exports.delUser = (id) => {
     });
 };
 //注册用户
-exports.registerUser = (username, password, subject, role, name, token) => {
+exports.registerUser = (username, password, subject, role, name, token, email) => {
     let user = new User({
         username,
         password,
         subject,
         role,
         name,
-        token
+        token,
+        email
     });
     return new Promise((resolve, reject) => {
         user.save((err, doc) => {
@@ -85,3 +86,24 @@ exports.registerUser = (username, password, subject, role, name, token) => {
         });
     });
 };
+// 修改用户信息
+exports.updateUser = (id, username, subject, role, name, email) => {
+    return new Promise((resolve, reject) => {
+        User.update({
+            _id: id
+        }, {
+            $set: {
+                username,
+                subject,
+                role,
+                name,
+                email
+            }
+        }, (err, doc) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(doc);
+        });
+    });
+}

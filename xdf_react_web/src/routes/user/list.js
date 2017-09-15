@@ -9,7 +9,7 @@ import AnimTableBody from 'components/DataTable/AnimTableBody'
 import TablePlate from 'components/plate/tableplate';
 import styles from './list.less'
 
-const List = ({location, ...tableProps}) => {
+const List = ({location,onAdd, ...tableProps}) => {
     location.query = queryString.parse(location.search)
 
     const columns = [
@@ -68,7 +68,7 @@ const List = ({location, ...tableProps}) => {
     <div>
        <TablePlate title="用户列表">
        <div className={styles.add_plate}>
-             <a><Icon type="plus" />新增用户</a>
+             <a href="javascript:;" onClick={onAdd}><Icon type="plus" />新增用户</a>
             </div>
         <Table
           {...tableProps}
@@ -86,7 +86,7 @@ const List = ({location, ...tableProps}) => {
 }
 
 List.propTypes = {
-    // onDeleteItem: PropTypes.func,
+    onAdd: PropTypes.func,
     // onEditItem: PropTypes.func,
     location: PropTypes.object,
   }

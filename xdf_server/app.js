@@ -9,6 +9,7 @@ const serve = require('koa-static');
 // const koaBody = require('koa-body');
 const index = require('./routes/index')
 const users = require('./routes/users')
+const subject = require('./routes/subject')
 const path = require('path');
 // error handler
 onerror(app)
@@ -57,7 +58,8 @@ app.use(async (ctx, next) => {
 // app.use(serve(path.join(__dirname, '/public')));
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use( users.routes(), users.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+app.use(subject.routes(), subject.allowedMethods())
 // //装载子路由
 // router.use('/api', users.routes(), users.allowedMethods());
 // //加载路由中间件
