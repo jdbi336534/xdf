@@ -1,7 +1,7 @@
 import { request, config } from 'utils'
 
 const { api } = config
-const { getUserList,register,updateUserinfo,delUser,subject } = api
+const { getUserList,register,updateUserinfo,delUser,subject,resetPass } = api
 
 export async function UserList (data) {
   return request({
@@ -31,6 +31,14 @@ export async function UserDelete (data) {
     data,
   })
 }
+export async function RestPassword (data) {
+  return request({
+    url: resetPass,
+    method: 'post',
+    data,
+  })
+}
+
 export async function GetSubject (data) {
   return request({
     url: subject,

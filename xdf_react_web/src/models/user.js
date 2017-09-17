@@ -1,6 +1,7 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
-import { UserList,UserRegister,UserUpdate,UserDelete,GetSubject } from 'services/user'
+import { message } from 'antd'
+import { UserList,UserRegister,UserUpdate,UserDelete,GetSubject,RestPassword } from 'services/user'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,6 +10,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalType: 'create',
     modalVisible: false,
+    visibleSure:false,
     subject:[]
   },
 
@@ -60,7 +62,7 @@ export default modelExtend(pageModel, {
       }
     },
     * update ({ payload }, { select, call, put}) {
-      const id = yield select(({ user }) => user.currentItem.id)
+      const id = yield select(({ user }) => user.currentItem._id)
       const newUser = { ...payload, id }
       const data = yield call(UserUpdate, newUser)
       if (data.success) {
@@ -83,17 +85,43 @@ export default modelExtend(pageModel, {
       }
     },
     * delete ({ payload }, { call, put, select }) {
-      const data = yield call(UserDelete, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
+      const id = yield select(({ user }) => user.currentItem._id)
+      const data = yield call(UserDelete, {id})
       if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
+        yield put({
+          type:'Change',
+          payload:{
+            visibleSure:false
+          }
+        });
         yield put({ type: 'query' })
+      } else {
+        throw data
+      }
+    },
+    * reset ({ payload }, { call, put, select }) {
+      const id = yield select(({ user }) => user.currentItem._id)
+      const name = yield select(({ user }) => user.currentItem.name)
+      const username = yield select(({ user }) => user.currentItem.username)
+      const email = yield select(({ user }) => user.currentItem.email)
+      const newUser = { id,name,username,email }
+      const data = yield call(RestPassword, newUser)
+      if (data.success) {
+        if(data.code===200){
+          message.success(data.msg);
+          yield put({
+            type:'Change',
+            payload:{
+              visibleSure:false
+            }
+          });
+        }
       } else {
         throw data
       }
     }
   },
-
+  
   reducers: {
     Change (state, action) {
       return { ...state, ...action.payload }

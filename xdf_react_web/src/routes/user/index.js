@@ -9,13 +9,34 @@ import List from './list'
 import Modal from './modal'
 const User = ({location, dispatch, user, loading }) => {
     location.query = queryString.parse(location.search);
-    const { list, pagination,modalVisible,modalType,subject} = user;
+    const { list, pagination,modalVisible,modalType,subject,currentItem,visibleSure} = user;
     const { pageSize } = pagination;
     const listProps = {
         dataSource: list,
         loading: loading.effects['user/query'],
         pagination,
         location,
+        confirmProp:{
+          title:'提示',
+          confirmLoading:loading.effects[`user/${modalType}`],
+          subtitle:modalType === 'reset' ?'确认要重置用户密码吗？':'确认要删除吗？',
+          exp:modalType === 'reset' ?'重置后，密码将不可回退':'删除后将不可恢复',
+          visibleSure,
+          handleCancel(){
+            dispatch({type:'user/Change',payload:{visibleSure:false}})
+          },
+          confirm(){
+            if(modalType==='delete'){
+              dispatch({
+              type: 'user/delete'
+              })
+            }else{
+              dispatch({
+                type: 'user/reset'
+                })
+            }
+          },
+        },
         onChange (page) {
           const { query, pathname } = location
           dispatch(routerRedux.push({
@@ -34,6 +55,45 @@ const User = ({location, dispatch, user, loading }) => {
                   modalType: 'create',
                 },
               })
+        },
+        onEditItem(record){
+          dispatch({
+            type: 'user/showModal',
+            payload: {
+              modalType: 'update',
+              currentItem: record
+            },
+          })
+        },
+        onDeleteItem(record){
+          // 在确认弹窗关闭的时候让列表出现加载
+          dispatch({
+            type:'user/Change',
+            payload:{
+              modalType: 'delete',
+              visibleSure:true,
+              currentItem: record
+            }
+          })
+        },
+        onReset(record){
+          dispatch({
+            type:'user/Change',
+            payload:{
+              modalType: 'reset',
+              visibleSure:true,
+              currentItem: record
+            }
+          })
+          // dispatch({
+          //   type: 'user/reset',
+          //   payload: {
+          //     id:record._id,
+          //     name:record.name,
+          //     username:record.username,
+          //     address:record.email
+          //   },
+          // })
         }
     }
     
@@ -44,9 +104,11 @@ const User = ({location, dispatch, user, loading }) => {
         }
     }
 
+    
+
     const modalProps = {
         subject,
-        item: modalType === 'create' ? {} : currentItem,
+        item: modalType === 'create' ? {} : {...currentItem,role:String(currentItem.role)},
         visible: modalVisible,
         maskClosable: false,
         confirmLoading: loading.effects[`user/${modalType}`],
@@ -55,7 +117,7 @@ const User = ({location, dispatch, user, loading }) => {
         onOk (data) {
           dispatch({
             type: `user/${modalType}`,
-            payload: data,
+            payload:data,
           })
         },
         onCancel () {

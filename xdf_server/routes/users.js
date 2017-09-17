@@ -36,8 +36,11 @@ router.get('/FindReportListById',DirectorController.FindById);
 router.post('/getUserList',UserController.getUserList);
 // 修改用户信息
 router.post('/updateUserinfo',UserController.Upd);
+// 重置用户的密码，密码会发送到邮箱
+router.post('/resetPassword',UserController.ResetPassWord);
+
 //需要先检查权限的路由
 router.get('/user', checkToken, UserController.GetAllUsers);
-router.post('/delUser', checkToken, UserController.DelUser);
+router.post('/delUser', UserController.DelUser);
 
 module.exports = router

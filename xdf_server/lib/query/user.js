@@ -107,3 +107,21 @@ exports.updateUser = (id, username, subject, role, name, email) => {
         });
     });
 }
+// 重置密码
+// 修改用户信息
+exports.resetPass = (id, password) => {
+    return new Promise((resolve, reject) => {
+        User.update({
+            _id: id
+        }, {
+            $set: {
+                password
+            }
+        }, (err, doc) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(doc);
+        });
+    });
+}

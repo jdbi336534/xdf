@@ -34,5 +34,7 @@ module.exports = {
     updateUserinfo:`${APIV3}/api/updateUserinfo`,// 更新用户信息
     delUser:`${APIV3}/api/delUser`,// 删除用户
     subject:`${APIV3}/api/subject`,// 获取学科组
+    resetPass:`${APIV3}/api/resetPassword`,// 获取学科组
+    
   },
 }

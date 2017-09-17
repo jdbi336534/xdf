@@ -2,10 +2,10 @@ const xlsx = require('node-xlsx');
 const ejsExcel = require("ejsexcel");
 const fs = require('fs');
 const path = require('path');
-// const User = require('../models/user').User;
+const Mail = require('../lib/utils/mail');
 const Models = require('../lib/query/core');
 const $User = Models.$User;
-var User = require('../models/user').User;
+const User = require('../models/user').User;
 //下面这两个包用来生成时间
 const moment = require('moment');
 const objectIdToTimestamp = require('objectid-to-timestamp');
@@ -105,7 +105,7 @@ const Reg = async(ctx) => {
                 code: 200,
                 msg: '用户注册成功'
             }
-        }else{
+        } else {
             ctx.body = {
                 code: 500,
                 msg: result
@@ -125,6 +125,7 @@ const Upd = async(ctx) => {
     if (result) {
         ctx.body = {
             code: 200,
+            data: result,
             msg: '用户信息修改成功'
         }
     }
@@ -160,11 +161,39 @@ const DelUser = async(ctx) => {
     //拿到要删除的用户id
     let id = ctx.request.body.id;
     await $User.delUser(id);
-    ctx.status = 200;
-    ctx.body = {
-        success: '删除成功'
-    };
+    // if (doc) {
+        // ctx.status = 200;
+       ctx.body = {
+            code:200,
+            msg: '删除成功'
+        };
+    // }
+
 };
+// 重置密码
+const ResetPassWord = async(ctx)=>{
+    let id = ctx.request.body.id;
+    let address = ctx.request.body.address;
+    let name = ctx.request.body.name;
+    let username = ctx.request.body.username;
+    let pass = '666666';// 之后随机生成
+    let password = sha1(pass);
+    let result = await $User.resetPass(id,password);
+    let doc = await Mail.sendmail('address',username,name,pass);
+    if(result){
+        ctx.body = {
+            code:200,
+            msg: '重置的密码已经发送至您的邮箱,请查收！若没有收到请再次重置'
+        };
+    }else{
+        ctx.status = 500;
+        ctx.body = {
+            code:500,
+            msg: result
+        };
+    }
+
+}
 
 //四折标课文件上传
 const Upload = (ctx) => {
@@ -221,6 +250,7 @@ module.exports = {
     Login,
     Reg,
     Upd,
+    ResetPassWord,
     GetAllUsers,
     getUserList,
     DelUser,

@@ -7,10 +7,36 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import AnimTableBody from 'components/DataTable/AnimTableBody'
 import TablePlate from 'components/plate/tableplate';
+import ConfirmModel from 'components/ConfirmModal/confirm'
 import styles from './list.less'
 
-const List = ({location,onAdd, ...tableProps}) => {
+const confirm = Modal.confirm
+
+const List = ({location,onAdd,onEditItem,onDeleteItem,onReset, ...tableProps,confirmProp}) => {
     location.query = queryString.parse(location.search)
+
+  //   const handleClick = (record) => {
+  //       confirm({
+  //         title: '你确定要删除此项吗?',
+  //         content:'删除后将不可恢复',
+  //         onOk () {
+  //           onDeleteItem(record._id)
+  //         },
+  //       })
+  //   }
+  //   const onResetpass = (record) => {
+  //     confirm({
+  //       title: '你确定要重置密码吗?',
+  //       content:'重置后不能恢复到之前的密码',
+  //       onOk () {
+  //         // return new Promise((resolve, reject) => {
+  //         //   setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+  //         // }).catch((err) => console.log(err.message))
+  //         onReset(record)
+  //       },
+  //     })
+  //  }
+
 
     const columns = [
         {
@@ -43,7 +69,7 @@ const List = ({location,onAdd, ...tableProps}) => {
           key: 'role',
           width:'15%',
           render: (text,record) => {
-            if(text===0){
+            if(String(text)==='0'){
               return '助理主管';
             } else {
               return '主管';
@@ -54,7 +80,7 @@ const List = ({location,onAdd, ...tableProps}) => {
           title: '操作',
           key: 'operation',
           width:'20%',
-          render: (text,record) => (<div><a href="javascript:;" >重置密码</a><a href="javascript:;" style={{marginLeft:10}}>修改</a> <a href="javascript:;" style={{marginLeft:10}}>删除</a></div>),
+          render: (text,record) => (<div><a href="javascript:;" onClick={()=>onReset(record)}>重置密码</a><a href="javascript:;" style={{marginLeft:10}} onClick={()=>onEditItem(record)}>修改</a> <a href="javascript:;" style={{marginLeft:10}} onClick={()=>onDeleteItem(record)}>删除</a></div>),
         },
       ]
     const getBodyWrapperProps = {
@@ -62,7 +88,7 @@ const List = ({location,onAdd, ...tableProps}) => {
         current: tableProps.pagination.current,
       }
     
-      const getBodyWrapper = (body) => { return  <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+    const getBodyWrapper = (body) => { return  <AnimTableBody {...getBodyWrapperProps} body={body} /> }
     
     return (
     <div>
@@ -81,13 +107,16 @@ const List = ({location,onAdd, ...tableProps}) => {
           getBodyWrapper={getBodyWrapper}
         />
         </TablePlate>
+        <ConfirmModel {...confirmProp}/>
     </div>
     );
 }
 
 List.propTypes = {
     onAdd: PropTypes.func,
-    // onEditItem: PropTypes.func,
+    onEditItem: PropTypes.func,
+    onDeleteItem: PropTypes.func,
+    onReset:PropTypes.func,
     location: PropTypes.object,
   }
 
