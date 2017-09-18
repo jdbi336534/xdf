@@ -9,8 +9,8 @@ exports.sendmail = (address,username,name,password) => {
             let transporter = nodemailer.createTransport(mailconfig);
             // setup email data with unicode symbols
             let mailOptions = {
-                from: '"朱海亮 👻" <zhuhl@r7data.top>', // sender address
-                to: 'jiangdb@r7data.com', // list of receivers
+                from: '"机芳 👻" <zhuhl@r7data.top>', // sender address
+                to: '296551289@qq.com', // list of receivers
                 subject: '用户密码重置成功✔', // Subject line
                 // text: 'Hello world?', // plain text body
                 html: '<b>尊敬的用户'+name+'您好，你的账号<span style="color:blue;font-weight:500;">username</span>密码已被重置，重置结果如下:</b></br>'+

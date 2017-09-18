@@ -4,7 +4,10 @@ import { login } from 'services/login'
 export default {
   namespace: 'createreport',
 
-  state: {},
+  state: {
+    imgpath:[],
+    filepath:[]
+  },
 
   effects: {
     * login ({

@@ -180,9 +180,10 @@ const ResetPassWord = async(ctx)=>{
     let password = sha1(pass);
     let result = await $User.resetPass(id,password);
     let doc = await Mail.sendmail('address',username,name,pass);
-    if(result){
+    if(result&&doc){
         ctx.body = {
             code:200,
+            status:doc,
             msg: '重置的密码已经发送至您的邮箱,请查收！若没有收到请再次重置'
         };
     }else{

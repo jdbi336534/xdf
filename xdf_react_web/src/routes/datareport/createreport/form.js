@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Icon, Input, Button, Select , Row, Col, Radio,Upload,Modal} from 'antd';
 import Plate from 'components/plate/plate';
 import PicturesWall from './uploadimg';
+import FilesWall from './uploadfile';
 import styles from './form.less'
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,6 +14,10 @@ const { TextArea } = Input;
 
 const Reportform=({
     reportData,
+    getImagepathArr,
+    getFilepathArr,
+    deleteImage,
+    deleteFile,
     form: {
         getFieldDecorator,
         validateFields,
@@ -40,6 +45,12 @@ const Reportform=({
       function removeImg(imgpath){
         //  删除的图片的路径，调取接口删除后期
           console.log(imgpath);
+      }
+      function uploadFileSuccess(patharr){
+        console.log(patharr);
+      }
+      function removeFile(filepath){
+        console.log(filepath);
       }
     
 return (
@@ -270,7 +281,10 @@ return (
             </Col>
         </Row>   
         <Row >  
+            <p style={{padding:10,color:'rgba(0, 0, 0, 0.85)'}}>图片上传:</p>
             <PicturesWall onSuccess={uploadSuccess} onRemoveImg={removeImg}/>
+            <p style={{padding:10,color:'rgba(0, 0, 0, 0.85)'}}>文件上传:</p>
+            <FilesWall onSuccess={uploadFileSuccess} onRemoveFile={removeFile}/>
         </Row>  
         </Plate>
             <FormItem>
@@ -284,7 +298,10 @@ return (
 Reportform.propTypes = {
     form: PropTypes.object,
     reportData:PropTypes.func,
-    subject: PropTypes.array
+    getImagepathArr:PropTypes.func,
+    getFilepathArr:PropTypes.func,
+    deleteImage:PropTypes.func,
+    deleteFile:PropTypes.func,
   };
 
 export default Form.create()(Reportform);
