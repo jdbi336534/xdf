@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Modal, Select } from 'antd'
-import city from '../../utils/city'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -18,7 +17,7 @@ const formItemLayout = {
 
 const modal = ({
   subject,
-  item = {},
+  item:{},
   onOk,
   form: {
     getFieldDecorator,

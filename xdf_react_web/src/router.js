@@ -74,6 +74,11 @@ const Routers = function ({ history, app }) {
         component: () => import('./routes/datareport/'),
     },
     {
+      path: '/createreport',
+      models: () => [import('./models/createreport')],
+      component: () => import('./routes/datareport/createreport/'),
+    },
+    {
       path: '/datareport/:id',
       models: () => [import('./models/report/detail')],
       component: () => import('./routes/datareport/reportdetail/'),

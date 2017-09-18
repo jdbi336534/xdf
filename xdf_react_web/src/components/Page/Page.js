@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import Loader from '../Loader'
 import styles from './Page.less'
 
-export default class Page extends Component {
+export default class Page extends React.Component {
   render () {
     const { className, children, loading = false, inner = false } = this.props
     const loadingStyle = {

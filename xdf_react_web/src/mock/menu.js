@@ -198,7 +198,7 @@ let database = [{
     mpid: '2',
     name: '统计数据',
     icon: 'database',
-    route: '/UIElement/dataTable',
+    route: '/createreport',
   },
   {
     id: '3',
