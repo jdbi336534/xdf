@@ -10,7 +10,8 @@ const ConfirmModel = ({
   confirmLoading,
   title,
   subtitle,
-  exp
+  exp,
+  wrapClassName
 }) => {
 	return(
    
@@ -22,6 +23,7 @@ const ConfirmModel = ({
           closable={false}
           maskClosable={false}
           className={styles.modal}
+          wrapClassName={wrapClassName}
         >
          <p className={styles.titlecenter}><b><i className={styles.scimg}></i>{subtitle}</b></p>
          <p className={styles.center}>{exp}</p>

@@ -22,6 +22,7 @@ const User = ({location, dispatch, user, loading }) => {
           subtitle:modalType === 'reset' ?'确认要重置用户密码吗？':'确认要删除吗？',
           exp:modalType === 'reset' ?'重置后，密码将不可回退':'删除后将不可恢复',
           visibleSure,
+          wrapClassName: 'vertical-center-modal',
           handleCancel(){
             dispatch({type:'user/Change',payload:{visibleSure:false}})
           },

@@ -27,7 +27,9 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
             },
           }));
         },
-        
+        newReport(){
+          dispatch(routerRedux.push('/createreport'));
+        }
       }
     
       const searchProps={

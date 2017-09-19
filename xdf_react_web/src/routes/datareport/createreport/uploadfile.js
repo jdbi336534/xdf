@@ -20,7 +20,11 @@ export default class FilesWall extends React.Component {
         if (!isLt2M) {
           message.error('图片大小不能超过2MB!');
         }
-        return isFile && isLt2M;
+        const isThree = this.state.fileList.length < 3; 
+        if (!isThree) {
+          message.error('上传数量已超过上限!');
+        }
+        return isFile && isLt2M && isThree;
       }
 
       handleChange = ({ fileList,file }) => {

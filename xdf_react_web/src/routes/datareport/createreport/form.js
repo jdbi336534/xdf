@@ -13,11 +13,14 @@ const { TextArea } = Input;
 
 
 const Reportform=({
+    Loading,
+    report,    
     reportData,
     getImagepathArr,
     getFilepathArr,
     deleteImage,
     deleteFile,
+    isChange,
     form: {
         getFieldDecorator,
         validateFields,
@@ -38,29 +41,26 @@ const Reportform=({
                 }
               });
       }
-      function uploadSuccess(patharr){
-        //   上传的图片路径数组
-        console.log(patharr);
-      }
-      function removeImg(imgpath){
-        //  删除的图片的路径，调取接口删除后期
-          console.log(imgpath);
-      }
-      function uploadFileSuccess(patharr){
-        console.log(patharr);
-      }
-      function removeFile(filepath){
-        console.log(filepath);
-      }
+
+      const formItemLayout = {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 3},
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 12 },
+        },
+      };
+     
     
 return (
     <div>
-        <Form layout="inline" >
+        <Form  >
         <Plate title="基础汇报">
-                <Row >
-                    <Col  span={6} >
                         <FormItem
-                        label="本月预排完成率(%)"
+                        {...formItemLayout}
+                        label="本月预排完成率"
                         >
                         {getFieldDecorator('prescheduling', {
                             rules:[
@@ -69,13 +69,12 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <Input size="small" placeholder="请输入" style={{width:'8vw'}}/>
+                            <label><Input  placeholder="请输入" style={{width:'8vw'}}/>%</label>
                         )}
                         </FormItem>
-                    </Col>
-                    <Col  span={6} >
                         <FormItem
-                        label="本月结转完成率(%)"
+                        {...formItemLayout}
+                        label="本月结转完成率"
                         >
                         {getFieldDecorator('carryover', {
                             rules:[
@@ -84,13 +83,12 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <Input size="small" placeholder="请输入" style={{width:'8vw'}} />
+                            <label><Input  placeholder="请输入" style={{width:'8vw'}} />%</label>
                         )}
                         </FormItem>
-                    </Col>
-                    <Col  span={6} >
                         <FormItem
-                        label="Q1预排完成率(%)"
+                        {...formItemLayout}
+                        label="Q1预排完成率"
                         >
                         {getFieldDecorator('Q1prescheduling', {
                             rules:[
@@ -99,13 +97,12 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <Input size="small" placeholder="请输入" style={{width:'8vw'}}/>
+                            <label><Input  placeholder="请输入" style={{width:'8vw'}}/>%</label>
                         )}
                         </FormItem>
-                    </Col>
-                    <Col  span={6} >
                         <FormItem
-                        label="Q1结转完成率(%)"
+                        {...formItemLayout}
+                        label="Q1结转完成率"
                         >
                         {getFieldDecorator('Q1carryover', {
                             rules:[
@@ -114,15 +111,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <Input size="small" placeholder="请输入" style={{width:'8vw'}}/>
+                            <label><Input  placeholder="请输入" style={{width:'8vw'}}/>%</label>
                         )}
                         </FormItem>
-                    </Col>
-                   
-                </Row>
-                <Row >
-                    <Col  span={12} >
                         <FormItem
+                        {...formItemLayout}
                         label="预排完成速度"
                         >
                         {getFieldDecorator('prespeed', {
@@ -138,9 +131,8 @@ return (
                             </RadioGroup>
                         )}
                         </FormItem>
-                    </Col>
-                    <Col  span={12} >
                         <FormItem
+                        {...formItemLayout}
                         label="结转完成速度"
                         >
                         {getFieldDecorator('speed', {
@@ -156,12 +148,9 @@ return (
                             </RadioGroup>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-                    <Row >
-                    <Col  span={24} >
                         <FormItem
-                        label="采取的措施和情况"
+                        {...formItemLayout}
+                        label="采取措施情况"
                         >
                         {getFieldDecorator('takesteps', {
                             rules:[
@@ -170,14 +159,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <TextArea placeholder="请输入为增加预排采取的措施和情况" size="small" autosize style={{width:'40vw'}}/>
+                            <TextArea placeholder="请输入为增加预排采取的措施和情况"  autosize style={{width:'40vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-                    <Row >
-                    <Col  span={24} >
                         <FormItem
+                        {...formItemLayout}
                         label="结转原因分析"
                         >
                         {getFieldDecorator('reason', {
@@ -187,14 +173,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <TextArea placeholder="请输入结转原因分析" size="small" autosize style={{width:'40vw'}}/>
+                            <TextArea placeholder="请输入结转原因分析"  autosize style={{width:'40vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-                    <Row >
-                    <Col  span={24} >
                         <FormItem
+                        {...formItemLayout}
                         label="后续采取措施"
                         >
                         {getFieldDecorator('takemeasures', {
@@ -204,14 +187,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <TextArea placeholder="请输入后续采取措施" size="small" autosize style={{width:'40vw'}}/>
+                            <TextArea placeholder="请输入后续采取措施"  autosize style={{width:'40vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-                    <Row >
-                    <Col  span={12} >
                         <FormItem
+                        {...formItemLayout}
                         label="结转前五名"
                         >
                         {getFieldDecorator('firstfive', {
@@ -221,12 +201,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <TextArea size="small" autosize placeholder="请用逗号或者空格将姓名隔开" style={{width:'25vw'}}/>
+                            <TextArea  autosize placeholder="请用逗号或者空格将姓名隔开" style={{width:'25vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    <Col  span={12} >
                         <FormItem
+                        {...formItemLayout}
                         label="结转后五名"
                         >
                         {getFieldDecorator('lastfive', {
@@ -236,14 +215,11 @@ return (
                             ],
                             validateTrigger:'onBlur'
                         })(
-                            <TextArea size="small" autosize placeholder="请用逗号或者空格将姓名隔开" style={{width:'25vw'}}/>
+                            <TextArea  autosize placeholder="请用逗号或者空格将姓名隔开" style={{width:'25vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-                    <Row >
-                    <Col  span={24} >
                         <FormItem
+                        {...formItemLayout}
                         label="其他工作情况"
                         >
                         {getFieldDecorator('others', {
@@ -253,42 +229,82 @@ return (
                                 ],
                                 validateTrigger:'onBlur'
                         })(
-                            <TextArea placeholder="请输入其他工作情况" size="small" autosize style={{width:'40vw'}}/>
+                            <TextArea placeholder="请输入其他工作情况"  autosize style={{width:'40vw'}}/>
                         )}
                         </FormItem>
-                    </Col>
-                    </Row>
-           
         </Plate>
         <Plate title="教研汇报">
-        <Row >
-            <Col  span={24} >
+       
                 <FormItem
-                label="是否教研"
+                {...formItemLayout}
+                label="是否进行教研"
                 >
                 {getFieldDecorator('isresearch', {
+                    initialValue:'false',
                     rules:[
                     {required:true,message:'请选择'}
                     ],
                     validateTrigger:'onChange'
                 })(
-                    <Select  style={{ width: 120 }} size="small" >
+                    <Select  style={{ width: 120 }}  onChange={isChange}>
                     <Option value="true">是</Option>
                     <Option value="false">否</Option>
                     </Select>
                 )}
                 </FormItem>
-            </Col>
-        </Row>   
-        <Row >  
-            <p style={{padding:10,color:'rgba(0, 0, 0, 0.85)'}}>图片上传:</p>
-            <PicturesWall onSuccess={uploadSuccess} onRemoveImg={removeImg}/>
-            <p style={{padding:10,color:'rgba(0, 0, 0, 0.85)'}}>文件上传:</p>
-            <FilesWall onSuccess={uploadFileSuccess} onRemoveFile={removeFile}/>
-        </Row>  
+           
+        {!report ?
+                <FormItem
+                {...formItemLayout}
+                label="未教研说明"
+                >
+                {getFieldDecorator('notresearchreason', {
+                        rules:[
+                        {required:true,message:'请输入其他工作情况'},
+                        {max:500,message:'不能超过500个字符'}
+                        ],
+                        validateTrigger:'onBlur'
+                })(
+                    <TextArea placeholder="请输入其他工作情况"  autosize style={{width:'40vw'}}/>
+                )}
+                </FormItem>
+        :
+        <div>
+                <FormItem
+                {...formItemLayout}
+                label="已教研说明"
+                >
+                {getFieldDecorator('researchexp', {
+                        rules:[
+                        {required:true,message:'请输入其他工作情况'},
+                        {max:500,message:'不能超过500个字符'}
+                        ],
+                        validateTrigger:'onBlur'
+                })(
+                     <TextArea placeholder="请输入其他工作情况"  autosize style={{width:'40vw'}}/>
+                )}
+                </FormItem>
+                <FormItem
+                {...formItemLayout}
+                label="图片上传(最多上传5张)"
+                >
+                <PicturesWall onSuccess={getImagepathArr} onRemoveImg={deleteImage}/>
+                </FormItem>
+                <FormItem
+                {...formItemLayout}
+                label="文件上传(最多上传3个)"
+                >
+                <div style={{width:'30vw'}}>
+                <FilesWall onSuccess={getFilepathArr} onRemoveFile={deleteFile} />
+                </div>
+                </FormItem>
+        </div>
+        }
         </Plate>
-            <FormItem>
-            <Button type="primary" size="default" onClick={handleSearch}>查询</Button>
+            <FormItem
+            style={{textAlign:'center',paddingTop:50,paddingBottom:200}}
+            >
+            <Button type="primary" size="large" icon="save" loading={Loading} onClick={handleSearch}>保存</Button>
             </FormItem>
         </Form>
     </div>
@@ -302,6 +318,9 @@ Reportform.propTypes = {
     getFilepathArr:PropTypes.func,
     deleteImage:PropTypes.func,
     deleteFile:PropTypes.func,
+    isChange:PropTypes.func,
+    report:PropTypes.bool,
+    Loading:PropTypes.bool
   };
 
 export default Form.create()(Reportform);

@@ -1,20 +1,25 @@
 import { routerRedux } from 'dva/router'
-import { login } from 'services/login'
+import { directiveSave } from 'services/createreport'
 
 export default {
   namespace: 'createreport',
 
   state: {
     imgpath:[],
-    filepath:[]
+    filepath:[],
+    report:false,
+    visibleSave:false
   },
 
   effects: {
-    * login ({
+    * commit ({
       payload,
     }, { put, call, select }) {
-      const data = yield call(login, payload)
+      const imgpath = yield select(({ createreport }) => createreport.imgpath);
+      const filepath = yield select(({ createreport }) => createreport.filepath);
+      const data = yield call(directiveSave, {...payload,imgpath,filepath});
       if (data.success) {
+        yield put({type:'showModal'});
       } else {
         throw data
       }
@@ -37,6 +42,12 @@ export default {
   reducers: {
     Change (state, action) {
       return { ...state, ...action.payload }
+    },
+    showModal (state) {
+      return { ...state, visibleSave: true }
+    },
+    hideModal (state) {
+      return { ...state, visibleSave: false }
     }
   }
 }

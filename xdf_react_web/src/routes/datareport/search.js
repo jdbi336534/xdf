@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Icon, Input, Button, Select , Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Select , Row, Col, DatePicker } from 'antd';
 import Plate from 'components/plate/plate';
 import styles from './search.less'
 const FormItem = Form.Item;
 const Option = Select.Option;
+const { RangePicker } = DatePicker;
 
 const Searchform=({
     subject,
@@ -26,9 +27,12 @@ const Searchform=({
         e.preventDefault();
           validateFields((errors,fieldsValue) => {
                 if (!errors) {
+                    const rangeValue = fieldsValue['range'];
                     const data = {
                        ...fieldsValue,
+                       'range':rangeValue?[rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]:[]
                      };
+                     console.log(data)
                     searchData(data);
                 }
               });
@@ -49,9 +53,9 @@ return (
     <Plate title="汇报查询">
         <Form layout="inline" className={styles.searchform}>
             <Row >
-                <Col  span={5} >
+                <Col  span={6} >
                     <FormItem
-                    label="姓名"
+                    label="姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                     >
                     {getFieldDecorator('name', {
                         rules:[{validator: valiName}],
@@ -61,24 +65,34 @@ return (
                     )}
                     </FormItem>
                 </Col>
-                <Col  span={5} >
+                <Col  span={6} >
                     <FormItem
-                    label="学科组"
+                    label="&nbsp;&nbsp;学&nbsp;科&nbsp;组"
                     >
-                    {getFieldDecorator('subject', {
-                    })(
+                    {getFieldDecorator('subject')(
                     <Select size="small" placeholder="请选择学科组" style={{ width: 147,textAlign:'left' }} allowClear>
                         {subjectOptions}
                     </Select>
                     )}
                     </FormItem>
                 </Col>
-                <Col  span={6} >
+                <Col span={12}>
+                <FormItem
+                label="时间段"
+                >
+                {getFieldDecorator('range')(
+                    <RangePicker size="small"/>
+                )}
+                </FormItem>
+                </Col>
+                
+            </Row>
+            <Row>
+            <Col  span={6} >
                     <FormItem
                     label="预排速度"
                     >
-                    {getFieldDecorator('prespeed', {
-                    })(
+                    {getFieldDecorator('prespeed')(
                     <Select size="small" placeholder="请选择预排速度" style={{ width: 147,textAlign:'left' }} allowClear>
                     <Option value="fast">较快</Option>
                     <Option value="normal">正常</Option>
@@ -89,10 +103,9 @@ return (
                 </Col>
                 <Col  span={6} >
                     <FormItem
-                    label="结转速度"
+                    label="&nbsp;结转速度"
                     >
-                    {getFieldDecorator('speed', {
-                    })(
+                    {getFieldDecorator('speed')(
                     <Select size="small" placeholder="请选择结转速度" style={{ width: 147,textAlign:'left' }} allowClear>
                     <Option value="fast">较快</Option>
                     <Option value="normal">正常</Option>
@@ -101,7 +114,9 @@ return (
                     )}
                     </FormItem>
                 </Col>
-                <Col  span={2} >
+                <Col  span={8}>
+                </Col>
+                <Col  span={4} >
                 <FormItem>
                 <Button type="primary" size="default" onClick={handleSearch}>查询</Button>
                 </FormItem>

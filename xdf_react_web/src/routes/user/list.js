@@ -14,30 +14,6 @@ const confirm = Modal.confirm
 
 const List = ({location,onAdd,onEditItem,onDeleteItem,onReset, ...tableProps,confirmProp}) => {
     location.query = queryString.parse(location.search)
-
-  //   const handleClick = (record) => {
-  //       confirm({
-  //         title: '你确定要删除此项吗?',
-  //         content:'删除后将不可恢复',
-  //         onOk () {
-  //           onDeleteItem(record._id)
-  //         },
-  //       })
-  //   }
-  //   const onResetpass = (record) => {
-  //     confirm({
-  //       title: '你确定要重置密码吗?',
-  //       content:'重置后不能恢复到之前的密码',
-  //       onOk () {
-  //         // return new Promise((resolve, reject) => {
-  //         //   setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-  //         // }).catch((err) => console.log(err.message))
-  //         onReset(record)
-  //       },
-  //     })
-  //  }
-
-
     const columns = [
         {
           title: '姓名',

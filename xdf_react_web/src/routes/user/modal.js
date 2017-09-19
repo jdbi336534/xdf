@@ -17,7 +17,7 @@ const formItemLayout = {
 
 const modal = ({
   subject,
-  item:{},
+  item,
   onOk,
   form: {
     getFieldDecorator,

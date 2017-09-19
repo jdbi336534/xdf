@@ -369,7 +369,8 @@
       },
       fileBeforeUpload(file) {
         // 文件上传前
-        if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type ==='application/pdf' || file.type === 'application/msword') {
+        if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type ===
+          'application/pdf' || file.type === 'application/msword') {
           return true;
         } else {
           this.$Message.warning('上传文件的格式错误，只能上传word,pdf文件');

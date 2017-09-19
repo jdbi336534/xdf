@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Spin } from 'antd';
+import { Row, Col, Spin, Icon } from 'antd';
 import moment from 'moment'
 import Plate from 'components/plate/plate';
 import styles from './index.less'
@@ -27,7 +27,7 @@ try{
     if(data.filepath){
         for(let item of data.filepath){
             filesrc.push(
-                <Col span={24} key={item}><a target="_blank" href={'http://localhost:3001'+item}>{item.split('/')[4]}</a></Col>
+                <Col span={24} key={item}><a target="_blank" href={'http://localhost:3001'+item}><Icon type="file" />{item.split('/')[4]}</a></Col>
             )
         }
     }
@@ -40,6 +40,11 @@ try{
     }
 }catch(err){
     console.error(err.message);
+}
+const others = ()=>{
+   let a=data.others || '';
+   return a.replace(/[\r\n]/g, '<br/>')
+{/* <div dangerouslySetInnerHTML={{__html: `从后台拿到字符串类型的标签`}} /> */}
 }
   return (
     <Spin size="small" spinning={loading}>
@@ -71,21 +76,44 @@ try{
             <Col span={24}><span className={styles.weight}>结转后五名：</span>{data.lastfive}</Col>
         </Row>
         <Row>
-            <Col span={24}><span className={styles.weight}>上周为增加预排采取的措施：</span>{data.takesteps}</Col>
+            <div style={{float:'left',display:'block',width:65}}>
+            <span className={styles.weight}>采取措施：</span>
+            </div>
+            <div style={{float:'left',display:'block',width:'calc(100% - 65px)'}} dangerouslySetInnerHTML={{__html: (data.takesteps || '').replace(/[\r\n]/g, '<br/>')}}/>
         </Row>
         <Row>
-            <Col span={24}><span className={styles.weight}>原因分析：</span>{data.reason}</Col>
+        <div style={{float:'left',display:'block',width:65}}>
+            <span className={styles.weight}>原因分析：</span>
+            </div>
+            <div style={{float:'left',display:'block',width:'calc(100% - 65px)'}} dangerouslySetInnerHTML={{__html: (data.reason || '').replace(/[\r\n]/g, '<br/>')}}/>
         </Row>
         <Row>
-            <Col span={24}><span className={styles.weight}>后续措施：</span>{data.takemeasures}</Col>
+            <div style={{float:'left',display:'block',width:65}}>
+            <span className={styles.weight}>后续措施：</span>
+            </div>
+            <div style={{float:'left',display:'block',width:'calc(100% - 65px)'}} dangerouslySetInnerHTML={{__html: (data.takemeasures || '').replace(/[\r\n]/g, '<br/>')}}/>
         </Row>
-        
         <Row>
-            <Col span={24}><span className={styles.weight}>其他工作详述：</span>{data.others}</Col>
+            <div style={{float:'left',display:'block',width:65}}>
+            <span className={styles.weight}>其他工作：</span>
+            </div>
+            <div dangerouslySetInnerHTML={{__html: (data.others || '').replace(/[\r\n]/g, '<br/>')}} style={{float:'left',display:'block',width:'calc(100% - 65px)'}}/>
         </Row>
         {
-        data.isresearch==='false'?<Row><Col span={24}><span className={styles.weight}>未教研说明：</span>{data.notresearchreason}</Col></Row>
-        :<Row><Col span={24}><span className={styles.weight}>已教研说明：</span>{data.researchexp}</Col></Row>
+        data.isresearch==='false'?
+        <Row>
+        <div style={{float:'left',display:'block',width:78}}>
+            <span className={styles.weight}>未教研说明：</span>
+            </div>
+            <div style={{float:'left',display:'block',width:'calc(100% - 78px)'}} dangerouslySetInnerHTML={{__html: (data.notresearchreason || '').replace(/[\r\n]/g, '<br/>')}}/>
+        </Row>
+        :
+        <Row>
+        <div style={{float:'left',display:'block',width:78}}>
+            <span className={styles.weight}>已教研说明：</span>
+            </div>
+            <div style={{float:'left',display:'block',width:'calc(100% - 78px)'}} dangerouslySetInnerHTML={{__html: (data.researchexp || '').replace(/[\r\n]/g, '<br/>')}}/>
+        </Row>
         }
         <Row>
         {data.filepath&&data.filepath.length>0?<Col span={24}><span className={styles.weight}>上传的附件(点击下载)：</span></Col>:''}

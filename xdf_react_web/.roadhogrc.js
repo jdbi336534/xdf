@@ -20,7 +20,7 @@ export default {
       "pathRewrite": { "^/api/v1/weather": "/v3/weather" }
     },
     "/node": {
-      "target": "http://localhost:3001",
+      "target": "http://47.93.59.76:3389",
       "changeOrigin": true,
       "pathRewrite": { "^/node" : "" }
     }

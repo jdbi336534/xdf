@@ -9,7 +9,7 @@ import AnimTableBody from 'components/DataTable/AnimTableBody'
 import TablePlate from 'components/plate/tableplate';
 import styles from './List.less'
 
-const List = ({location, ...tableProps}) => {
+const List = ({location,newReport,...tableProps}) => {
     location.query = queryString.parse(location.search)
 
     const columns = [
@@ -106,13 +106,13 @@ const List = ({location, ...tableProps}) => {
     <div>
        <TablePlate title="汇报列表">
        <div className={styles.add_plate}>
-             <a><Icon type="plus" />新增汇报</a>
+             <a onClick={newReport}><Icon type="plus" />新增汇报</a>
             </div>
         <Table
           {...tableProps}
           className={classnames({ [styles.table]: true })}
          
-          scroll={{ y: 'calc(100vh - 338px)' }}
+          scroll={{ y: 'calc(100vh - 370px)' }}
           columns={columns}
           size='small'
           rowKey={record => record._id}
@@ -125,7 +125,7 @@ const List = ({location, ...tableProps}) => {
 
 List.propTypes = {
     // onDeleteItem: PropTypes.func,
-    // onEditItem: PropTypes.func,
+    newReport: PropTypes.func,
     location: PropTypes.object,
   }
 
