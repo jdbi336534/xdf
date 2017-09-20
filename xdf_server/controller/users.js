@@ -6,6 +6,7 @@ const Mail = require('../lib/utils/mail');
 const Models = require('../lib/query/core');
 const $User = Models.$User;
 const User = require('../models/user').User;
+const tool =require('../lib/utils/tool');
 //下面这两个包用来生成时间
 const moment = require('moment');
 const objectIdToTimestamp = require('objectid-to-timestamp');
@@ -144,7 +145,18 @@ const GetAllUsers = async(ctx) => {
 const getUserList = async(ctx) => {
     let page = parseInt(ctx.request.body.page);
     let size = parseInt(ctx.request.body.pageSize);
-    let doc = await $User.findUserList(page, size);
+    let name=ctx.request.body.name||'';
+    let role =ctx.request.body.role||'';
+    let subject=ctx.request.body.subject||'';
+    let username =ctx.request.body.username||'';
+    // 去掉为空的查询条件
+    let obj=tool.deleteObj({
+        name,
+        role,
+        username,
+        subject,
+    },'');
+    let doc = await $User.findUserList(page, size, obj);
     if (doc) {
         doc.code = 200;
         ctx.body = doc;

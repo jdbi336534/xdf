@@ -18,7 +18,7 @@ const Searchform=({
 
     const subjectOptions=subject.map((item,key)=>{
         return(
-         <Option key={key} value={item._id}>{item.subject}</Option>
+         <Option key={key} value={item.subject}>{item.subject}</Option>
        );
     });
 

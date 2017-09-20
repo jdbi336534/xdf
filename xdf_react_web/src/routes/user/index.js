@@ -101,7 +101,16 @@ const User = ({location, dispatch, user, loading }) => {
     const searchProps={
         subject,
         searchData(data){
-
+          dispatch({
+            type:'user/Change',
+            payload:{
+            condition:data
+          }});
+          dispatch({
+            type:'user/query',
+            payload:{
+            ...data
+          }});
         }
     }
 

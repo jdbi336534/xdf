@@ -1,5 +1,6 @@
 const Models = require('../lib/query/core');
 const moment = require('moment');
+const tool =require('../lib/utils/tool');
 const $Director = Models.$Director;
 //保存主管提交的信息
 const Save = async(ctx) => {
@@ -9,8 +10,7 @@ const Save = async(ctx) => {
         //     code: 500,
         //     msg: '保存失败！'
         // };
-    } else {
-    }
+    } else {}
     //拿到数据
     let prescheduling = ctx.request.body.prescheduling;
     let carryover = ctx.request.body.carryover;
@@ -94,21 +94,35 @@ const FindById = async(ctx) => {
 const getAssistantList = async(ctx) => {
     let page = parseInt(ctx.request.body.page);
     let size = parseInt(ctx.request.body.pageSize);
-    // let start = new Date(ctxstart);
-    // let end = new Date(ctxend);
-    // console.log(start,moment(start).format('YYYY-MM-DD HH:mm:ss'));
-    // console.log(end,moment(end).format('YYYY-MM-DD HH:mm:ss'));
-    let doc = await $Director.findAssistantList(page, size);
+    let name=ctx.request.body.name||'';
+    let prespeed =ctx.request.body.prespeed||'';
+    let speed=ctx.request.body.speed||'';
+    let subject =ctx.request.body.subject||'';
+    let start=ctx.request.body.start||'';
+    let end =ctx.request.body.end||'';
+    // 去掉为空的查询条件
+    let obj=tool.deleteObj({
+        name,
+        prespeed,
+        speed,
+        subject,
+    },'');
+    if(start!==''&&end !==''){
+        obj.create_time={
+            '$gt': new Date(start),
+            '$lt': new Date(end)
+        }
+    }
+    console.log(obj);
+    let doc = await $Director.findAssistantList(page,size,obj);
     if (doc) {
         doc.code = 200;
         ctx.body = doc;
     } else {
-        ctx.body = {
-            code: 500,
-            msg: doc
-        }
+        ctx.throw(400, '服务器错误');
     }
 };
+
 
 module.exports = {
     Save,

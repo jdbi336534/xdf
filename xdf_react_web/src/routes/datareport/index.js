@@ -23,7 +23,7 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
             query: {
               ...query,
               page: page.current,
-              pageSize: page.pageSize,
+              pageSize: page.pageSize
             },
           }));
         },
@@ -35,7 +35,16 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
       const searchProps={
         subject,
         searchData(data){
-
+          dispatch({
+            type:'datareport/Change',
+            payload:{
+            condition:data
+          }});
+          dispatch({
+            type:'datareport/reportlist',
+            payload:{
+            ...data
+          }});
         }
       }
     return (

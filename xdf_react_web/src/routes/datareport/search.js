@@ -19,7 +19,7 @@ const Searchform=({
 
     const subjectOptions=subject.map((item,key)=>{
         return(
-         <Option key={key} value={item._id}>{item.subject}</Option>
+         <Option key={key} value={item.subject}>{item.subject}</Option>
        );
     });
 
@@ -27,12 +27,12 @@ const Searchform=({
         e.preventDefault();
           validateFields((errors,fieldsValue) => {
                 if (!errors) {
-                    const rangeValue = fieldsValue['range'];
+                    const rangeValue = fieldsValue['range']||[];
                     const data = {
                        ...fieldsValue,
-                       'range':rangeValue?[rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]:[]
+                       'start':rangeValue.length>0?rangeValue[0].format('YYYY-MM-DD'):undefined,
+                       'end':rangeValue.length>0?rangeValue[1].format('YYYY-MM-DD'):undefined
                      };
-                     console.log(data)
                     searchData(data);
                 }
               });

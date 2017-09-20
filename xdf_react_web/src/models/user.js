@@ -11,11 +11,13 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     modalVisible: false,
     visibleSure:false,
-    subject:[]
+    subject:[],
+    condition:{}
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
+      dispatch({type:'querySubject'});
       history.listen((location) => {
         if (location.pathname === '/user') {
           const payload = location.query || { page: 1, pageSize: 30 }
@@ -23,7 +25,6 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload,
           });
-          dispatch({type:'querySubject'});
         }
       })
     },
@@ -31,7 +32,8 @@ export default modelExtend(pageModel, {
 
   effects: {
     * query ( {payload={} }, { put, call, select }) {
-        const data = yield call(UserList, payload);
+      const condition = yield select(({ user }) => user.condition);
+      const data = yield call(UserList, {page: 1, pageSize: 30,...payload,...condition});
         if (data.success) {
           yield put({
             type:'querySuccess',
