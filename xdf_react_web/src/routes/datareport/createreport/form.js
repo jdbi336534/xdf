@@ -310,8 +310,11 @@ return (
                 description="Additional description and informations about copywriting."
                 type="info"
                 showIcon
+                style={{marginBottom:15}}
             />
-            <ExcelWall onSuccess={getExcelData} onRemove={deleteExcel}/>
+            <div style={{width:'50vw',marginBottom:20}}>
+                <ExcelWall onSuccess={getExcelData} onRemove={deleteExcel} />
+            </div>
         </Plate>
             <FormItem
             style={{textAlign:'center',paddingTop:50,paddingBottom:50,marginBottom:0}}

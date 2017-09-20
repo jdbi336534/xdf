@@ -8,7 +8,8 @@ import Searchform from './search'
 import List from './List'
 
 const Datareport = ({location, dispatch, datareport, loading }) => {
-    location.query = queryString.parse(location.search);
+  location.search='?a=1&b=2&c=3';
+   location.query = queryString.parse(location.search);
     const { list, pagination, subject} = datareport;
     const { pageSize } = pagination;
     const listProps = {
@@ -33,6 +34,7 @@ const Datareport = ({location, dispatch, datareport, loading }) => {
       }
     
       const searchProps={
+        location,
         subject,
         searchData(data){
           dispatch({

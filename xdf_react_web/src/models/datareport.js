@@ -18,7 +18,7 @@ export default modelExtend(pageModel, {
       history.listen((location) => {
         if (location.pathname === '/datareport') {
           const payload = location.query || { page: 1, pageSize: 30 }
-          console.log()
+          console.log('payload:',payload)
           dispatch({
             type: 'reportlist',
             payload,

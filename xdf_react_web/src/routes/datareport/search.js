@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Icon, Input, Button, Select , Row, Col, DatePicker } from 'antd';
+import queryString from 'query-string'
 import Plate from 'components/plate/plate';
 import styles from './search.less'
 const FormItem = Form.Item;
@@ -8,6 +9,7 @@ const Option = Select.Option;
 const { RangePicker } = DatePicker;
 
 const Searchform=({
+    location,
     subject,
     searchData,
     form: {
@@ -54,6 +56,7 @@ return (
         <Form layout="inline" className={styles.searchform}>
             <Row >
                 <Col  span={6} >
+                {console.log(location)}
                     <FormItem
                     label="姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                     >
