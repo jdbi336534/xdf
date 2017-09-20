@@ -112,7 +112,7 @@ const List = ({location,newReport,...tableProps}) => {
           {...tableProps}
           className={classnames({ [styles.table]: true })}
          
-          scroll={{ y: 'calc(100vh - 370px)' }}
+          scroll={{ y: 'calc(100vh - 376px)' }}
           columns={columns}
           size='small'
           rowKey={record => record._id}

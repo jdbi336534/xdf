@@ -27,14 +27,14 @@ try{
     if(data.filepath){
         for(let item of data.filepath){
             filesrc.push(
-                <Col span={24} key={item}><a target="_blank" href={'http://localhost:3001'+item}><Icon type="file" />{item.split('/')[4]}</a></Col>
+                <Col span={24} key={item}><a target="_blank" href={'http://47.93.59.76:3389'+item}><Icon type="file" />{item.split('/')[4]}</a></Col>
             )
         }
     }
     if(data.imgpath){
         for(let img of data.imgpath){
             imgsrc.push(
-                <Col span={24} key={img}><img style={{width:'50%'}} src={'http://localhost:3001'+img}></img></Col>
+                <Col span={24} key={img}><img style={{width:'50%'}} src={'http://47.93.59.76:3389'+img}></img></Col>
             )
         }
     }
