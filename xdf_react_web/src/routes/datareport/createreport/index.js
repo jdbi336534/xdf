@@ -2,20 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Page } from 'components'
+import { message } from 'antd';
 import { routerRedux } from 'dva/router'
 import Savesuccess from 'components/Savesuccess/'
 import Reportform from './form'
 
 const Createreport = ({location, dispatch, createreport, loading }) => {
-    const { report, visibleSave } = createreport;
+    const { report, visibleSave, excelpath } = createreport;
     
     const reportProps={
         Loading:loading.effects['createreport/commit'],
         report,
         reportData(data){
+          if(excelpath===''){
+            message.warning('请上传四折标课后再保存!');
+            return;
+          }
           dispatch({
             type:'createreport/commit',
-            payload:data
+            payload:{...data,excelpath}
           });
         },
         getImagepathArr(imgarr){
@@ -57,13 +62,36 @@ const Createreport = ({location, dispatch, createreport, loading }) => {
               }
             });
           }
+        },
+        getExcelData(res){
+        console.log(res);
+        if(res.code===200){
+          dispatch({
+            type:'createreport/Change',
+            payload:{
+              exceldata:res.data,
+              excelpath:res.filepath
+            }
+          });
+        }
+        },
+        deleteExcel(path){
+
         }
     }
+
+
     const modalProps={
       content:'保存成功！',
         visibleSave,
         handleOk(){
-         dispatch({type:'hideModal'});
+         dispatch({
+           type:'createreport/hideModal',
+           payload:{
+            exceldata:[],
+            excelpath:''
+           }
+          });
          dispatch(routerRedux.push('/datareport'));
         }
     }

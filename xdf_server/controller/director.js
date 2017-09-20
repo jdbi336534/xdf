@@ -1,7 +1,11 @@
+const xlsx = require('node-xlsx');
+const fs = require('fs');
+const path = require('path');
 const Models = require('../lib/query/core');
 const moment = require('moment');
 const tool =require('../lib/utils/tool');
 const $Director = Models.$Director;
+const $Renewals = Models.$Renewals;
 //保存主管提交的信息
 const Save = async(ctx) => {
     // 获得cookie
@@ -32,10 +36,31 @@ const Save = async(ctx) => {
     let username = ctx.cookies.get("xdf_user");
     let name = ctx.cookies.get("xdf_name");
     let subject = ctx.cookies.get("xdf_subject");
+    let excelfilepath = ctx.request.body.excelpath;
     // 可以进行相关的验证
+
+
+    let realfilepath = path.resolve(__dirname, '..');
+    console.log(realfilepath + '/public' + excelfilepath);
+    let obj = xlsx.parse(realfilepath + '/public' + excelfilepath);
+    let data = obj[0].data;
+    let collectionarr = [];
+    for (let i = 4; i < data.length; i++) {
+        if (data[i].length !== 0) {
+            collectionarr.push({
+                'campus': data[i][0] || '',
+                'assistant': data[i][1] || '',
+                'teacher': data[i][2] || '',
+                'student': data[i][3] || '',
+                'isrenew': data[i][4] || '',
+                'measures': data[i][5] || '',
+                'create_time': new Date()
+            });
+        }
+    }
     let doc = await $Director.newAndSave(prescheduling, carryover, Q1prescheduling, Q1carryover, takesteps, prespeed, speed, reason, takemeasures, firstfive, lastfive, others, isresearch, notresearchreason, filepath, imgpath, researchexp, username, name, subject);
-    console.log('doc', doc);
-    if (doc) {
+    let result = await $Renewals.newAndSave('username', 'name', collectionarr);
+    if (doc&&result) {
         ctx.body = {
             code: 200,
             data: ctx.request.body,
@@ -122,6 +147,7 @@ const getAssistantList = async(ctx) => {
         ctx.throw(400, '服务器错误');
     }
 };
+
 
 
 module.exports = {

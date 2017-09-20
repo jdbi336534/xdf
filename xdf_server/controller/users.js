@@ -1,7 +1,3 @@
-const xlsx = require('node-xlsx');
-const ejsExcel = require("ejsexcel");
-const fs = require('fs');
-const path = require('path');
 const Mail = require('../lib/utils/mail');
 const Models = require('../lib/query/core');
 const $User = Models.$User;
@@ -14,9 +10,7 @@ const objectIdToTimestamp = require('objectid-to-timestamp');
 const sha1 = require('sha1');
 //createToken
 const createToken = require('../lib/token/createToken.js');
-var filepath2 = path.resolve(__dirname, '..');
-//获得Excel模板的buffer对象
-var exlBuf = fs.readFileSync(filepath2 + "/public/exports/assistantDirector.xlsx");
+
 //登录
 const Login = async(ctx) => {
     //拿到账号和密码
@@ -208,56 +202,6 @@ const ResetPassWord = async(ctx)=>{
 
 }
 
-//四折标课文件上传
-const Upload = (ctx) => {
-    var filepath = path.resolve(__dirname, '..');
-    var obj = xlsx.parse(filepath + '/' + ctx.req.file.destination + '/' + ctx.req.file.filename);
-    let data = obj[0].data;
-    let collectionarr = [];
-    for (let i = 4; i < data.length; i++) {
-        if (data[i].length !== 0) {
-            collectionarr.push({
-                'campus': data[i][0] || '',
-                'assistant': data[i][1] || '',
-                'teacher': data[i][2] || '',
-                'student': data[i][3] || '',
-                'isrenew': data[i][4] || '',
-                'measures': data[i][5] || ''
-            });
-        }
-    }
-    //用数据源(对象)data渲染Excel模板
-    // ejsExcel.renderExcel(exlBuf, collectionarr).then(function (exlBuf2) {
-    //     fs.writeFileSync(filepath2 + "/public/exports/助理主管四折标课统计.xlsx", exlBuf2);
-    //     console.log("生成助理主管四折标课统计.xlsx成功！");
-    // }).catch(function (err) {
-    //     console.error(err);
-    // });
-    // 这里不能直接存数据库，得手动在页面确认后才行。
-    ctx.status = 200;
-    ctx.body = {
-        code: 200,
-        data: collectionarr,
-        origionname: ctx.req.file.originalname,
-        filename: ctx.req.file.filename,
-        // 去掉路径中的public字段
-        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public", "")
-    }
-}
-
-//文件上传
-const Fileupload = (ctx) => {
-    var filepath = path.resolve(__dirname, '..');
-    // 这里返回文件路径，页面在提交的时候提交路径信息
-    ctx.status = 200;
-    ctx.body = {
-        code: 200,
-        origionname: ctx.req.file.originalname,
-        filename: ctx.req.file.filename,
-        // 去掉路径中的public字段
-        filepath: (ctx.req.file.destination + '/' + ctx.req.file.filename).replace("public", "")
-    }
-}
 
 module.exports = {
     Login,
@@ -266,7 +210,5 @@ module.exports = {
     ResetPassWord,
     GetAllUsers,
     getUserList,
-    DelUser,
-    Upload,
-    Fileupload
+    DelUser
 };

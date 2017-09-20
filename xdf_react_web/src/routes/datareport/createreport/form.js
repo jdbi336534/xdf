@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Icon, Input, Button, Select , Row, Col, Radio,Upload,Modal} from 'antd';
+import { Form, Icon, Input, Button, Select , Row, Col, Radio,Upload,Modal,Alert } from 'antd';
 import Plate from 'components/plate/plate';
 import PicturesWall from './uploadimg';
 import FilesWall from './uploadfile';
+import ExcelWall from './uploadxlsx';
 import styles from './form.less'
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -21,6 +22,8 @@ const Reportform=({
     deleteImage,
     deleteFile,
     isChange,
+    getExcelData,
+    deleteExcel,
     form: {
         getFieldDecorator,
         validateFields,
@@ -286,13 +289,13 @@ return (
                 </FormItem>
                 <FormItem
                 {...formItemLayout}
-                label="图片上传(最多上传5张)"
+                label="图片上传(最多5张)"
                 >
                 <PicturesWall onSuccess={getImagepathArr} onRemoveImg={deleteImage}/>
                 </FormItem>
                 <FormItem
                 {...formItemLayout}
-                label="文件上传(最多上传3个)"
+                label="文件上传(最多3个)"
                 >
                 <div style={{width:'30vw'}}>
                 <FilesWall onSuccess={getFilepathArr} onRemoveFile={deleteFile} />
@@ -301,8 +304,17 @@ return (
         </div>
         }
         </Plate>
+        <Plate title="四折标课汇报">
+            <Alert
+                message="上传四折标课Excel步骤"
+                description="Additional description and informations about copywriting."
+                type="info"
+                showIcon
+            />
+            <ExcelWall onSuccess={getExcelData} onRemove={deleteExcel}/>
+        </Plate>
             <FormItem
-            style={{textAlign:'center',paddingTop:50,paddingBottom:200}}
+            style={{textAlign:'center',paddingTop:50,paddingBottom:50,marginBottom:0}}
             >
             <Button type="primary" size="large" icon="save" loading={Loading} onClick={handleSearch}>保存</Button>
             </FormItem>
@@ -319,6 +331,8 @@ Reportform.propTypes = {
     deleteImage:PropTypes.func,
     deleteFile:PropTypes.func,
     isChange:PropTypes.func,
+    getExcelData:PropTypes.func,
+    deleteExcel:PropTypes.func,
     report:PropTypes.bool,
     Loading:PropTypes.bool
   };
