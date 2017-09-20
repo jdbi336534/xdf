@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Upload, Icon, message } from 'antd';
-import styles from './uploadfile.less'
 const Dragger = Upload.Dragger;
 
 export default class FilesWall extends React.Component {
@@ -18,7 +17,7 @@ export default class FilesWall extends React.Component {
         }
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isLt2M) {
-          message.error('图片大小不能超过2MB!');
+          message.error('文件大小不能超过2MB!');
         }
         const isThree = this.state.fileList.length < 3; 
         if (!isThree) {
@@ -45,7 +44,7 @@ export default class FilesWall extends React.Component {
     render(){
         const { fileList } = this.state;
         return (
-            <div   className={styles.dragcontent}>
+            <div>
             <Dragger 
             name="file" 
             multiple={false} 

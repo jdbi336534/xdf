@@ -25,13 +25,13 @@ exports.findAllUsers = () => {
     });
 };
 //分页获取所有用户数据
-exports.findUserList = (page, size) => {
+exports.findUserList = (page, size, opt) => {
     return new Promise((resolve, reject) => {
-        User.count({}, (err, count) => {
+        User.count(opt, (err, count) => {
             if (err) {
                 reject(err);
             }
-            User.find({}, null, {
+            User.find(opt, null, {
                 skip: (page - 1) * size,
                 sort: {
                     create_time: -1

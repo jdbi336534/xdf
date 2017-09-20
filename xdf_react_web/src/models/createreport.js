@@ -7,6 +7,8 @@ export default {
   state: {
     imgpath:[],
     filepath:[],
+    exceldata:[],
+    excelpath:'',
     report:false,
     visibleSave:false
   },
@@ -46,8 +48,8 @@ export default {
     showModal (state) {
       return { ...state, visibleSave: true }
     },
-    hideModal (state) {
-      return { ...state, visibleSave: false }
+    hideModal (state,{payload}) {
+      return { ...state,...payload, visibleSave: false }
     }
   }
 }

@@ -8,19 +8,22 @@ export default modelExtend(pageModel, {
   namespace: 'datareport',
   state: {
     modalType: 'create',
-    subject:[]
+    subject:[],
+    condition:{}
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
+      dispatch({type:'querySubject'});
       history.listen((location) => {
         if (location.pathname === '/datareport') {
           const payload = location.query || { page: 1, pageSize: 30 }
+          console.log()
           dispatch({
             type: 'reportlist',
             payload,
           });
-          dispatch({type:'querySubject'});
+          
         }
       })
     },
@@ -28,7 +31,8 @@ export default modelExtend(pageModel, {
 
   effects: {
     * reportlist ( {payload={} }, { put, call, select }) {
-        const data = yield call(AssistantList, payload);
+      const condition = yield select(({ datareport }) => datareport.condition);
+      const data = yield call(AssistantList, {page: 1, pageSize: 30,...payload,...condition});
         if (data.success) {
           yield put({
             type:'querySuccess',

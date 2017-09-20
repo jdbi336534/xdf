@@ -53,13 +53,13 @@ exports.findBydate = (start, end) => {
     });
 };
 //分页获取助理主管提交的数据
-exports.findAssistantList = (page, size) => {
+exports.findAssistantList = (page, size, opt={}) => {
     return new Promise((resolve, reject) => {
-        Director.count({}, (err, count) => {
+        Director.count(opt, (err, count) => {
             if (err) {
                 reject(err);
             }
-            Director.find({}, null, {
+            Director.find(opt, null, {
                 skip: (page - 1) * size,
                 sort: {
                     create_time: -1

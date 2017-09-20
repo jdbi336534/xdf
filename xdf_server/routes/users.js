@@ -1,6 +1,6 @@
 const router = require('koa-router')();
 const UserController = require('../controller/users');
-const UploadController = require('../controller/userupload');
+const CourseController = require('../controller/courseupload');
 const DirectorController = require('../controller/director');
 // 上传中间件的配置
 const Upload = require('../controller/upload');
@@ -11,14 +11,21 @@ router.prefix('/api');
 router.post('/login', UserController.Login);
 router.post('/register', UserController.Reg);
 // 测试
-router.get('/users',UploadController.Upload);
-// 四折标课excel文件上传
-router.post('/course',Upload.single('file'), UserController.Upload);
+// router.get('/users',UploadController.Upload);
 
+
+// 四折标课excel文件上传
+router.post('/course',Upload.single('file'), CourseController.Upload);
 // 教研文件图片上传
-router.post('/researchfile',Upload.single('file'), UserController.Fileupload);
+router.post('/researchfile',Upload.single('file'), CourseController.Fileupload);
+// 删除文件接口
+
+
+
+
+
 // 四折标课数据保存
-router.post('/coursesave',UploadController.Upload);
+// router.post('/coursesave',CourseController.Upload);
 // 主管提交信保存
 router.post('/directorsave', DirectorController.Save);
 // 按日期条件查询主管提交的数据

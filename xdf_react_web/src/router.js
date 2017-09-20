@@ -68,6 +68,11 @@ const Routers = function ({ history, app }) {
         models: () => [import('./models/login')],
         component: () => import('./routes/login/'),
     },
+    {   
+      path: '/dashboard',
+      // models: () => [import('./models/dashboard')],
+      component: () => import('./routes/dashboard/'),
+    },
     {
         path: '/datareport',
         models: () => [import('./models/datareport')],

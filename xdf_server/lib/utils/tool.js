@@ -60,3 +60,13 @@ exports.getNextMonth = (date) => {
     var t2 = year2 + '-' + month2 + '-' + day2;
     return t2;
 }
+
+exports.deleteObj=(obj,string)=>{
+    let temp = Object.assign({},obj);
+    for(let item in temp){
+        if(temp[item]==string){
+            delete temp[item];
+        }
+      }
+      return temp;
+}

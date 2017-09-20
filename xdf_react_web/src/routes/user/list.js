@@ -75,8 +75,7 @@ const List = ({location,onAdd,onEditItem,onDeleteItem,onReset, ...tableProps,con
         <Table
           {...tableProps}
           className={classnames({ [styles.table]: true })}
-         
-          scroll={{ y: 'calc(100vh - 344px)' }}
+          scroll={{ y: true }}
           columns={columns}
           size='small'
           rowKey={record => record._id}
